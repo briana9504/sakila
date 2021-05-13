@@ -6,15 +6,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
+import com.gd.sakila.vo.Board;
 
 @Controller
 public class BoardController {
 	@Autowired
 	BoardService boardServcie;
 	
+	@GetMapping("/addBoard")
+	public String addBoard() {
+		return"addBoard";
+	}
+	
+	@PostMapping("/addBoard")//request 값들을 spring 받아서 묶어줌(커맨드객체): input type의 명의 board의 필드 명과 같아야함...
+	public String addBoard(Board board) {
+		boardServcie.addBoard(board);
+		return "redirect:/getBoardList"; //forward가 아닌 redirect
+		//context명이 있음 redirect:/이름/getBoardList
+	}
+	//관리자 게시판 상세보기
+	@GetMapping("/getBoardOne")
+	public String getBoardOne(Model model, @RequestParam(value="boardId", required = true)int boardId) {
+		System.out.println(boardServcie.getBoardOne(boardId).toString());
+		//model servlet의 request.getattribute와 비슷한 역할
+		model.addAttribute("map", boardServcie.getBoardOne(boardId));
+		return "getBoardOne";
+	}
+	
+	//관리자 게시판
 	@GetMapping("/getBoardList")
 	public String getBoardList(Model model,
 								@RequestParam(value="currentPage", defaultValue = "1") int currentPage,

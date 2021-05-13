@@ -30,7 +30,7 @@
                 <tr>
                     <td>${b.boardId}</td>
                     <td><a href="${pageContext.request.contextPath}/getBoardOne?boardId=${b.boardId}">${b.boardTitle}</a></td>
-                    <td>${b.insertDate}</td>
+                    <td>${b.insertDate.substring(0,10)}</td>
                 </tr>
             </c:forEach>
         </tbody>

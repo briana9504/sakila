@@ -15,6 +15,16 @@ import com.gd.sakila.vo.Page;
 public class BoardService {
 	@Autowired
 	BoardMapper boardMapper;
+	
+	public int addBoard(Board board) {
+		
+		return boardMapper.insertBoard(board);
+	}
+	
+	public Map<String,Object> getBoardOne(int boardId){
+		
+		return boardMapper.selectBoardOne(boardId);
+	}
 	//관리자 게시판 리스트
 	public Map<String, Object> getBoardList(int currentPage, int rowPerPage, String searchWord){
 		//1
