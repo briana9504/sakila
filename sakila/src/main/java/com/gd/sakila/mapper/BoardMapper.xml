@@ -17,7 +17,7 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
-	<select id="selectTotal" parameterType="String" resultType="Integer" ><!-- myBatis동적쿼리 -->
+	<select id="selectBoardTotal" parameterType="String" resultType="Integer" ><!-- myBatis동적쿼리 -->
 		SELECT COUNT(*) FROM board
 		<where>
 			<if test="searchWord != null">
