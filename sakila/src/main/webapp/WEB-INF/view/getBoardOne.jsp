@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,33 +17,55 @@
 <body>
 <div class="container">
     <h1>BoardOnd</h1>
+    <br>
      <table class="table">
          <tbody>
              <tr>
-                <td>board_no :</td>
-                <td>${map.boardId}</td>
-               </tr>
+                <td class="col-sm-2">board_id :</td>
+                <td>${boardMap.boardId}</td>
+           </tr>
             <tr>
                    <td>board_title :</td>
-                   <td>${map.boardTitle}</td>
+                   <td>${boardMap.boardTitle}</td>
             </tr>
             <tr>
                    <td>board_content :</td>
-                   <td>${map.boardContent}</td>
+                   <td>${boardMap.boardContent}</td>
             </tr>
             <tr>
                    <td>username :</td>
-                   <td>${map.username}</td>
+                   <td>${boardMap.username}</td>
             </tr>
             <tr>
                    <td>insert_date :</td>
-                   <td>${map.insertDate}</td>
+                   <td>${insertDate}</td>
             </tr>
         </tbody>
     </table>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/modifyBoard?boardId=${map.boardId}">수정</a>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/removeBoard?boardId=${map.boardId}">삭제</a>
+    <a class="btn btn-default" href="${pageContext.request.contextPath}/modifyBoard?boardId=${boardMap.boardId}">수정</a>
+    <a class="btn btn-default" href="${pageContext.request.contextPath}/removeBoard?boardId=${boardMap.boardId}">삭제</a>
     <a class="btn btn-default" href="${pageContext.request.contextPath}/getBoardList">글목록</a>
+    <!-- 댓글 목록 -->
+    <br>
+    <br>
+    <div>
+	   	전체 댓글수 : ${commentList.size()}
+	   	<div>
+	   		<div class="text-right"><a href="${pageContext.request.contextPath}/addComment?boardId=${boardMap.boardId}" class="btn btn-default">댓글 추가</a></div>
+	   		<br>
+	   		<table class="table">
+	   			<c:forEach items="${commentList}" var="c">
+		   			<tr>
+		   				<td class="col-sm-9">${c.commentContent}</td>
+		   				<td class="col-sm-1">${c.username}</td>
+		   				<td>${c.insertDate.substring(0,10)}</td>
+		   				<td><a href="${pageContext.request.contextPath}/removeComment?commentId=${c.commentId}">삭제</a></td>
+		   			</tr>
+	   			</c:forEach>
+	   		</table>
+	   	</div>
+   	</div>
+   	
 </div>
 </body>
 </html>

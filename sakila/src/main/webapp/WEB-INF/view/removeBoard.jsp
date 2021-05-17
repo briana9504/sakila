@@ -12,13 +12,19 @@ $(document).ready(function() {
 	$('#btn').click(function(){
 		console.log('btn click!');//웹브라우저에서 확인가능
 		//유효성 검사 코드 추가
-		$('#removeForm').submit();	
+		if($('#boardPw').val().length < 4){
+			 alert('boardPw는 4자이상 이어야 합니다');
+			 $('#boardPw').focus();
+		} else {
+			$('#removeForm').submit();	
+		}
 	});
 });
 </script>
 </head>
 <body>
 	<div class="container">
+		<br>
 		<h3>removeBoard</h3>
 		<br>
 		<form id="removeForm" action="${pageContext.request.contextPath}/removeBoard" method="post">

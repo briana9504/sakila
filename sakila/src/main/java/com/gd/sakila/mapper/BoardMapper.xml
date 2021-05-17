@@ -61,6 +61,7 @@
 		WHERE board_id = #{boardId}
 		AND board_pw = PASSWORD(#{boardPw})
 	</delete>
+
 	<update id="updateBoard" parameterType="com.gd.sakila.vo.Board">
 		UPDATE board
 		SET board_title = #{boardTitle},

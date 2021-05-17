@@ -1,5 +1,6 @@
 package com.gd.sakila.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,30 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	@Autowired
 	BoardService boardServcie;
+	//게시물 수정
+	@GetMapping("/modifyBoard")
+	public String modifyBoard(Model model, @RequestParam(value = "boardId", required = true)int boardId) {
+		log.debug("▶▶▶▶▶ modifyBoard() param: "+boardId);
+		
+		Map<String, Object> map = boardServcie.getBoardOne(boardId);
+		log.debug("▶▶▶▶▶ modifyBoard() map: "+map.get("boardMap"));
+		model.addAttribute("map", map.get("boardMap"));
+		return"modifyBoard";
+	}
+	@PostMapping("/modifyBoard")
+	public String modifyBoard(Board board) {
+		log.debug("▶▶▶▶▶ modifyBoard() param: " +board.toString());
+		int row = boardServcie.modifyBoard(board);
+		log.debug("▶▶▶▶▶ update row:"+ row);
+		return"redirect:/getBoardOne?boardId="+board.getBoardId();
+	}
 	
 	//C -> M -> redirect
 	@PostMapping("/removeBoard")
 	public String removeBoard(Board board) {
 		
 		int row = boardServcie.removeBoard(board);
-		log.debug("param: "+row);
+		log.debug("▶▶▶▶▶ removeBoard() param: "+row);
 		if(row == 0) {//실패
 			return "redirect:/getBoardOne?boardId="+board.getBoardId();
 		}
@@ -35,16 +53,17 @@ public class BoardController {
 	//게시물 삭제 c-> v
 	@GetMapping("/removeBoard")
 	public String removeBoard(Model model, @RequestParam(value = "boardId", required = true)int boardId) {
-		log.debug("param: "+boardId);
+		log.debug("▶▶▶▶▶ param: "+boardId);
 		model.addAttribute("boardId", boardId);
 		return"removeBoard";//리턴타입 뷰이름 -> 문자열
 	}
 	
+	//게시물 입력창
 	@GetMapping("/addBoard")
 	public String addBoard() {
 		return"addBoard";
 	}
-	
+	//게시물 입력 후 올리기
 	@PostMapping("/addBoard")//request 값들을 spring 받아서 묶어줌(커맨드객체): input type의 명의 board의 필드 명과 같아야함...
 	public String addBoard(Board board) {
 		boardServcie.addBoard(board);
@@ -54,9 +73,20 @@ public class BoardController {
 	//관리자 게시판 상세보기
 	@GetMapping("/getBoardOne")
 	public String getBoardOne(Model model, @RequestParam(value="boardId", required = true)int boardId) {
-		log.debug("▶▶▶▶▶boardOne : "+boardServcie.getBoardOne(boardId).toString());
+		
 		//model servlet의 request.getattribute와 비슷한 역할
-		model.addAttribute("map", boardServcie.getBoardOne(boardId));
+		Map<String, Object> map = boardServcie.getBoardOne(boardId);
+		
+		log.debug("▶▶▶▶▶map : "+map);
+		
+		//날짜 형식 변환 --map에 insertDate가 timeStamp로 들어가 있음..
+		Map<String, Object> boardMap = (Map<String, Object>) map.get("boardMap");
+		String insertDate = new SimpleDateFormat("yyyy-MM-dd").format(boardMap.get("insertDate"));
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ date::: "+ insertDate);
+		
+		model.addAttribute("insertDate", insertDate);
+		model.addAttribute("boardMap",map.get("boardMap"));
+		model.addAttribute("commentList", map.get("commentList"));
 		return "getBoardOne";
 	}
 	
