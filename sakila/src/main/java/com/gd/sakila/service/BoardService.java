@@ -11,11 +11,21 @@ import com.gd.sakila.mapper.BoardMapper;
 import com.gd.sakila.vo.Board;
 import com.gd.sakila.vo.Page;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class BoardService {
 	@Autowired
 	BoardMapper boardMapper;
+	//게시물 삭제
+	public int removeBoard(Board board) {
+		log.debug(board.toString());
+		
+		return boardMapper.deleteBoard(board);
+	}
 	
+	
+	//게시물 추가
 	public int addBoard(Board board) {
 		
 		return boardMapper.insertBoard(board);

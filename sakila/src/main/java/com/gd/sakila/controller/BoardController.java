@@ -12,10 +12,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class BoardController {
 	@Autowired
 	BoardService boardServcie;
+	
+	//C -> M -> redirect
+	@PostMapping("/removeBoard")
+	public String removeBoard(Board board) {
+		
+		int row = boardServcie.removeBoard(board);
+		log.debug("param: "+row);
+		if(row == 0) {//실패
+			return "redirect:/getBoardOne?boardId="+board.getBoardId();
+		}
+		return"redirect:/getBoardList";
+	}
+	
+	//게시물 삭제 c-> v
+	@GetMapping("/removeBoard")
+	public String removeBoard(Model model, @RequestParam(value = "boardId", required = true)int boardId) {
+		log.debug("param: "+boardId);
+		model.addAttribute("boardId", boardId);
+		return"removeBoard";//리턴타입 뷰이름 -> 문자열
+	}
 	
 	@GetMapping("/addBoard")
 	public String addBoard() {
@@ -31,7 +54,7 @@ public class BoardController {
 	//관리자 게시판 상세보기
 	@GetMapping("/getBoardOne")
 	public String getBoardOne(Model model, @RequestParam(value="boardId", required = true)int boardId) {
-		System.out.println(boardServcie.getBoardOne(boardId).toString());
+		log.debug("▶▶▶▶▶boardOne : "+boardServcie.getBoardOne(boardId).toString());
 		//model servlet의 request.getattribute와 비슷한 역할
 		model.addAttribute("map", boardServcie.getBoardOne(boardId));
 		return "getBoardOne";
@@ -44,10 +67,9 @@ public class BoardController {
 								@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage,
 								@RequestParam(value="searchWord", required = false)String searchWord) {
 		//required -> 필수 옵션  true : 꼭 받음 false: 받지 않아도됨..
-		
-		System.out.println(currentPage + "<--currentPage");
-		System.out.println(rowPerPage + "<--rowPerPage");
-		System.out.println(searchWord + "<--searchWord");
+		log.debug("currentPage: "+ currentPage);
+		log.debug("rowPerPage: "+ rowPerPage);
+		log.debug("searchWord: "+ searchWord);
 		
 		Map<String, Object> map = boardServcie.getBoardList(currentPage, rowPerPage, searchWord);
 		//model.addAttribute("map", map);
