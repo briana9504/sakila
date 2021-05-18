@@ -18,11 +18,16 @@ $(document).ready(function() {
 	console.log('ready');
 	$('#btn').click(function() {
 		console.log('btn.click!');
+		if ($('#username').val() == '') {
+			 alert('username을 입력하세요');
+			 $('#username').focus();
+		} else if ($('#commentContent').val() == ''){
+			 alert('commentContent를 입력하세요');
+			 $('#commentContent').focus();
+		} else{
+			$('#addCommentForm').submit();
+		}		
 		
-		//유효성검사 넣기
-		
-		
-		$('#addCommentForm').submit();
 	});
 });
 </script>
@@ -67,7 +72,7 @@ $(document).ready(function() {
 	   		<div><!-- 댓글 남기기 -->
 	   			<form id="addCommentForm" action="${pageContext.request.contextPath}/addComment" method="post">
 	   				<input name="boardId" type="hidden" value="${boardMap.boardId}">
-	   				<input type="text" name="username" placeholder="username">
+	   				<input id="username" type="text" name="username" placeholder="username">
 	   				<div>
 	   					<textarea id="commentContent" name="commentContent" rows="5" cols="80" placeholder="commentContent"></textarea>
 	   				</div>
