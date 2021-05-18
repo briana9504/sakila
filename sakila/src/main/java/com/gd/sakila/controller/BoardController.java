@@ -30,6 +30,7 @@ public class BoardController {
 		model.addAttribute("map", map.get("boardMap"));
 		return"modifyBoard";
 	}
+	
 	@PostMapping("/modifyBoard")
 	public String modifyBoard(Board board) {
 		log.debug("▶▶▶▶▶ modifyBoard() param: " +board.toString());
@@ -63,6 +64,7 @@ public class BoardController {
 	public String addBoard() {
 		return"addBoard";
 	}
+	
 	//게시물 입력 후 올리기
 	@PostMapping("/addBoard")//request 값들을 spring 받아서 묶어줌(커맨드객체): input type의 명의 board의 필드 명과 같아야함...
 	public String addBoard(Board board) {

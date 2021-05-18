@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.aop.ThrowsAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +34,24 @@ public class BoardService {
 
 	//게시물 삭제
 	public int removeBoard(Board board) {
-		log.debug("▶▶▶▶▶ removeBoard() param:"+ board.toString());		
-		return boardMapper.deleteBoard(board);
+		log.debug("▶▶▶▶▶ removeBoard() param:"+ board.toString());	
+		
+		//2) 게시글 삭제 -- FK(외래키)를 지정하지 않거나, FK를 delete no action..
+		int boardRow = boardMapper.deleteBoard(board);
+		if(boardRow == 0) {//패스워드가 지정되어 있지 않으면 게시글은 삭제되지 않으면서 댓글을 삭제될 수 있다.
+			log.debug("삭제된 게시물이 없음");
+			return 0;
+		}
+		log.debug("게시물 삭제");
+		//1) 댓글삭제
+		int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
+		log.debug("▶▶▶▶▶▶ remeveBoard() commentRow: " + commentRow);
+		
+		
+		
+		log.debug("▶▶▶▶▶▶ remeveBoard() boardRow: " + boardRow);
+		
+		return boardRow;
 	}
 	
 	

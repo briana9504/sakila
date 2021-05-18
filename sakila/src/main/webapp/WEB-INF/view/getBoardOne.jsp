@@ -12,7 +12,20 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
- 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+	console.log('ready');
+	$('#btn').click(function() {
+		console.log('btn.click!');
+		
+		//유효성검사 넣기
+		
+		
+		$('#addCommentForm').submit();
+	});
+});
+</script>
 </head>
 <body>
 <div class="container">
@@ -51,7 +64,16 @@
     <div>
 	   	전체 댓글수 : ${commentList.size()}
 	   	<div>
-	   		<div class="text-right"><a href="${pageContext.request.contextPath}/addComment?boardId=${boardMap.boardId}" class="btn btn-default">댓글 추가</a></div>
+	   		<div><!-- 댓글 남기기 -->
+	   			<form id="addCommentForm" action="${pageContext.request.contextPath}/addComment" method="post">
+	   				<input name="boardId" type="hidden" value="${boardMap.boardId}">
+	   				<input type="text" name="username" placeholder="username">
+	   				<div>
+	   					<textarea id="commentContent" name="commentContent" rows="5" cols="80" placeholder="commentContent"></textarea>
+	   				</div>
+	   				<button id="btn" type="button">댓글 남기기</button>
+	   			</form>
+	   		</div>
 	   		<br>
 	   		<table class="table">
 	   			<c:forEach items="${commentList}" var="c">
@@ -59,7 +81,7 @@
 		   				<td class="col-sm-9">${c.commentContent}</td>
 		   				<td class="col-sm-1">${c.username}</td>
 		   				<td>${c.insertDate.substring(0,10)}</td>
-		   				<td><a href="${pageContext.request.contextPath}/removeComment?commentId=${c.commentId}">삭제</a></td>
+		   				<td><a href="${pageContext.request.contextPath}/removeComment?commentId=${c.commentId}&boardId=${boardMap.boardId}">삭제</a></td>
 		   			</tr>
 	   			</c:forEach>
 	   		</table>
