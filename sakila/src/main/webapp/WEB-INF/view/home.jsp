@@ -10,6 +10,7 @@
 </head>
 <body>
 	<h1>home</h1>
-	<a href="${pageContext.request.contextPath}/getBoardList">게시판</a>
+	<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
+	<!-- 로그인 화면 넣을것임... -->
 </body>
 </html>

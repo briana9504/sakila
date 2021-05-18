@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequestMapping("/admin")//get과 post요청 둘다 받음--> 클래스 위에 맵핑이 되면 밑의 매핑과 함쳐져서 처리됨
 public class BoardController {
 	@Autowired
 	BoardService boardServcie;
@@ -36,7 +38,7 @@ public class BoardController {
 		log.debug("▶▶▶▶▶ modifyBoard() param: " +board.toString());
 		int row = boardServcie.modifyBoard(board);
 		log.debug("▶▶▶▶▶ update row:"+ row);
-		return"redirect:/getBoardOne?boardId="+board.getBoardId();
+		return"redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 	}
 	
 	//C -> M -> redirect
@@ -48,7 +50,7 @@ public class BoardController {
 		if(row == 0) {//실패
 			return "redirect:/getBoardOne?boardId="+board.getBoardId();
 		}
-		return"redirect:/getBoardList";
+		return"redirect:/admin/getBoardList";
 	}
 	
 	//게시물 삭제 c-> v
@@ -69,7 +71,7 @@ public class BoardController {
 	@PostMapping("/addBoard")//request 값들을 spring 받아서 묶어줌(커맨드객체): input type의 명의 board의 필드 명과 같아야함...
 	public String addBoard(Board board) {
 		boardServcie.addBoard(board);
-		return "redirect:/getBoardList"; //forward가 아닌 redirect
+		return "redirect:/admin/getBoardList"; //forward가 아닌 redirect
 		//context명이 있음 redirect:/이름/getBoardList
 	}
 	//관리자 게시판 상세보기
