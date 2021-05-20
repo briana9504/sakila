@@ -23,18 +23,20 @@ public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		//요청전
 		log.debug("▶▶▶▶▶loginFilter 요청전");
+		
 		HttpSession session = null;
 		if(request instanceof HttpServletRequest) {
 			session = ((HttpServletRequest)request).getSession();
 		}
-		/*로그인 필터
+		
 		if(session.getAttribute("loginStaff") == null) {
 			if(response instanceof HttpServletResponse) {
-				((HttpServletResponse)response).sendRedirect("/");
+				((HttpServletResponse)response).sendRedirect("/");//home.jsp로 이동
 			}
 			return;
 		}
-		*/
+		
+		
 		chain.doFilter(request, response);
 		//요청후
 		log.debug("▶▶▶▶▶loginFilter 요청전");
