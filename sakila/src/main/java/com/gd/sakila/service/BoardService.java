@@ -1,17 +1,26 @@
 package com.gd.sakila.service;
 
+
+
+
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-import org.springframework.aop.ThrowsAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gd.sakila.mapper.BoardMapper;
+import com.gd.sakila.mapper.BoardfileMapper;
 import com.gd.sakila.mapper.CommentMapper;
 import com.gd.sakila.vo.Board;
+import com.gd.sakila.vo.BoardForm;
+import com.gd.sakila.vo.Boardfile;
 import com.gd.sakila.vo.Comment;
 import com.gd.sakila.vo.Page;
 
@@ -24,6 +33,8 @@ public class BoardService {
 	BoardMapper boardMapper;
 	@Autowired
 	CommentMapper commentMapper;
+	@Autowired
+	BoardfileMapper boardfileMapper;
 	
 	//게시글 수정 호출
 	public int modifyBoard(Board board) {
@@ -56,9 +67,48 @@ public class BoardService {
 	
 	
 	//게시물 추가
-	public int addBoard(Board board) {
-		log.debug("▶▶▶▶▶ addBoard() param:"+ board.toString());
-		return boardMapper.insertBoard(board);
+	public void addBoard(BoardForm boardForm) {
+		log.debug("▶▶▶▶▶ addBoard() boardForm param:"+ boardForm);
+		//boardForm --> board, boardfile로 나눔
+		
+		//1)
+		Board board = boardForm.getBoard(); //boardId값이 null
+		log.debug("▶▶▶▶▶ addBoard() board:"+board);
+		boardMapper.insertBoard(board); 
+		// 입력시 만들어진 key값을 리턴 받아야한다. --> 리턴받을 수 없다. --> 매개변수 board의 boardId값 변경해준다.
+		
+		//2) // list -> boardfile List로 바꾸기
+		List<MultipartFile> list = boardForm.getBoardfile();
+		if(list != null) {
+			for(MultipartFile f: list) {
+				Boardfile boardfile = new Boardfile();
+				//입력하고 바로 그 데이터의 아이디가 필요함.
+				boardfile.setBoardId(board.getBoardId());
+				
+				//뒤의 확장자를 알기위해 오리지널 네임이 필요함
+				String originalFileName = f.getOriginalFilename();
+				int p = originalFileName.lastIndexOf("."); //마지막 점을 찾음 ex) test.txt --> 4
+				String ext = originalFileName.substring(p).toLowerCase(); //확장자 구하고 소문자로 변환...
+				String prename = UUID.randomUUID().toString().replace("-", ""); //세상에 존재하지 않는 이상한 문자열..., "-"를 -> 공백으로
+				
+				String fileName = prename + ext;
+				
+				boardfile.setBoardfileName(fileName);
+				boardfile.setBoardfileSize(f.getSize());
+				boardfile.setBoardfileType(f.getContentType());
+				log.debug("▶▶▶▶▶▶▶ 확인확인!!!!  boardfile: "+boardfile);
+				//2-1) db에 저장
+				boardfileMapper.insertBoardfile(boardfile);
+				
+				//2-2)파일을 저장
+				try {
+					f.transferTo(new File("C:\\fileUpload\\"+fileName));
+				}catch(Exception e){
+					throw new RuntimeException();
+				}
+				
+			}	
+		}
 	}
 	//1)boardOne 상세보기 + 2)댓글목록, 수정폼
 	public Map<String,Object> getBoardOne(int boardId){

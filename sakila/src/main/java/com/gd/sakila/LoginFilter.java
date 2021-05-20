@@ -23,7 +23,7 @@ public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		//요청전
 		log.debug("▶▶▶▶▶loginFilter 요청전");
-		
+		/*
 		HttpSession session = null;
 		if(request instanceof HttpServletRequest) {
 			session = ((HttpServletRequest)request).getSession();
@@ -35,7 +35,7 @@ public class LoginFilter implements Filter {
 			}
 			return;
 		}
-		
+		*/
 		
 		chain.doFilter(request, response);
 		//요청후
