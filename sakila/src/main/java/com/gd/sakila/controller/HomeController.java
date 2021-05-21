@@ -1,6 +1,8 @@
 package com.gd.sakila.controller;
 
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,8 @@ public class HomeController {
 		
 		//System.out.println("<HomeController.home>"); 이제 안쓸거임..-> Logger log=LoggerFactory.getLogger(this.getClass())->@Slf4j
 		//log 출력
-		log.debug("test");
+		log.debug("HomeController test");
+		
 		return "home";
 	}
 	

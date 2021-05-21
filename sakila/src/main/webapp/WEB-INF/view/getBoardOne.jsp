@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>BOARD VIEW(spring mvc 방식)</title>
+<title>getBoardOne</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -41,22 +41,46 @@ $(document).ready(function() {
              <tr>
                 <td class="col-sm-2">board_id :</td>
                 <td>${boardMap.boardId}</td>
-           </tr>
+       	    </tr>
             <tr>
-                   <td>board_title :</td>
-                   <td>${boardMap.boardTitle}</td>
+                 <td>board_title :</td>
+                 <td>${boardMap.boardTitle}</td>
             </tr>
             <tr>
-                   <td>board_content :</td>
-                   <td>${boardMap.boardContent}</td>
+                  <td>board_content :</td>
+                  <td>${boardMap.boardContent}</td>
             </tr>
             <tr>
-                   <td>username :</td>
-                   <td>${boardMap.username}</td>
+                 <td>username :</td>
+                 <td>${boardMap.username}</td>
             </tr>
-            <tr>
-                   <td>insert_date :</td>
-                   <td>${insertDate}</td>
+          	<tr>
+                 <td>insert_date :</td>
+                 <td>${insertDate}</td>
+            </tr>
+            <!-- 업로드한 파일 출력 -->
+			<tr>
+                   <td>boardfile :</td>
+                   <td>
+                   		<div>
+                   			<a href="${pageContext.request.contextPath}/admin/addBoardfile?boardId=${boardMap.boardId}">
+                   				<button type="button">파일추가</button>
+                   			</a>
+                   		</div>
+                   		<!-- 여러개일 수 있으니 출력하는 반복문 코드 구현 -->
+                   		<c:forEach items="${boardfileList}" var="f">
+                   			<div>
+                   				<a href ="${pageContext.request.contextPath}/resource/${f.boardfileName}">${f.boardfileName}</a>
+                   				<a href="${pageContext.request.contextPath}/admin/removeBoardfile?boardfileId=${f.boardfileId}">
+                   					<button type="button">파일삭제</button>
+                   				</a>
+                   			</div>
+                 			<div>
+                 				<img src="${pageContext.request.contextPath}/resource/${f.boardfileName}" height="100" width="100">
+                 			</div>
+                   		</c:forEach>
+                   		
+                   </td>
             </tr>
         </tbody>
     </table>

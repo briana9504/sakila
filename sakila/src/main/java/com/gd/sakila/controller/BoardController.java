@@ -76,7 +76,7 @@ public class BoardController {
 		return "redirect:/admin/getBoardList"; //forward가 아닌 redirect
 		//context명이 있음 redirect:/이름/getBoardList
 	}
-	//관리자 게시판 상세보기
+	//관리자 게시판 상세보기 //1)첨부파일 2)날짜 3)content title 등이 들어간 map 4)댓글 리스트
 	@GetMapping("/getBoardOne")
 	public String getBoardOne(Model model, @RequestParam(value="boardId", required = true)int boardId) {
 		
@@ -90,6 +90,8 @@ public class BoardController {
 		String insertDate = new SimpleDateFormat("yyyy-MM-dd").format(boardMap.get("insertDate"));
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ date::: "+ insertDate);
 		
+		
+		model.addAttribute("boardfileList", map.get("boardfileList"));
 		model.addAttribute("insertDate", insertDate);
 		model.addAttribute("boardMap",map.get("boardMap"));
 		model.addAttribute("commentList", map.get("commentList"));

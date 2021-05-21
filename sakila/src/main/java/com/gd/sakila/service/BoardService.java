@@ -47,20 +47,35 @@ public class BoardService {
 	public int removeBoard(Board board) {
 		log.debug("▶▶▶▶▶ removeBoard() param:"+ board.toString());	
 		
-		//2) 게시글 삭제 -- FK(외래키)를 지정하지 않거나, FK를 delete no action..
+		//1)게시글 삭제 -- FK(외래키)를 지정하지 않거나, FK를 delete no action..
 		int boardRow = boardMapper.deleteBoard(board);
 		if(boardRow == 0) {//패스워드가 지정되어 있지 않으면 게시글은 삭제되지 않으면서 댓글을 삭제될 수 있다.
 			log.debug("삭제된 게시물이 없음");
 			return 0;
 		}
 		log.debug("게시물 삭제");
-		//1) 댓글삭제
+		log.debug("▶▶▶▶▶▶ remeveBoard() boardRow: " + boardRow);
+		//2) 댓글삭제
 		int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
 		log.debug("▶▶▶▶▶▶ remeveBoard() commentRow: " + commentRow);
+				
+		//3) 물지적 파일 삭제(/resource)
+		//파일 리스트 호출
+		List<Boardfile> boardfileList = boardfileMapper.selectBoardfileByBoardId(board.getBoardId());
 		
+		if(boardfileList != null) {
+			for(Boardfile f : boardfileList) {
+				File temp = new File("");//프로젝트 위치에 빈파일이 만들어짐.... src 위에 프로젝트 안에
+				String path =temp.getAbsolutePath();//프로젝트 위치
+				File file = new File(path+"\\src\\main\\webapp\\resource\\"+f.getBoardfileName());//메모리 안에 파일을 새로만듬...
+				file.delete();
+			}
+		}
 		
+		//4) 파일삭제(1. 파일 테일블 행 삭제)
+		int boardfileRow = boardfileMapper.deleteBoardfileByBoardId(board.getBoardId());
+		log.debug("▶▶▶▶▶▶ remeveBoard() boardfileRow: " + commentRow);
 		
-		log.debug("▶▶▶▶▶▶ remeveBoard() boardRow: " + boardRow);
 		
 		return boardRow;
 	}
@@ -99,10 +114,13 @@ public class BoardService {
 				log.debug("▶▶▶▶▶▶▶ 확인확인!!!!  boardfile: "+boardfile);
 				//2-1) db에 저장
 				boardfileMapper.insertBoardfile(boardfile);
-				
+				//프로젝트폴더아래...
 				//2-2)파일을 저장
 				try {
-					f.transferTo(new File("C:\\fileUpload\\"+fileName));
+					File temp = new File("");//프로젝트 위치에 빈파일이 만들어짐.... src 위에 프로젝트 안에
+					String path =temp.getAbsolutePath();//프로젝트 위치
+					
+					f.transferTo(new File(path+"\\src\\main\\webapp\\resource\\"+fileName));
 				}catch(Exception e){
 					throw new RuntimeException();
 				}
@@ -116,13 +134,18 @@ public class BoardService {
 		//1)상세보기
 		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
 		
-		//2)댓글 목록
+		//2)boardfile 목록
+		List<Boardfile> boardfileList = boardfileMapper.selectBoardfileByBoardId(boardId);
+		log.debug("▶▶▶▶▶ getBoardOnt() boardfileList: "+boardfileList);
+		//3)댓글 목록
 		List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
 		log.debug("commentList size():"+ commentList.size());
 		
-		//3)리턴 값 정리
+		
+		//4)리턴 값 정리
 		Map<String, Object> map = new HashMap<>();
 		map.put("boardMap", boardMap);
+		map.put("boardfileList", boardfileList);
 		map.put("commentList", commentList);
 		
 		return map;
