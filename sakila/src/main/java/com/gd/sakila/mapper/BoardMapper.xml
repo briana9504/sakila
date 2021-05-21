@@ -40,6 +40,7 @@
 			ON b.staff_id = s.staff_id
 		WHERE board_id = #{boardId}
 	</select>
+	
 	<insert id="insertBoard" parameterType="com.gd.sakila.vo.Board">
 		
 		<selectKey resultType="int" keyProperty="boardId" order="AFTER"><!-- key 값을 리턴 -->

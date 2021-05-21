@@ -16,6 +16,7 @@
 <script>
 $(document).ready(function() {
 	console.log('ready');
+	
 	$('#btn').click(function() {
 		console.log('btn.click!');
 		if ($('#username').val() == '') {
@@ -63,17 +64,21 @@ $(document).ready(function() {
                    <td>boardfile :</td>
                    <td>
                    		<div>
-                   			<a href="${pageContext.request.contextPath}/admin/addBoardfile?boardId=${boardMap.boardId}">
-                   				<button type="button">파일추가</button>
-                   			</a>
+                   			<c:if test="${sessionUsername == boardMap.username}"><!-- 로그인한 유저네임과 글쓴이가 같아야만 파일 추가가 뜬다. -->
+                   				<a href="${pageContext.request.contextPath}/admin/addBoardfile?boardId=${boardMap.boardId}&username=${boardMap.username}">
+                   					<button type="button">파일추가</button>
+                   				</a>
+                   			</c:if>         			
                    		</div>
                    		<!-- 여러개일 수 있으니 출력하는 반복문 코드 구현 -->
                    		<c:forEach items="${boardfileList}" var="f">
                    			<div>
                    				<a href ="${pageContext.request.contextPath}/resource/${f.boardfileName}">${f.boardfileName}</a>
-                   				<a href="${pageContext.request.contextPath}/admin/removeBoardfile?boardfileId=${f.boardfileId}">
-                   					<button type="button">파일삭제</button>
-                   				</a>
+                   				<c:if test="${sessionUsername == boardMap.username}">
+	                   				<a href="${pageContext.request.contextPath}/admin/removeBoardfile?boardfileId=${f.boardfileId}&boardId=${f.boardId}&boardfileName=${f.boardfileName}">
+	                   					<button type="button">파일삭제</button>
+	                   				</a>
+                   				</c:if>
                    			</div>
                  			<div>
                  				<img src="${pageContext.request.contextPath}/resource/${f.boardfileName}" height="100" width="100">
@@ -108,9 +113,14 @@ $(document).ready(function() {
 	   			<c:forEach items="${commentList}" var="c">
 		   			<tr>
 		   				<td class="col-sm-9">${c.commentContent}</td>
-		   				<td class="col-sm-1">${c.username}</td>
+		   				<td id="commentUsername" class="col-sm-1">${c.username}</td>
 		   				<td>${c.insertDate.substring(0,10)}</td>
-		   				<td><a href="${pageContext.request.contextPath}/admin/removeComment?commentId=${c.commentId}&boardId=${boardMap.boardId}">삭제</a></td>
+		   				<td id="commentDelete">
+		   				<!-- 로그인 아이디와 commentName이 같은 경우에만 삭제 버튼이 나온다. -->
+		   					<c:if test="${sessionUsername == c.username}">
+		   						<a href="${pageContext.request.contextPath}/admin/removeComment?commentId=${c.commentId}&boardId=${boardMap.boardId}&username=${c.username}">삭제</a>
+		   					</c:if>		
+		   				</td>
 		   			</tr>
 	   			</c:forEach>
 	   		</table>

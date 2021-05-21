@@ -119,7 +119,7 @@ public class BoardService {
 				try {
 					File temp = new File("");//프로젝트 위치에 빈파일이 만들어짐.... src 위에 프로젝트 안에
 					String path =temp.getAbsolutePath();//프로젝트 위치
-					
+					log.debug("§§§§§§§§§§ 프로젝트 경로: "+path);
 					f.transferTo(new File(path+"\\src\\main\\webapp\\resource\\"+fileName));
 				}catch(Exception e){
 					throw new RuntimeException();

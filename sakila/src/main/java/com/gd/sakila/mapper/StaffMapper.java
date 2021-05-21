@@ -1,5 +1,8 @@
 package com.gd.sakila.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gd.sakila.vo.Staff;
@@ -14,5 +17,7 @@ import com.gd.sakila.vo.Staff;
 
 @Mapper//mapper.xml을 찾아서 매서드명과 mapper의 id명이 같으면 합쳐서 메서드를 구현클래스 생성시 오버라이딩을 한다.
 public interface StaffMapper {
+	Map<String,Object> selectStaffListOne(int StaffId);
+	List<Map<String, Object>> selectStaffList();
 	Staff selectStaffByLogin(Staff staff);
 }

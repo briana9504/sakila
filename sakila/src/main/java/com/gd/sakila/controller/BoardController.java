@@ -3,6 +3,8 @@ package com.gd.sakila.controller;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
 import com.gd.sakila.vo.BoardForm;
+import com.gd.sakila.vo.Staff;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -78,8 +81,10 @@ public class BoardController {
 	}
 	//관리자 게시판 상세보기 //1)첨부파일 2)날짜 3)content title 등이 들어간 map 4)댓글 리스트
 	@GetMapping("/getBoardOne")
-	public String getBoardOne(Model model, @RequestParam(value="boardId", required = true)int boardId) {
+	public String getBoardOne(Model model, @RequestParam(value="boardId", required = true)int boardId, HttpSession session) {
 		
+		Staff staff = (Staff)session.getAttribute("loginStaff");
+		log.debug("§§§§§§ session staff: "+staff);
 		//model servlet의 request.getattribute와 비슷한 역할
 		Map<String, Object> map = boardServcie.getBoardOne(boardId);
 		
@@ -90,7 +95,7 @@ public class BoardController {
 		String insertDate = new SimpleDateFormat("yyyy-MM-dd").format(boardMap.get("insertDate"));
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ date::: "+ insertDate);
 		
-		
+		model.addAttribute("sessionUsername", staff.getUsername());
 		model.addAttribute("boardfileList", map.get("boardfileList"));
 		model.addAttribute("insertDate", insertDate);
 		model.addAttribute("boardMap",map.get("boardMap"));

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gd.sakila.mapper.BoardfileMapper">	
-	
+<mapper namespace="com.gd.sakila.mapper.BoardfileMapper">
 	<!-- boardfile 하나 삭제 -->
 	<delete id="deleteBoardfileOne" parameterType="int">
 		DELETE FROM boardfile WHERE boardfile_id = #{boardfileId}
@@ -19,6 +18,7 @@
 	 <!-- 하나의 게시글의 참조되는 파일 --><!-- resultType : return type X, List의 제네릭 타입(List<>) -->
 	<select id="selectBoardfileByBoardId" parameterType="int" resultType="com.gd.sakila.vo.Boardfile">
 		SELECT
+			board_id boardId,
 			boardfile_id boardfileId,
 			boardfile_name boardfileName,
 			boardfile_size boardfileSize

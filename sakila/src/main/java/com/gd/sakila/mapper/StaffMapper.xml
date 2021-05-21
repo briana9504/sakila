@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.StaffMapper">
+
+	<select id="selectStaffListOne" resultType="java.util.Map" parameterType="int">
+		SELECT
+			 ID ID,
+			 NAME name, 
+			 address address, 
+			 phone phone, 
+			 city city, 
+			 country country, 
+			 SID SID,
+			 `zip code` zipCode
+		FROM staff_list
+		WHERE ID = #{staffId}
+	
+	</select>
+	<select id="selectStaffList" resultType="java.util.Map">
+		SELECT
+			 ID ID,
+			 NAME name, 
+			 SID SID
+		FROM staff_list
+	</select>
+	
 	<select id="selectStaffByLogin" parameterType="com.gd.sakila.vo.Staff" resultType="com.gd.sakila.vo.Staff">
 		SELECT
 			staff_id staffId,
