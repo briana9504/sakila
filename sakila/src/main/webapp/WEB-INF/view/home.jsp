@@ -48,6 +48,7 @@ $(document).ready(function() {
 	
 		<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
 		<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a>
+		<a href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>		
 		<a href="${pageContext.request.contextPath}/admin/logout">로그아웃</a>
 		<!-- 로그인 화면 넣을것임... -->
 	

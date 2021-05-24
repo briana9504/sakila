@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.FilmMapper">
+	<!-- 영화 카테고리 리스트 -->
+	<select id="selectCategoryList" resultType="java.lang.String">
+		SELECT NAME categoryName FROM category
+	</select>
+	
+	<!-- 영화 상세보기 -->
+	<select id="selectFilmOne" parameterType="int" resultType="java.util.Map">
+		SELECT f.film_id filmId, f.release_year releaseYear, f.rental_duration rentalDuration, f.special_features specialFeatures, f.replacement_cost replacementCost,
+			n.title title, n.description description, n.category category, n.price price, n.length length, n.rating rating, n.actors actors,
+			l.name languageName
+		FROM film f LEFT JOIN nicer_but_slower_film_list n ON f.film_id=n.FID LEFT JOIN language l ON f.language_id=l.language_id
+		WHERE f.film_id = #{filmId}
+	</select>
+
+	<!-- 프로시저를 호출 -->
+	<!-- Map: filmId(in), storeId(in), film(out) -->
+	<select id="selectFilmInStock" parameterType="java.util.Map" statementType="CALLABLE" resultType="int">
+		{
+			call film_in_stock(
+				#{filmId},
+				#{storeId},
+				#{filmCount, mode=OUT, jdbcType=DECIMAL, javaType=INTEGER}
+			)
+		}
+	</select>
+	<!-- 전체 영화목록 수 구하기 -->
+	<select id="selectFilmTotal" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM nicer_but_slower_film_list
+		<where>
+			<if test="searchWord != null">
+				title LIKE CONCAT('%',#{searchWord},'%')
+				<if test="category != all">
+					AND	category = #{category}
+				</if>		
+			</if>
+			
+			<if test="category != all and searchWord == null">
+				category = #{category}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 영화목록 구하기 -->
+	<select id="selectFilmList" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			f.film_id flimId,
+			f.title title,
+			f.description description,
+			f.rating rating, 
+			f.length length, 
+			f.rental_rate rentalRate, 
+			n.actors actors, 
+			n.category category
+		FROM film f left JOIN nicer_but_slower_film_list n
+		ON f.film_id = n.FID
+		<where>
+			<if test="searchWordActor != null">
+				n.actors LIKE CONCAT('%',#{searchWordActor},'%')
+			</if>
+			<if test="searchWord != null">
+				f.title LIKE CONCAT('%',#{searchWord},'%')
+				<if test="!category.equals('all')">
+					AND	n.category = #{category}
+				</if>		
+			</if>
+			
+			<if test="!category.equals('all') and searchWord == null and rating.equals('all')">
+				n.category = #{category}
+			</if>
+			
+			<if test="!rating.equals('all') and searchWord == null and category.equals('all')">
+				<if test="rating.equals('teenager')">
+				f.rating IN('G','PG', 'NC-13')
+				</if>
+				<if test="rating.equals('adult')">
+				f.rating IN('NC-17','R')
+				</if>
+			</if>	
+		</where>
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+</mapper>

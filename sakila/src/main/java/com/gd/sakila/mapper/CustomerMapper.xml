@@ -2,9 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
 	<!-- 기간마다 고객의 액티브를 변경 -->
-	<update id="updateCustomerActiveByscheduler">
+	<!-- 
 		UPDATE customer set active = 0
 		WHERE customer_id IN(SELECT customer_id FROM rental GROUP BY customer_id
 							HAVING DATEDIFF(NOW(), MAX(rental_date))>365)
+	 -->
+	<update id="updateCustomerActiveByscheduler">						
+		UPDATE customer c, 
+			(SELECT customer_id, max(rental_date), DATEDIFF(NOW(), max(rental_date))
+             FROM rental
+             GROUP BY customer_id
+             HAVING DATEDIFF(NOW(), max(rental_date)) > 365) A
+		SET c.active = 0
+		WHERE c.customer_id = A.customer_id
 	</update>
 </mapper>
