@@ -30,7 +30,7 @@ $(document).ready(function() {
 		<form id="removeForm" action="${pageContext.request.contextPath}/admin/removeBoard" method="post">
 			<input type = "hidden" name="boardId" value="${boardId}">
 			<div class="row">
-				<label class="col-sm-1"> boardPw: </label>
+				<label class="col-sm-3"> boardPassword: </label>
 				<input type="password" class="col-sm-3 form-control" id="boardPw" name="boardPw">
 				&nbsp;&nbsp;<button type="button" id="btn" class="btn btn-light">삭제</button>
 			</div>

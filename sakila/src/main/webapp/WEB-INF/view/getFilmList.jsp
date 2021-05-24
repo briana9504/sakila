@@ -10,11 +10,10 @@
 $(document).ready(function(){
 	console.log('ready!');
 	console.log($('#category').val());
+	
 	$('#btn').click(function(){
 		console.log('btn click!')
-		if($('#searchWord').val() != ''){
-			$('#searchWordAction').submit();
-		}
+		$('#searchWordAction').submit();
 	});
 	
 	
@@ -29,14 +28,16 @@ $(document).ready(function(){
 	
 	$('#searchOption').change(function(){
 		console.log($('#searchOption').val());
-		$('#searchWord').remove()
+		
 		
 		if($('#searchOption').val() == 'title'){
+			$('#searchWordActor').remove()
 			console.log('제목');
 			$('#target').append('<input type="text" name="searchWord" id="searchWord">');
 		} else{
+			$('#searchWord').remove()
 			console.log('배우');
-			$('#target').append('<input type="text" name="searchWord" id="searchWordActor">');
+			$('#target').append('<input type="text" name="searchWordActor" id="searchWordActor">');
 		}
 	});
 	
@@ -123,6 +124,7 @@ $(document).ready(function(){
     		<option value="title">제목</option>
     		<option value="actor">배우</option>
     	</select>
+    	
     	<input type="hidden" name="category" value="${category}">
     	<span id="target">
     		<input type="text" name="searchWord" id="searchWord">

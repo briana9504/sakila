@@ -74,7 +74,7 @@ public class FilmService {
 		paramMap.put("beginRow", beginRow);
 		paramMap.put("category", category);
 		paramMap.put("rating", rating);
-		paramMap.put("rating", searchWordActor);
+		paramMap.put("searchWordActor", searchWordActor);
 		
 		
 		log.debug("§§§§§§§§ paramMap: "+paramMap);

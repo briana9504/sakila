@@ -57,28 +57,25 @@
 		FROM film f left JOIN nicer_but_slower_film_list n
 		ON f.film_id = n.FID
 		<where>
-			<if test="searchWordActor != null">
+			<if test="searchWordActor !=null">
 				n.actors LIKE CONCAT('%',#{searchWordActor},'%')
 			</if>
+			
 			<if test="searchWord != null">
-				f.title LIKE CONCAT('%',#{searchWord},'%')
-				<if test="!category.equals('all')">
-					AND	n.category = #{category}
-				</if>		
+				f.title LIKE CONCAT('%',#{searchWord},'%')	
 			</if>
 			
-			<if test="!category.equals('all') and searchWord == null and rating.equals('all')">
+			<if test="!category.equals('all')">
 				n.category = #{category}
 			</if>
-			
-			<if test="!rating.equals('all') and searchWord == null and category.equals('all')">
-				<if test="rating.equals('teenager')">
+			<if test="rating.equals('teenager')">
 				f.rating IN('G','PG', 'NC-13')
-				</if>
-				<if test="rating.equals('adult')">
+			</if>
+			
+			<if test="rating.equals('adult')">
 				f.rating IN('NC-17','R')
-				</if>
-			</if>	
+			</if>
+				
 		</where>
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
