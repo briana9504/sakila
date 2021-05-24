@@ -101,7 +101,7 @@ $(document).ready(function() {
 	   		<div><!-- ´ñ±Û ³²±â±â -->
 	   			<form id="addCommentForm" action="${pageContext.request.contextPath}/admin/addComment" method="post">
 	   				<input name="boardId" type="hidden" value="${boardMap.boardId}">
-	   				<input id="username" type="text" name="username" placeholder="username">
+	   				<input id="username" type="text" name="username" value="${sessionUsername}" readonly="readonly">
 	   				<div>
 	   					<textarea id="commentContent" name="commentContent" rows="5" cols="80" placeholder="commentContent"></textarea>
 	   				</div>

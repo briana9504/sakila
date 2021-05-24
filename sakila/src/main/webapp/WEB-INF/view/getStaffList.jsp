@@ -49,6 +49,10 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		
+		<div>
+			<a href="${pageContext.request.contextPath}/admin/addStaff">직원추가</a>
+		</div>
 	</div>	
 </body>
 </html>
