@@ -48,7 +48,9 @@ public class FilmController {
 								@RequestParam(value = "category", defaultValue = "all")String category,
 								@RequestParam(value = "rating", defaultValue = "all")String rating,
 								@RequestParam(value = "searchActor", defaultValue = "")String searchActor,
-								@RequestParam(value = "price", required = false)Double price) {
+								@RequestParam(value = "price", required = false)Double price,
+								@RequestParam(value = "searchDescription", defaultValue = "")String searchDescription,
+								@RequestParam(value = "titleAndDescription", defaultValue = "")String titleAndDescription) {
 		//현재 페이지
 		log.debug("§§§§§§§§§ currentPage param: "+currentPage);
 		//페이지당 게시물 수
@@ -63,16 +65,21 @@ public class FilmController {
 		log.debug("§§§§§§§§§ searchActor param: "+searchActor);
 		//가격
 		log.debug("§§§§§§§§§ price param: "+price);
-		
-		
+		//줄거리
+		log.debug("§§§§§§§§§ searchDescription param: "+searchDescription);
+		//줄거리 + 제목
+		log.debug("§§§§§§§§§ titleAndDescription param: "+titleAndDescription);
+				
 		if(price != null && price == 0) {
 			price = null;
 		}
 		//service 호출
-		Map<String, Object> map =this.filmService.getFilmList(currentPage, rowPerPage, searchWord, category, rating, searchActor, price);
+		Map<String, Object> map =this.filmService.getFilmList(currentPage, rowPerPage, searchWord, category, rating, searchActor, price, searchDescription, titleAndDescription);
 	
 		log.debug("§§§§§§§§§ filmList: "+map);
 		
+		model.addAttribute("titleAndDescription",titleAndDescription);
+		model.addAttribute("searchDescription",searchDescription);
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("price", price);
 		model.addAttribute("searchActor", searchActor);

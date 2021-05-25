@@ -68,13 +68,19 @@ $(document).ready(function(){
 		console.log($('#searchOption').val());
 	
 		if($('#searchOption').val() == 'title'){
-			$('#searchActor').remove()
+			$('#target').empty()
 			console.log('제목');
 			$('#target').append('<input type="text" name="searchWord" id="searchWord">');
-		} else{
-			$('#searchWord').remove()
+		} else if($('#searchOption').val() == 'actor'){
+			$('#target').empty()
 			console.log('배우');
 			$('#target').append('<input type="text" name="searchActor" id="searchActor">');
+		} else if($('#searchOption').val() == 'description'){
+			$('#target').empty()
+			$('#target').append('<input type="text" name="searchDescription" id="searchDescription">');
+		} else{
+			$('#target').empty()
+			$('#target').append('<input type="text" name="titleAndDescription" id="titleAndDescription">');
 		}
 	});
 	
@@ -180,6 +186,8 @@ $(document).ready(function(){
 				<select id="searchOption">
 		    		<option value="title">제목</option>
 		    		<option value="actor">배우</option>
+		    		<option value="description">줄거리</option>
+		    		<option value="titleAndDescription">제목+줄거리</option>
 		    	</select>
 		    	
 		    	<span id="target">
@@ -249,13 +257,11 @@ $(document).ready(function(){
 			<!-- 페이징 -->
 			<ul class="pager">
 		        <c:if test="${currentPage > 1}">
-	            	<li class="previous"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}&category=${category}&rating=${rating}&searchActor=${searchActor}&rowPerPage=${rowPerPage}&price=${price}">이전</a></li>        
+	            	<li class="previous"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}&category=${category}&rating=${rating}&searchActor=${searchActor}&rowPerPage=${rowPerPage}&price=${price}&searchDescription=${searchDescription}&titleAndDescription=${titleAndDescription}">이전</a></li>        
 		        </c:if>
 		       
 		        <c:if test="${currentPage < lastPage}">
-	            	<li class="next"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&searchWord=${searchWord}&category=${category}&rating=${rating}&searchActor=${searchActor}&rowPerPage=${rowPerPage}&price=${price}">다음</a></li>
-	
-		        
+	            	<li class="next"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&searchWord=${searchWord}&category=${category}&rating=${rating}&searchActor=${searchActor}&rowPerPage=${rowPerPage}&price=${price}&searchDescription=${searchDescription}&titleAndDescription=${titleAndDescription}">다음</a></li>        
 		        </c:if>
 		    </ul>
 	    </div>

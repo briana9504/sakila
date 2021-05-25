@@ -60,7 +60,7 @@ public class FilmService {
 		return returnMap;
 	}
 	//film list
-	public Map<String, Object> getFilmList(int currentPage, int rowPerPage, String searchWord, String category, String rating, String searchActor, Double price){
+	public Map<String, Object> getFilmList(int currentPage, int rowPerPage, String searchWord, String category, String rating, String searchActor, Double price, String searchDescription, String titleAndDescription){
 		log.debug("§§§§§§§ getFlimList currentPage param: "+currentPage);
 		log.debug("§§§§§§§ getFlimList rowPerPage param: "+rowPerPage);
 		log.debug("§§§§§§§ getFlimList SearchWord param: "+searchWord);
@@ -68,6 +68,8 @@ public class FilmService {
 		log.debug("§§§§§§§ getFlimList rating param: "+rating);
 		log.debug("§§§§§§§ getFlimList searchActor param: "+searchActor);
 		log.debug("§§§§§§§ getFlimList price param: "+price);
+		log.debug("§§§§§§§ getFlimList searchDescription param: "+searchDescription);
+		log.debug("§§§§§§§ getFlimList titleAndDescription param: "+titleAndDescription);
 		//list와 총 수량 구할 때 보낼 값
 		Map<String, Object> paramMap = new HashMap<>();
 		
@@ -80,6 +82,9 @@ public class FilmService {
 		paramMap.put("rating", rating);//등급
 		paramMap.put("searchActor", searchActor);//배우 검색
 		paramMap.put("price", price);//가격
+		paramMap.put("searchDescription", searchDescription);//줄거리
+		paramMap.put("titleAndDescription", titleAndDescription);//줄거리 + 제목
+		
 		
 		log.debug("§§§§§§§§ paramMap: "+paramMap);
 		

@@ -30,6 +30,12 @@
 		SELECT COUNT(*) 
 		FROM nicer_but_slower_film_list
 		<where>
+			<if test="!titleAndDescription.equals('')">
+				AND	(title LIKE CONCAT('%',#{titleAndDescription},'%') OR description LIKE CONCAT('%',#{titleAndDescription},'%'))
+			</if>
+			<if test="!searchDescription.equals('')">
+				AND description LIKE CONCAT('%',#{searchDescription},'%')
+			</if>
 			<if test="!searchActor.equals('')">
 				AND actors LIKE CONCAT('%',#{searchActor},'%')
 			</if>
@@ -80,6 +86,12 @@
 		FROM nicer_but_slower_film_list 
 		
 		<where>
+			<if test="!titleAndDescription.equals('')">
+				AND	(title LIKE CONCAT('%',#{titleAndDescription},'%') OR description LIKE CONCAT('%',#{titleAndDescription},'%'))
+			</if>
+			<if test="!searchDescription.equals('')">
+				AND description LIKE CONCAT('%',#{searchDescription},'%')
+			</if>
 			<if test="!searchActor.equals('')">
 				AND actors LIKE CONCAT('%',#{searchActor},'%')
 			</if>
