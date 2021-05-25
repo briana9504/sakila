@@ -28,7 +28,7 @@
 	<!-- 전체 영화목록 수 구하기 -->
 	<select id="selectFilmTotal" resultType="int" parameterType="java.util.Map">
 		SELECT COUNT(*) 
-		FROM nicer_but_slower_film_list n
+		FROM nicer_but_slower_film_list
 		<where>
 			<if test="!searchActor.equals('')">
 				AND actors LIKE CONCAT('%',#{searchActor},'%')
@@ -43,11 +43,11 @@
 			</if>
 			
 			<if test="rating.equals('teenager')">
-				rating IN('G','PG', 'PG-13')
+				AND rating IN('G','PG', 'PG-13')
 			</if>
 			
 			<if test="rating.equals('adult')">
-				rating IN('NC-17','R')
+				AND rating IN('NC-17','R')
 			</if>
 								
 			<if test="price != null">
@@ -93,11 +93,11 @@
 			</if>
 			
 			<if test="rating.equals('teenager')">
-				rating IN('G','PG', 'PG-13')
+				AND rating IN('G','PG', 'PG-13')
 			</if>
 			
 			<if test="rating.equals('adult')">
-				rating IN('NC-17','R')
+				AND rating IN('NC-17','R')
 			</if>
 								
 			<if test="price != null">
