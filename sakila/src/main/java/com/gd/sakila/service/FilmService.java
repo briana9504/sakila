@@ -8,14 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gd.sakila.mapper.CategoryMapper;
 import com.gd.sakila.mapper.FilmMapper;
-import com.gd.sakila.vo.Page;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @Transactional
 public class FilmService {
+	@Autowired
+	CategoryMapper categoryMapper;
 	@Autowired
 	FilmMapper filMapper;
 	
@@ -57,36 +59,41 @@ public class FilmService {
 		return returnMap;
 	}
 	//film list
-	public Map<String, Object> getFilmList(int currentPage, int rowPerPage, String SearchWord, String category, String rating, String searchWordActor){
+	public Map<String, Object> getFilmList(int currentPage, int rowPerPage, String searchWord, String category, String rating, String searchActor, Double price){
 		log.debug("§§§§§§§ getFlimList currentPage param: "+currentPage);
 		log.debug("§§§§§§§ getFlimList rowPerPage param: "+rowPerPage);
-		log.debug("§§§§§§§ getFlimList SearchWord param: "+SearchWord);
+		log.debug("§§§§§§§ getFlimList SearchWord param: "+searchWord);
 		log.debug("§§§§§§§ getFlimList category param: "+category);
 		log.debug("§§§§§§§ getFlimList rating param: "+rating);
-		log.debug("§§§§§§§ getFlimList searchWordActor param: "+searchWordActor);
+		log.debug("§§§§§§§ getFlimList searchActor param: "+searchActor);
+		log.debug("§§§§§§§ getFlimList price param: "+price);
 		
 		Map<String, Object> paramMap = new HashMap<>();
 		
 		int beginRow = (currentPage-1)*rowPerPage;
 		
 		paramMap.put("rowPerPage", rowPerPage);
-		paramMap.put("SearchWord", SearchWord);
+		paramMap.put("searchWord", searchWord);
 		paramMap.put("beginRow", beginRow);
 		paramMap.put("category", category);
 		paramMap.put("rating", rating);
-		paramMap.put("searchWordActor", searchWordActor);
+		paramMap.put("searchActor", searchActor);
+		paramMap.put("price", price);
 		
 		
 		log.debug("§§§§§§§§ paramMap: "+paramMap);
+		
 		//카테고리 리스트
-		List<String> categoryList = this.filMapper.selectCategoryList();
+		List<String> categoryList = this.categoryMapper.selectCategoryList();
 		log.debug("§§§§§§§§§§ categoryList: "+categoryList);
 		
 		//총 페이지 수..에서 lastPage구하기
-		int totalPage = this.filMapper.selectFilmTotal(SearchWord);
+		int totalPage = this.filMapper.selectFilmTotal(paramMap);
+		
 		int lastPage = (int)Math.ceil((double)totalPage/rowPerPage);
 		
 		Map<String, Object> map = new HashMap<>();
+
 		map.put("categoryList", categoryList);
 		map.put("filmList", this.filMapper.selectFilmList(paramMap));
 		map.put("lastPage", lastPage);

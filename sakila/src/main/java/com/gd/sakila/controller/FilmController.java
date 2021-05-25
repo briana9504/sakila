@@ -1,6 +1,7 @@
 package com.gd.sakila.controller;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,22 +43,38 @@ public class FilmController {
 	public String getFilmList(Model model,
 								@RequestParam(value = "currentPage", defaultValue = "1")int currentPage,
 								@RequestParam(value = "rowPerPage", defaultValue = "10")int rowPerPage,
-								@RequestParam(value = "searchWord", required = false)String searchWord,
+								@RequestParam(value = "searchWord", defaultValue = "")String searchWord,
 								@RequestParam(value = "category", defaultValue = "all")String category,
 								@RequestParam(value = "rating", defaultValue = "all")String rating,
-								@RequestParam(value = "searchWordActor", required = false)String searchWordActor) {
+								@RequestParam(value = "searchActor", defaultValue = "")String searchActor,
+								@RequestParam(value = "price", required = false)Double price) {
+		//현재 페이지
 		log.debug("§§§§§§§§§ currentPage param: "+currentPage);
+		//페이지당 게시물 수
 		log.debug("§§§§§§§§§ rowPerPage param: "+rowPerPage);
+		//제목 검색
 		log.debug("§§§§§§§§§ searchWord param: "+searchWord);
+		//카테고리
 		log.debug("§§§§§§§§§ category param: "+category);
+		//영화 등급
 		log.debug("§§§§§§§§§ rating param: "+rating);
-		log.debug("§§§§§§§§§ searchWordActor param: "+searchWordActor);
+		//배우 검색
+		log.debug("§§§§§§§§§ searchActor param: "+searchActor);
+		//가격
+		log.debug("§§§§§§§§§ price param: "+price);
 		
-		Map<String, Object> map =this.filmService.getFilmList(currentPage, rowPerPage, searchWord, category, rating, searchWordActor);
+		
+		if(price != null && price == 0) {
+			price = null;
+		}
+
+		Map<String, Object> map =this.filmService.getFilmList(currentPage, rowPerPage, searchWord, category, rating, searchActor, price);
 	
 		log.debug("§§§§§§§§§ 혹안확인확인~!!!!!!!!!!!!! filmList: "+map);
 		
-		model.addAttribute("searchWord", searchWordActor);
+		model.addAttribute("rowPerPage", rowPerPage);
+		model.addAttribute("price", price);
+		model.addAttribute("searchActor", searchActor);
 		model.addAttribute("rating", rating);
 		model.addAttribute("category", category);
 		model.addAttribute("categoryList", map.get("categoryList"));

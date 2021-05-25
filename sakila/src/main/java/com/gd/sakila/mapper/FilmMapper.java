@@ -7,9 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface FilmMapper {
-	List<String> selectCategoryList();
+	List<String> selectPriceList();
+	
 	Map<String, Object> selectFilmOne(int filmId);
 	List<Integer> selectFilmInStock(Map<String, Object> map);
-	int selectFilmTotal(String searchWord);
+	int selectFilmTotal(Map<String, Object> map);
 	List<Map<String, Object>> selectFilmList(Map<String, Object> map);
 }

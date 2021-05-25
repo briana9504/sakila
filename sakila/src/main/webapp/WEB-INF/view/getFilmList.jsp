@@ -7,66 +7,208 @@
 <title>getFilmList</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+let hidden = '${f.description}';
 $(document).ready(function(){
 	console.log('ready!');
 	console.log($('#category').val());
-	
+	/*
 	$('#btn').click(function(){
 		console.log('btn click!')
 		$('#searchWordAction').submit();
 	});
+	*/
 	
-	
+	$('#getListBtn').click(function(){
+		console.log('btn click!')
+		$('#getFilmListAction').submit();
+	});
+	/*
+	//카테고리 선택하는 순간 변경
 	$('#category').change(function(){
 		console.log($('#category').val());
 		$('#categoryAction').submit();
 	});
 	
+	//등급 선택하는 순간 변경
 	$('.rating').change(function(){
 		$('#ratingAction').submit();
 	});
 	
+	//가격선택
+	$('#price').change(function(){
+		console.log($('#price').val());
+		$('#priceAction').submit();
+	});
+	
+	//게시물 수
+	$('#rowPerPage').change(function(){
+		console.log($('#rowPerPage').val());
+		$('#rowPerPageAction').submit();
+	});
+	
+	
+	//등급 체크박스
+	$('#ratingBtn').click(function name() {
+		console.log('checkboxClick!');
+		$('#ratingCheckboxAction').submit();
+	});
+	
+	*/
+	
+	//검색어: 제목, 배우 변경	
 	$('#searchOption').change(function(){
 		console.log($('#searchOption').val());
-		
-		
+	
 		if($('#searchOption').val() == 'title'){
-			$('#searchWordActor').remove()
+			$('#searchActor').remove()
 			console.log('제목');
 			$('#target').append('<input type="text" name="searchWord" id="searchWord">');
 		} else{
 			$('#searchWord').remove()
 			console.log('배우');
-			$('#target').append('<input type="text" name="searchWordActor" id="searchWordActor">');
+			$('#target').append('<input type="text" name="searchActor" id="searchActor">');
 		}
 	});
+	
+
 	
 });
 
 </script>
 </head>
 <body>
-	 <form id="categoryAction" action="${pageContext.request.contextPath}/admin/getFilmList" method="get">
-		<select id="category" name="category">
-			<option value="all">all</option>
-			<c:forEach var="c" items="${categoryList}">
-				<c:if test="${c.equals(category)}">
-					<option selected="selected" value="${c}">${c}</option>
+	
+	
+	<!-- rowPerPage -->
+	
+	
+	<form id="getFilmListAction" action="${pageContext.request.contextPath}/admin/getFilmList" method="get">
+		<div>
+			게시물 수
+			<select id="rowPerPage" name="rowPerPage">
+				<c:forEach begin="10" step="10" end="30" var="r">
+					<c:if test="${r.equals(rowPerPage)}">
+						<option selected="selected" value="${r}">${r}</option>
+					</c:if>
+					<c:if test="${!r.equals(rowPerPage)}">
+						<option value="${r}">${r}</option>
+					</c:if>
+				</c:forEach>
+			</select>
+		</div>
+		
+		
+		<div>
+			카테고리
+			<select id="category" name="category">
+				<option value="all">all</option>
+				<c:forEach var="c" items="${categoryList}">
+					<c:if test="${c.equals(category)}">
+						<option selected="selected" value="${c}">${c}</option>
+					</c:if>
+					<c:if test="${!c.equals(category)}">
+						<option value="${c}">${c}</option>
+					</c:if>
+				</c:forEach>
+			</select>
+		</div>
+		
+		<div>
+			등급
+			<c:if test="${rating.equals('teenager')}">
+				<input type="radio" class="rating" name="rating" value="teenager" checked="checked">청소년 관람 가능
+			</c:if>
+			<c:if test="${!rating.equals('teenager')}">
+				<input type="radio" class="rating" name="rating" value="teenager">청소년 관람 가능
+			</c:if>
+			
+			<c:if test="${rating.equals('adult')}">
+				<input type="radio" class="rating" name="rating" value="adult" checked="checked">청소년 관람 불가
+			</c:if>
+			<c:if test="${!rating.equals('adult')}">
+				<input type="radio" class="rating" name="rating" value="adult">청소년 관람 불가
+			</c:if>
+			
+			<c:if test="${rating.equals('all')}">
+				<input type="radio" class="rating" name="rating" value="all" checked="checked">모두 보기
+			</c:if>
+			<c:if test="${!rating.equals('all')}">
+				<input type="radio" class="rating" name="rating" value="all">모두 보기
+			</c:if>
+		</div>
+	
+		<!--
+			<div>
+				<input type="checkbox" name="rating" value="G">G
+				<input type="checkbox" name="rating" value="PG">PG
+				<input type="checkbox" name="rating" value="PG-13">PG-13
+				<input type="checkbox" name="rating" value="R">R
+				<input type="checkbox" name="rating" value="NC-17">NC-17
+			</div>
+		
+		 -->		
+		
+		<div>
+			가격
+			<select id="price" name="price">
+				<option value="0">all</option>
+				<c:if test="${price == 0.99}">
+					<option value="0.99" selected="selected">0.99</option>
 				</c:if>
-				<option value="${c}">${c}</option>
-			</c:forEach>
-		</select>
+				<c:if test="${price != 0.99}">
+					<option value="0.99">0.99</option>
+				</c:if>
+				
+				<c:if test="${price == 2.99}">
+					<option value="2.99" selected="selected">2.99</option>
+				</c:if>
+				<c:if test="${price != 2.99}">
+					<option value="2.99">2.99</option>
+				</c:if>
+				
+				<c:if test="${price == 4.99}">
+					<option value="4.99" selected="selected">4.99</option>
+				</c:if>
+				<c:if test="${price != 4.99}">
+					<option value="4.99">4.99</option>
+				</c:if>
+			</select>
+		</div>
+		
+		
+		<div>
+			검색
+			<select id="searchOption">
+	    		<option value="title">제목</option>
+	    		<option value="actor">배우</option>
+	    	</select>
+	    	
+	    	<span id="target">
+	    		<input type="text" name="searchWord" id="searchWord">
+	    	</span>
+		</div>
+		
+    	
+		<br>
+		<button type="button" id="getListBtn">검색</button>
 	</form>
 	
+
+	
 	<!-- 등급 -->
+	<!-- 
+	등급
 	<form id="ratingAction" action="${pageContext.request.contextPath}/admin/getFilmList" method="get">
 		<input type="radio" class="rating" name="rating" value="teenager">청소년 관람 가능
 		<input type="radio" class="rating" name="rating" value="adult">청소년 관람 불가
 		<input type="radio" class="rating" name="rating" value="all">모두 보기
 	</form>
+	-->
+	
 	
 	<h1>FilmList</h1>
 	
+	<!-- film List -->
 	<table border="1">
 		<thead>
 			<tr>
@@ -84,53 +226,43 @@ $(document).ready(function(){
 				<tr>
 					<td>${f.category}</td>
 					<td><a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${f.flimId}">${f.title}</a></td>
-					<td>${f.rentalRate}</td>
+					<td>${f.price}</td>
 					<td>${f.length}</td>
 					<td>${f.rating}</td>
+					
+					<!-- ajax 배우면 고치기 -->
 					<td>
-						<c:if test="${f.actors.length()<=30}">
-							${f.actors}
-						</c:if>
-						<c:if test="${f.actors.length()>30}">
-							${f.actors.substring(0,30)}...
-						</c:if>
+						${f.actors}
+
 					</td>
+					<!-- ajax 배우면 고치기 -->
 					<td>
-						<c:if test="${f.description.length()<=50}">
-							${f.description}
-						</c:if>
-						<c:if test="${f.description.length()>50}">
-							${f.description.substring(0,50)}...
-						</c:if>
+						${f.description}
 					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 	
-	<!-- 페이징 -->
-	<ul class="pager">
-        <c:if test="${currentPage > 1}">
-            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}&category=${category}&rating=${rating}">이전</a></li>
-        </c:if>
-        <c:if test="${currentPage < lastPage}">
-            <li class="next"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&searchWord=${searchWord}&category=${category}&rating=${rating}">다음</a></li>
-        </c:if>
-    </ul>
+	<!-- 현재 페이지/ 마지막 페이지 -->
+	<div>
+		${currentPage}/${lastPage}
+	</div>
+	
+	<div>
+		<!-- 페이징 -->
+		<ul class="pager">
+	        <c:if test="${currentPage > 1}">
+            	<li class="previous"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}&category=${category}&rating=${rating}&searchActor=${searchActor}&rowPerPage=${rowPerPage}&price=${price}">이전</a></li>        
+	        </c:if>
+	       
+	        <c:if test="${currentPage < lastPage}">
+            	<li class="next"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&searchWord=${searchWord}&category=${category}&rating=${rating}&searchActor=${searchActor}&rowPerPage=${rowPerPage}&price=${price}">다음</a></li>
+
+	        
+	        </c:if>
+	    </ul>
+    </div>
     
-    <!-- 검색 -->
-    <form id="searchWordAction" action="${pageContext.request.contextPath}/admin/getFilmList" method="get">
-    	<select id="searchOption">
-    		<option value="title">제목</option>
-    		<option value="actor">배우</option>
-    	</select>
-    	
-    	<input type="hidden" name="category" value="${category}">
-    	<span id="target">
-    		<input type="text" name="searchWord" id="searchWord">
-    	</span>
-    	
-    	<button type="button" id="btn">찾기</button>
-    </form>
 </body>
 </html>
