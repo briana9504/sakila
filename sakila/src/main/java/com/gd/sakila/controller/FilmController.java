@@ -22,13 +22,14 @@ public class FilmController {
 	@Autowired
 	FilmService filmService;
 	
+	//영화 상세보기
 	@GetMapping("/getFilmOne")
 	public String getFilmOne(Model model,
 								@RequestParam(value = "filmId", required = true)int filmId) {
 		log.debug("§§§§§§§§§ filmId param: "+filmId);
 		
 		Map<String, Object> map = this.filmService.getFilmOne(filmId);
-		log.debug("●＠＃＠ 확인확인: ", map);
+		log.debug("●＠＃＠ 영화 상세보기 filmOne 확인확인: ", map);
 		
 		//1번 재고량
 		model.addAttribute("countInvetory1",map.get("countInvetory1"));
@@ -38,7 +39,7 @@ public class FilmController {
 		model.addAttribute("filmOne", map.get("filmOne"));
 		return "getFilmOne";
 	}
-	
+	//영화 리스트
 	@GetMapping("/getFilmList")
 	public String getFilmList(Model model,
 								@RequestParam(value = "currentPage", defaultValue = "1")int currentPage,
@@ -67,10 +68,10 @@ public class FilmController {
 		if(price != null && price == 0) {
 			price = null;
 		}
-
+		//service 호출
 		Map<String, Object> map =this.filmService.getFilmList(currentPage, rowPerPage, searchWord, category, rating, searchActor, price);
 	
-		log.debug("§§§§§§§§§ 혹안확인확인~!!!!!!!!!!!!! filmList: "+map);
+		log.debug("§§§§§§§§§ filmList: "+map);
 		
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("price", price);

@@ -17,8 +17,8 @@
 <script>
 let hidden = '${f.description}';
 $(document).ready(function(){
-	console.log('ready!');
-	console.log($('#category').val());
+	//console.log('ready!');
+	//console.log($('#category').val());
 	/*
 	$('#btn').click(function(){
 		console.log('btn click!')
@@ -77,8 +77,6 @@ $(document).ready(function(){
 			$('#target').append('<input type="text" name="searchActor" id="searchActor">');
 		}
 	});
-	
-
 	
 });
 

@@ -47,6 +47,7 @@ public class FilmService {
 		log.debug("§§§§§§§§§§§ filmCount2: " + paramMap2.get("filmCount"));
 		log.debug("§§§§§§§§§§§ row: " + list);
 		
+		//controller로 보낼 값 map에 넣기
 		Map<String, Object> returnMap = new HashMap<>();
 		//1번 스토어 재고량
 		returnMap.put("countInvetory1", paramMap1.get("filmCount"));
@@ -67,19 +68,18 @@ public class FilmService {
 		log.debug("§§§§§§§ getFlimList rating param: "+rating);
 		log.debug("§§§§§§§ getFlimList searchActor param: "+searchActor);
 		log.debug("§§§§§§§ getFlimList price param: "+price);
-		
+		//list와 총 수량 구할 때 보낼 값
 		Map<String, Object> paramMap = new HashMap<>();
 		
 		int beginRow = (currentPage-1)*rowPerPage;
 		
-		paramMap.put("rowPerPage", rowPerPage);
-		paramMap.put("searchWord", searchWord);
-		paramMap.put("beginRow", beginRow);
-		paramMap.put("category", category);
-		paramMap.put("rating", rating);
-		paramMap.put("searchActor", searchActor);
-		paramMap.put("price", price);
-		
+		paramMap.put("rowPerPage", rowPerPage);//한 페이지 당 게시글 수
+		paramMap.put("searchWord", searchWord);//제목 검색어
+		paramMap.put("beginRow", beginRow);//페이지 시작 게시글 번호
+		paramMap.put("category", category);//카테고리
+		paramMap.put("rating", rating);//등급
+		paramMap.put("searchActor", searchActor);//배우 검색
+		paramMap.put("price", price);//가격
 		
 		log.debug("§§§§§§§§ paramMap: "+paramMap);
 		
@@ -87,16 +87,17 @@ public class FilmService {
 		List<String> categoryList = this.categoryMapper.selectCategoryList();
 		log.debug("§§§§§§§§§§ categoryList: "+categoryList);
 		
-		//총 페이지 수..에서 lastPage구하기
+		//총 페이지 수에서 lastPage구하기
 		int totalPage = this.filMapper.selectFilmTotal(paramMap);
 		
 		int lastPage = (int)Math.ceil((double)totalPage/rowPerPage);
 		
+		//controller로 보낼 값들 map에 넣기
 		Map<String, Object> map = new HashMap<>();
 
-		map.put("categoryList", categoryList);
-		map.put("filmList", this.filMapper.selectFilmList(paramMap));
-		map.put("lastPage", lastPage);
+		map.put("categoryList", categoryList);//카테고리 리스트
+		map.put("filmList", this.filMapper.selectFilmList(paramMap));//영화 리스트
+		map.put("lastPage", lastPage);//마지막 페이지
 		return map;
 	}
 }
