@@ -1,7 +1,8 @@
 package com.gd.sakila.controller;
 
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,24 @@ public class FilmController {
 		Map<String, Object> map = this.filmService.getFilmOne(filmId);
 		log.debug("●＠＃＠ 영화 상세보기 filmOne 확인확인: ", map);
 		
+		//Map으로 받으니까 releasYear가 2006-01-01로 표기되는 이슈 -> Date를 포멧해준다.
+		Map<String, Object> filmOne = (Map<String,Object>)map.get("filmOne");
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy");
+		String releaseYear = dtFormat.format(filmOne.get("releaseYear"));
+		
+		log.debug("■■■■■■■■■■■ 개봉년도(releaseYear) :"+releaseYear);
+		
+		//releaseYear
+		model.addAttribute("releaseYear", releaseYear);
 		//1번 재고량
 		model.addAttribute("countInvetory1",map.get("countInvetory1"));
 		//2번 재고량
 		model.addAttribute("countInvetory2", map.get("countInvetory2"));
 		//영화정보 
-		model.addAttribute("filmOne", map.get("filmOne"));
+		model.addAttribute("filmOne", filmOne);
 		return "getFilmOne";
 	}
+	
 	//영화 리스트
 	@GetMapping("/getFilmList")
 	public String getFilmList(Model model,
@@ -78,6 +89,7 @@ public class FilmController {
 	
 		log.debug("§§§§§§§§§ filmList: "+map);
 		
+			
 		model.addAttribute("titleAndDescription",titleAndDescription);
 		model.addAttribute("searchDescription",searchDescription);
 		model.addAttribute("rowPerPage", rowPerPage);

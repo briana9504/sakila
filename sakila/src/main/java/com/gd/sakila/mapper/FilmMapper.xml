@@ -105,7 +105,7 @@
 			</if>
 			
 			<if test="rating.equals('teenager')">
-				AND rating IN('G','PG', 'PG-13')
+				AND rating IN('G','PG','PG-13')
 			</if>
 			
 			<if test="rating.equals('adult')">
