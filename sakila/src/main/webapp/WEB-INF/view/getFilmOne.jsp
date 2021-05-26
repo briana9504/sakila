@@ -15,16 +15,19 @@
 </head>
 <body>
 	<div class="container">
-		<div>
-			<a href="${pageContext.request.contextPath}/">
-				홈
-			</a>
+		<div class="row">
+			<div>
+				<a href="${pageContext.request.contextPath}/">
+					홈
+				</a>
+			</div>
+			<div>
+				<a href="${pageContext.request.contextPath}/admin/getFilmList">
+					영화 리스트
+				</a>
+			</div>
 		</div>
-		<div>
-			<a href="${pageContext.request.contextPath}/admin/getFilmList">
-				영화 리스트
-			</a>
-		</div>
+		
 		<h1>Film One</h1>
 		
 		<table  class="table table-striped">
@@ -38,7 +41,7 @@
 			</tr>
 			<tr>
 				<td>개봉년도</td>
-				<td>${releaseYear}년</td>
+				<td>${releaseYear}</td>
 			</tr>
 			<tr>
 				<td>줄거리</td>
@@ -58,7 +61,12 @@
 			</tr>
 			<tr>
 				<td>출연배우</td>
-				<td>${filmOne.actors}</td>
+				<td>
+					${filmOne.actors}
+					<a href="${pageContext.request.contextPath}/admin/modifyFilmActor?filmId=${filmOne.filmId}">
+						배우추가
+					</a>
+				</td>
 			</tr>
 			<tr>
 				<td>사용언어</td>

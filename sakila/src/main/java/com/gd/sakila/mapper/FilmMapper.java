@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface FilmMapper {
+	//영화 추가할때 배우 목록
+	List<Map<String, Object>> selectActorForFilmActorInsert(int filmId);
 	//영화 상세보기
 	Map<String, Object> selectFilmOne(int filmId);
 	//재고 확인

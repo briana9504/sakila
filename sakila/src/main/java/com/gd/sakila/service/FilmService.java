@@ -21,6 +21,11 @@ public class FilmService {
 	@Autowired
 	FilmMapper filMapper;
 	
+	//영하 추가 배우목록 보기!
+	public List<Map<String, Object>> getActorListForAddFilmActor(int filmId){
+		log.debug("■■■■■■■■■■■■■■■■ filmId param: "+filmId);
+		return this.filMapper.selectActorForFilmActorInsert(filmId);
+	}
 	//film 상세보기 : count 재고량 확인할것임..
 	public Map<String, Object> getFilmOne(int filmId){
 		log.debug("＆＆＆＆＆＆＆＆＆＆＆＆ filmId"+filmId);

@@ -2,13 +2,14 @@ package com.gd.sakila.controller;
 
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,6 +24,24 @@ public class FilmController {
 	@Autowired
 	FilmService filmService;
 	
+	@PostMapping("/modifyFilmActor")
+	public String addFilmActor(@RequestParam(value = "actorId")List<Integer> actorId,
+								@RequestParam(value = "filmId", required = true)int filmId) {
+		log.debug("■■■■■■■■ actorId param: "+actorId);
+		log.debug("■■■■■■■■ filmId param: "+filmId);
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
+	}
+	
+	//영화 배우추가 form으로
+	@GetMapping("/modifyFilmActor")
+	public String addFilmActor(Model model, @RequestParam(value = "filmId", required = true)int filmId) {
+		log.debug("■■■■■■■■■■ filmId param: "+filmId);
+		
+		model.addAttribute("actorList", this.filmService.getActorListForAddFilmActor(filmId));
+		model.addAttribute("filmId", filmId);
+		return "modifyFilmActor";
+	}
+	
 	//영화 상세보기
 	@GetMapping("/getFilmOne")
 	public String getFilmOne(Model model,
@@ -34,7 +53,7 @@ public class FilmController {
 		
 		//Map으로 받으니까 releasYear가 2006-01-01로 표기되는 이슈 -> Date를 포멧해준다.
 		Map<String, Object> filmOne = (Map<String,Object>)map.get("filmOne");
-		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy");
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy년");
 		String releaseYear = dtFormat.format(filmOne.get("releaseYear"));
 		
 		log.debug("■■■■■■■■■■■ 개봉년도(releaseYear) :"+releaseYear);
