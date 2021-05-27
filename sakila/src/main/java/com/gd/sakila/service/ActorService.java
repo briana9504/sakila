@@ -20,7 +20,7 @@ public class ActorService {
 		@Autowired
 		ActorMapper actorMapper;
 		
-		//배우 리스트
+		//배우 리스트   -- > info: 를 어떻게 가공하여 보여주어야 하는가?
 		public Map<String, Object> getActorInfoList(int currentPage, int rowPerPage, String searchWord, String searchFilm){
 			log.debug("■■■■■■■■■■■■■■■ currentPage param:" + currentPage);
 			log.debug("■■■■■■■■■■■■■■■ rowPerPage param:" + rowPerPage);
@@ -42,12 +42,17 @@ public class ActorService {
 			int lastPage = (int)Math.ceil((double)totalRow/rowPerPage);
 			log.debug("■■■■■■■■■■■■■■■ totalRow:" + totalRow);
 			log.debug("■■■■■■■■■■■■■■■ lastPage:" + lastPage);
+
+			List<Map<String, Object>> list = this.actorMapper.selectActorInfoList(paramMap);
+			for(Map<String, Object> map: list) {
 				
+			}
+			
 			Map<String, Object> returnMap = new HashMap<>();
 			
 			
 			returnMap.put("lastPage", lastPage);
-			returnMap.put("actorList", this.actorMapper.selectActorInfoList(paramMap));
+			returnMap.put("actorList", list);
 			
 			return returnMap;
 		}

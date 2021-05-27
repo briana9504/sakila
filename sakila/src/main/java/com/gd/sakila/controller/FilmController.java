@@ -25,21 +25,28 @@ public class FilmController {
 	FilmService filmService;
 	
 	@PostMapping("/modifyFilmActor")
-	public String addFilmActor(@RequestParam(value = "actorId")List<Integer> actorId,
+	public String modifyFilmActor(@RequestParam(value = "actorId", required = false)List<Integer> actorId,
 								@RequestParam(value = "filmId", required = true)int filmId) {
 		log.debug("■■■■■■■■ actorId param: "+actorId);
 		log.debug("■■■■■■■■ filmId param: "+filmId);
+		
+		int row = this.filmService.modifyFilmActor(actorId, filmId);
+		log.debug("■■■■■■■■■■■■ 컨트롤러 확인: "+row);
+		
 		return "redirect:/admin/getFilmOne?filmId="+filmId;
 	}
 	
 	//영화 배우추가 form으로
-	@GetMapping("/modifyFilmActor")
-	public String addFilmActor(Model model, @RequestParam(value = "filmId", required = true)int filmId) {
+	@GetMapping("/getFilmActorListByFilm")
+	public String getFilmActorListByFilm(Model model, @RequestParam(value = "filmId", required = true)int filmId) {
 		log.debug("■■■■■■■■■■ filmId param: "+filmId);
 		
-		model.addAttribute("actorList", this.filmService.getActorListForAddFilmActor(filmId));
+		List<Map<String, Object>> list = this.filmService.getFilmActorListByFilm(filmId);
+		log.debug("■■■■■■■■■■ list size(): "+ list.size());
+		
+		model.addAttribute("actorList", list);
 		model.addAttribute("filmId", filmId);
-		return "modifyFilmActor";
+		return "getFilmActorListByFilm";
 	}
 	
 	//영화 상세보기

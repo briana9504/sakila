@@ -12,11 +12,14 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 let hidden = '${f.description}';
 $(document).ready(function(){
+	
+	let block = $('.block')
+	block.style.display = 'block';
+	
 	//console.log('ready!');
 	//console.log($('#category').val());
 	/*
@@ -83,6 +86,30 @@ $(document).ready(function(){
 			$('#target').append('<input type="text" name="titleAndDescription" id="titleAndDescription">');
 		}
 	});
+	
+	$('.btn').click(function(){
+		console.log('btn click!');
+		//  클릭한 id가져오기
+		let clickedId = $(this).attr("id");
+		console.log(clickedId);
+		alert(clickedId);
+
+		$('.removeActor')[clickedId].replaceWith(<span class="removeActor"></span>);
+		$('.actorTarget')[clickedId].append('${filmList.get(f).actors}');
+		// alert($(".table th").index(this));
+		
+		$.ajax({
+			type: 'get',
+			URL: '/getFilmActorsAndDescription',
+			data: {filmId: clickedId},
+			success:function(jsonData){
+				console.log('성공성공!!');
+			}
+		})
+		
+	});
+	
+	
 	
 });
 
@@ -221,8 +248,6 @@ $(document).ready(function(){
 					<th>price</th>
 					<th>LENGTH</th>
 					<th>rating</th>
-					<th>actors</th>
-					<th>description</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -233,16 +258,6 @@ $(document).ready(function(){
 						<td>${f.price}</td>
 						<td>${f.length}</td>
 						<td>${f.rating}</td>
-						
-						<!-- ajax 배우면 고치기 -->
-						<td>
-							${f.actors}
-	
-						</td>
-						<!-- ajax 배우면 고치기 -->
-						<td>
-							${f.description}
-						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

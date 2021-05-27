@@ -63,7 +63,7 @@
 				<td>출연배우</td>
 				<td>
 					${filmOne.actors}
-					<a href="${pageContext.request.contextPath}/admin/modifyFilmActor?filmId=${filmOne.filmId}">
+					<a href="${pageContext.request.contextPath}/admin/getFilmActorListByFilm?filmId=${filmOne.filmId}">
 						배우추가
 					</a>
 				</td>

@@ -36,6 +36,7 @@ public class ActorController {
 		return "redirect:/admin/getActorList";
 	}
 	
+	//배우 리스트 -> 배우 프로필이 너무 두서없는 이슈...
 	@GetMapping("/getActorList")
 	public String getActorList(Model model,
 								@RequestParam(value = "currentPage", defaultValue = "1")int currentPage,

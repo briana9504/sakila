@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
+	<!-- 
+		나중에 배열 받을때 쓰기....
+		<if test="rating != null">
+			AND f.rating IN
+			
+			<foreach collection="rating" item="rating" open="(" close=")" separator=", ">
+				#{rating}
+			</foreach>
+		</if>
+	
+	 -->
+	 <insert id="insertFilmActors" parameterType="java.util.Map">
+	 	INSERT INTO film_actor(actor_id, film_id) VALUES
+	 	<foreach collection="actorId" item="actorId" separator=", ">
+	 		(#{actorId}, #{filmId})
+	 	</foreach>
+	 </insert>
+	 
+	<delete id="deleteFilmActors" parameterType="int">
+		DELETE FROM film_actor 
+		<where>
+			film_id = #{filmId}
+		</where>
+	</delete>
+	
 	<!-- 배우 추가할때 배우 목록 보기 -->
-	<select id="selectActorForFilmActorInsert" parameterType="int" resultType="java.util.Map">
+	<select id="selectFilmActorListByFilm" parameterType="int" resultType="java.util.Map">
 		SELECT a.actor_id actorId, CONCAT(a.first_name,' ', a.last_name) name,
-				 CASE WHEN t.actor_id IS NULL then 'X' ELSE 'O' END ck 
+				 CASE WHEN t.actor_id IS NULL then 'X' ELSE 'O' END ck,
+				 film_id filmId
 		FROM actor a 
 			LEFT JOIN (SELECT * FROM film_actor where film_id = #{filmId}) t 
 			ON a.actor_id = t.actor_id
-		ORDER BY a.first_name
+		ORDER BY a.first_name ASC
 	</select>
 	
 	<!-- 영화 상세보기 -->
@@ -69,27 +95,16 @@
 			</if>	
 		</where>
 	</select>
-	<!-- 
-		나중에 배열 받을때 쓰기....
-		<if test="rating != null">
-			AND f.rating IN
-			
-			<foreach collection="rating" item="rating" open="(" close=")" separator=", ">
-				#{rating}
-			</foreach>
-		</if>
 	
-	 -->
+	
 	<!-- 영화목록 구하기 -->
 	<select id="selectFilmList" resultType="java.util.Map" parameterType="java.util.Map">
 		SELECT
 			FID flimId,
 			title title,
-			description description,
 			rating rating, 
 			length length, 
-			price price, 
-			actors actors, 
+			price price,
 			category category
 		FROM nicer_but_slower_film_list 
 		

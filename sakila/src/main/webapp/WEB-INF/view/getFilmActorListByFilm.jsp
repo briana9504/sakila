@@ -23,30 +23,39 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-	<h1>addFilmActor</h1>
-	
-	<form id="addFilmAction" action="${pageContext.request.contextPath}/admin/modifyFilmActor" method="post">
-		<input type="hidden" name="filmId" value="${filmId}">
-		<table border="1">
-			<tbody>
-				<c:forEach items="${actorList}" var="a">
-					<tr>
-						<td>
-							${a.name}
-							<c:if test="${a.ck == 'X'}">
-								<input type="checkbox" name="actorId" value="${a.actorId}">
-							</c:if>
-							
-							<c:if test="${a.ck == 'O'}">
-								<input type="checkbox" name="actorId" checked="checked" value="${a.actorId}">
-							</c:if>
-						</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+	<div class="container">
+
+		<h1>(${filmId} 번)영화 출연자 수정</h1>
 		
-		<button id="btn" type="button">배우추가</button>
-	</form>
+		<form id="addFilmAction" action="${pageContext.request.contextPath}/admin/modifyFilmActor" method="post">
+		<div>
+			<button id="btn" type="button">출연진 추가</button>
+		</div>
+			
+			<input type="hidden" name="filmId" value="${filmId}" readonly="readonly">
+			
+			<h3>A</h3>
+			
+			<c:forEach var="i" begin="0" end="${actorList.size()-1}" step="1">
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<span style="color:red;">${actorList.get(i).name.substring(0,1)}</span><span>${actorList.get(i).name.substring(1)}</span>	
+								
+				<c:if test="${actorList.get(i).ck == 'X'}">
+					<input type="checkbox" name="actorId" value="${actorList.get(i).actorId}">
+				</c:if>
+				
+				<c:if test="${actorList.get(i).ck == 'O'}">
+					<input type="checkbox" name="actorId" checked="checked" value="${actorList.get(i).actorId}">
+				</c:if>
+			
+				<c:if test="${(i!=0) && actorList.get(i).name.substring(0,1) != actorList.get(i+1).name.substring(0,1)}">
+					<div></div>
+					<h3>${actorList.get(i+1).name.substring(0,1)}</h3>
+					<div></div>
+				</c:if>
+			</c:forEach>
+			
+		</form>
+	</div>
 </body>
 </html>
