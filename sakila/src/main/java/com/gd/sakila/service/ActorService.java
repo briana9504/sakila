@@ -44,9 +44,15 @@ public class ActorService {
 			log.debug("■■■■■■■■■■■■■■■ lastPage:" + lastPage);
 
 			List<Map<String, Object>> list = this.actorMapper.selectActorInfoList(paramMap);
+			
+			/*
+			 * 고민하기! info 깔끔하게 보게하는 방법 고민!
+			 * 
 			for(Map<String, Object> map: list) {
-				
+				map.get("actorInfo");
 			}
+			
+			*/
 			
 			Map<String, Object> returnMap = new HashMap<>();
 			

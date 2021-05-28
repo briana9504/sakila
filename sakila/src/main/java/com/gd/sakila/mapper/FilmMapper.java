@@ -5,8 +5,13 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.gd.sakila.vo.Film;
+
 @Mapper
 public interface FilmMapper {
+	int insertFilmCategory(Map<String, Object> map);
+	
+	int insertFilm(Film film);
 	//여러행 추가
 	int insertFilmActors(Map<String, Object> map);
 	//여러행 삭제

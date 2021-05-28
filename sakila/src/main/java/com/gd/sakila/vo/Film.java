@@ -7,14 +7,16 @@ public class Film {
 	private int filmId;
 	private String title;
 	private String description;
-	private String release_year;
-	private int language_id;
-	private int original_language_id;
-	private int rental_duration;
-	private double rental_rate;
+	private String releaseYear;
+	private int languageId;
+	private int originalLanguageId;
+	private int rentalDuration;
+	private double rentalRate;
 	private int length;
-	private double replacement_cost;
-	private String rating;
-	private String special_features;
-	private String last_update;
+	private double replacementCost;
+	private String rating;//'G','PG','PG-13','R','NC-17'
+	private String specialFeatures;//'Trailers','Commentaries','Deleted Scenes','Behind the Scenes'
+	private String lastUpdate;
+
+	
 }

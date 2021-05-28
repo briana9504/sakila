@@ -7,6 +7,8 @@
 <title>getActorList</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
+<!-- bootstrap을 사용하기 위한 CDN주소 -->
+<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -17,6 +19,8 @@
 <script>
 $(document).ready(function(){
 	console.log('ready!');
+
+	
 	
 	$('#btn').click(function(){
 		console.log('btn.click!')
@@ -60,6 +64,7 @@ $(document).ready(function(){
 				<c:forEach items="${actorList}" var="a">
 					<tr>
 						<td>${a.name}</td>
+						<!-- filmInfo 깔끔하게 보는방법? -->
 						<td>${a.filmInfo}</td>
 					</tr>
 				</c:forEach>

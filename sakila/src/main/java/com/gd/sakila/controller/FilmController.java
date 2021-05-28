@@ -13,7 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gd.sakila.mapper.LanguageMapper;
+import com.gd.sakila.service.CategoryService;
 import com.gd.sakila.service.FilmService;
+import com.gd.sakila.service.LanguageService;
+import com.gd.sakila.vo.Category;
+import com.gd.sakila.vo.FilmForm;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,8 +28,27 @@ import lombok.extern.slf4j.Slf4j;
 public class FilmController {
 	@Autowired
 	FilmService filmService;
+	@Autowired
+	CategoryService categoryServce;
+	@Autowired
+	LanguageService languageService;
 	
-	@PostMapping("/modifyFilmActor")
+	@GetMapping("/addFilm")//영화 추가 폼으로 연결 ->필요한 것 categoryList, languageList
+	public String addFilm(Model model) {
+		
+		model.addAttribute("categoryList", this.categoryServce.getCategoryList());
+		model.addAttribute("languageList", this.languageService.getLanguageList());
+		return "addFilm";
+	}
+	
+	@PostMapping("/addFilm") //영화 추가 form 에서 받음
+	public String addFilm(FilmForm filmForm) {
+		log.debug("■■■■■■■■■■■■■■■■ filmForm param:"+filmForm);
+		int filmId = this.filmService.addFilm(filmForm);
+		return "redirect:/admin/getFilmOne?filmId="+ filmId;
+	}
+	
+	@PostMapping("/modifyFilmActor") //영화 출연 배우 수정
 	public String modifyFilmActor(@RequestParam(value = "actorId", required = false)List<Integer> actorId,
 								@RequestParam(value = "filmId", required = true)int filmId) {
 		log.debug("■■■■■■■■ actorId param: "+actorId);
@@ -58,15 +82,8 @@ public class FilmController {
 		Map<String, Object> map = this.filmService.getFilmOne(filmId);
 		log.debug("●＠＃＠ 영화 상세보기 filmOne 확인확인: ", map);
 		
-		//Map으로 받으니까 releasYear가 2006-01-01로 표기되는 이슈 -> Date를 포멧해준다.
 		Map<String, Object> filmOne = (Map<String,Object>)map.get("filmOne");
-		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy년");
-		String releaseYear = dtFormat.format(filmOne.get("releaseYear"));
-		
-		log.debug("■■■■■■■■■■■ 개봉년도(releaseYear) :"+releaseYear);
-		
-		//releaseYear
-		model.addAttribute("releaseYear", releaseYear);
+
 		//1번 재고량
 		model.addAttribute("countInvetory1",map.get("countInvetory1"));
 		//2번 재고량
@@ -123,7 +140,7 @@ public class FilmController {
 		model.addAttribute("searchActor", searchActor);
 		model.addAttribute("rating", rating);
 		model.addAttribute("category", category);
-		model.addAttribute("categoryList", map.get("categoryList"));
+		model.addAttribute("categoryList", this.categoryServce.getCategoryList());
 		model.addAttribute("filmList", map.get("filmList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("searchWord", searchWord);

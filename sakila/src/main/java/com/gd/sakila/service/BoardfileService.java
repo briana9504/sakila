@@ -26,7 +26,7 @@ public class BoardfileService {
 	@Autowired
 	BoardMapper boardMapper;
 	
-	
+	//파일 입력
 	public int addBoardfile(MultipartFile multipartFile, int boardId) {
 		//1)db입력
 		

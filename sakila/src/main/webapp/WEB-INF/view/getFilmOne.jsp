@@ -41,7 +41,7 @@
 			</tr>
 			<tr>
 				<td>개봉년도</td>
-				<td>${releaseYear}</td>
+				<td>${filmOne.releaseYear}</td>
 			</tr>
 			<tr>
 				<td>줄거리</td>

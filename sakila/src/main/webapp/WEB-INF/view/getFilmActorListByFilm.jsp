@@ -34,6 +34,27 @@ $(document).ready(function(){
 			
 			<input type="hidden" name="filmId" value="${filmId}" readonly="readonly">
 			
+			<c:forEach var="m" items="${actorList}">
+				&nbsp;
+				<!-- 첫문자로 그룹핑하여 보여줌 -->
+				<c:if test="${preFirstStr != m.name.substring(0, 1)}">
+					<c:set var="preFirstStr" value="${m.name.substring(0, 1)}"/>
+					<hr>
+					<div><span class="text-danger">${m.name.substring(0, 1)}</span></div>
+				</c:if>
+				
+				<span>${m.name.substring(0, 1)}</span>${m.name.substring(1)}&nbsp;
+				
+				<c:if test="${m.ck == 'X'}">
+					<input type="checkbox" name="actorId" value="${m.actorId}">
+				</c:if>
+				<c:if test="${m.ck == 'O'}">
+					<input type="checkbox" name="actorId" checked="checked" value="${m.actorId}">
+				</c:if>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+			</c:forEach>
+			
+			<!-- 
 			<h3>A</h3>
 			
 			<c:forEach var="i" begin="0" end="${actorList.size()-1}" step="1">
@@ -54,7 +75,7 @@ $(document).ready(function(){
 					<div></div>
 				</c:if>
 			</c:forEach>
-			
+			-->
 		</form>
 	</div>
 </body>

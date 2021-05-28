@@ -17,18 +17,6 @@
 let hidden = '${f.description}';
 $(document).ready(function(){
 	
-	let block = $('.block')
-	block.style.display = 'block';
-	
-	//console.log('ready!');
-	//console.log($('#category').val());
-	/*
-	$('#btn').click(function(){
-		console.log('btn click!')
-		$('#searchWordAction').submit();
-	});
-	*/
-	
 	$('#getListBtn').click(function(){
 		console.log('btn click!')
 		$('#getFilmListAction').submit();
@@ -87,28 +75,14 @@ $(document).ready(function(){
 		}
 	});
 	
+	/*
 	$('.btn').click(function(){
 		console.log('btn click!');
 		//  클릭한 id가져오기
-		let clickedId = $(this).attr("id");
-		console.log(clickedId);
-		alert(clickedId);
-
-		$('.removeActor')[clickedId].replaceWith(<span class="removeActor"></span>);
-		$('.actorTarget')[clickedId].append('${filmList.get(f).actors}');
-		// alert($(".table th").index(this));
-		
-		$.ajax({
-			type: 'get',
-			URL: '/getFilmActorsAndDescription',
-			data: {filmId: clickedId},
-			success:function(jsonData){
-				console.log('성공성공!!');
-			}
-		})
-		
+		let clickedId = $(this).attr("id"); -> 클릭한 버튼의 id 가져오기
+		})	
 	});
-	
+	*/
 	
 	
 });
@@ -145,11 +119,11 @@ $(document).ready(function(){
 				<select id="category" name="category">
 					<option value="all">all</option>
 					<c:forEach var="c" items="${categoryList}">
-						<c:if test="${c.equals(category)}">
-							<option selected="selected" value="${c}">${c}</option>
+						<c:if test="${(c.name).equals(category)}">
+							<option selected="selected" value="${c.name}">${c.name}</option>
 						</c:if>
-						<c:if test="${!c.equals(category)}">
-							<option value="${c}">${c}</option>
+						<c:if test="${!(c.name).equals(category)}">
+							<option value="${c.name}">${c.name}</option>
 						</c:if>
 					</c:forEach>
 				</select>
@@ -280,6 +254,13 @@ $(document).ready(function(){
 		        </c:if>
 		    </ul>
 	    </div>
+	    
+	    
+	    <!-- 영화 추가 버튼 -->
+	    <div>
+	    	<a href="${pageContext.request.contextPath}/admin/addFilm">영화추가</a>
+	    </div>
+	    
     </div>
     
 </body>

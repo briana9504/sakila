@@ -10,6 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CategoryMapper;
 import com.gd.sakila.mapper.FilmMapper;
+import com.gd.sakila.mapper.LanguageMapper;
+import com.gd.sakila.vo.Category;
+import com.gd.sakila.vo.Film;
+import com.gd.sakila.vo.FilmForm;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -20,6 +24,22 @@ public class FilmService {
 	CategoryMapper categoryMapper;
 	@Autowired
 	FilmMapper filmMapper;
+
+
+	//영화 추가 => param: film입력폼, return: 입력된 filmId값 리턴
+	public int addFilm(FilmForm filmForm) {//참조타입은 필드명과 named 같으면 맵핑, 기본(값)타입 매개변수의 이름과 name이 같으면 맵핑 setFilmId
+		log.debug("■■■■■■■■■■■ filmForm param: "+ filmForm);
+		
+		Film film = filmForm.getFilm();
+		this.filmMapper.insertFilm(film);// insert 후 film.setFilmId(생성된 값)호출
+		Map<String, Object> map = new HashMap<>();
+		map.put("categoryId", filmForm.getCategory().getCategoryId());
+		map.put("filmId", film.getFilmId());
+		
+		this.filmMapper.insertFilmCategory(map);
+		
+		return film.getFilmId();
+	}
 	
 	// 영화 출연배우 수정
 	public int modifyFilmActor(List<Integer> actorId, int filmId) {
@@ -117,10 +137,6 @@ public class FilmService {
 		
 		log.debug("§§§§§§§§ paramMap: "+paramMap);
 		
-		//카테고리 리스트
-		List<String> categoryList = this.categoryMapper.selectCategoryList();
-		log.debug("■■■■■■■■■■■■■■■■ categoryList: "+categoryList);
-		
 		//총 페이지 수에서 lastPage구하기
 		int totalPage = this.filmMapper.selectFilmTotal(paramMap);
 		
@@ -129,7 +145,6 @@ public class FilmService {
 		//controller로 보낼 값들 map에 넣기
 		Map<String, Object> map = new HashMap<>();
 
-		map.put("categoryList", categoryList);//카테고리 리스트
 		map.put("filmList", this.filmMapper.selectFilmList(paramMap));//영화 리스트
 		map.put("lastPage", lastPage);//마지막 페이지
 		return map;
