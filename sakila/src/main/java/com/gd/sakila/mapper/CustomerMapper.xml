@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
+
+	<!-- 전체 고객 수 -->
+	<select id="selectCustomerTotal" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(*) FROM customer_list
+		<where>
+			<if test="!searchName.equals('')">
+				AND name LIKE CONCAT('%',#{searchName} ,'%')
+			</if>
+			<if test="!searchPhone.equals('')">
+				AND phone LIKE CONCAT('%',#{searchPhone} ,'%')
+			</if>
+			<if test="!storeId.equals('')">
+				AND SID = #{storeId}
+			</if>
+		</where>
+	</select>
+	<!--  고객 리스트 -->
+	<select id="selectCustomerList" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT ID id,
+			 NAME name, 
+			 phone phone, 
+			 SID storeId 
+		FROM customer_list
+		<where>
+			<if test="!searchName.equals('')">
+				AND name LIKE CONCAT('%',#{searchName} ,'%')
+			</if>
+			<if test="!searchPhone.equals('')">
+				AND phone LIKE CONCAT('%',#{searchPhone} ,'%')
+			</if>
+			<if test="!storeId.equals('')">
+				AND SID = #{storeId}
+			</if>
+		</where>
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
 	<!-- 기간마다 고객의 액티브를 변경 -->
 	<!-- 
 		UPDATE customer set active = 0
