@@ -1,5 +1,6 @@
 package com.gd.sakila.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gd.sakila.service.CountryService;
 import com.gd.sakila.service.CustomerService;
+import com.gd.sakila.service.PaymentService;
+import com.gd.sakila.vo.Country;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +23,38 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerController {
 	@Autowired
 	CustomerService customerService;
+	@Autowired
+	PaymentService paymentService;
+	@Autowired
+	CountryService countryService;
+	
+	@GetMapping("/addCustomer")
+	public String addCustomer(Model model) {
+		
+		//나라별 목록
+		List<Country> list =  this.countryService.getCountryList();
+		log.debug("■■■■■■ countryList: "+list);
+		
+		model.addAttribute("countryList", list);
+		return "addCustomer";
+	}
+	
+	@GetMapping("/getCustomerOne")
+	public String getCustomerOne(Model model, @RequestParam(value = "customerId", required = true)int customerId) {
+		log.debug("■■■■■■■■■■■■■■■■■■ customerId: "+customerId);
+		
+		Map<String, Object> map = this.customerService.getCustomerOne(customerId);
+		log.debug("■■■■■■■■■■■ map: " + map);
+		
+		//총 구매금액
+		double totalPayment = this.paymentService.getPaymentByCustomer(customerId);
+		log.debug("totalPayment" + totalPayment);
+		
+		model.addAttribute("customerOne" , map.get("customerOne"));
+		model.addAttribute("rentalList", map.get("rentalList"));
+		model.addAttribute("totalPayment", totalPayment);
+		return "getCustomerOne";
+	}
 	
 	@GetMapping("/getCustomerList")
 	public String getCustomerList(Model model,

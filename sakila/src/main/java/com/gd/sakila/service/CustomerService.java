@@ -18,6 +18,20 @@ public class CustomerService {
 	@Autowired
 	CustomerMapper customerMapper;
 	
+	//고객 상세보기+고객 대여목록 보기
+	public Map<String, Object> getCustomerOne(int customerId){
+		log.debug("■■■■■■■■■■■■■ customerId: " + customerId);
+		
+		Map<String, Object> map = new HashMap<>();
+		//customerOne
+		map.put("customerOne", this.customerMapper.selectCustomerOne(customerId));
+		//고객 대여 목록보기
+		map.put("rentalList", this.customerMapper.selectRentalListByCustomer(customerId));
+		
+		log.debug("■■■■■■■■■■■■■■■■ map: "+ map);
+		return map;
+	}
+	
 	public Map<String, Object> getCustomerList(int currentPage, int rowPerPage, String searchName, String searchPhone, String storeId) {
 		log.debug("■■■■■■■■■■■ currentPage param: "+ currentPage);
 		log.debug("■■■■■■■■■■■ rowPerPage param: "+ rowPerPage);

@@ -29,12 +29,18 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+
+	<div>
+		<a href="${pageContext.request.contextPath}/admin/addCustomer">고객추가</a>
+	</div>
+	
+	<h1>getCustomerList</h1>
+	
 	<div>
 		<a href="${pageContext.request.contextPath}/admin/getCustomerList">전체</a>
 		<a href="${pageContext.request.contextPath}/admin/getCustomerList?storeId=1">1호점</a>
 		<a href="${pageContext.request.contextPath}/admin/getCustomerList?storeId=2">2호점</a>
 	</div>
-	<h1>getCustomerList</h1>
 	
 	<table border="1">
 		<thead>
@@ -42,14 +48,16 @@ $(document).ready(function(){
 				<th>store id</th>
 				<th>name</th>
 				<th>phone</th>
+				<th>black&vip</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${customerList}" var="c">
 				<tr>
 					<td>${c.storeId}</td>
-					<td>${c.name}</td>
+					<td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${c.customerId}">${c.name}</a></td>
 					<td>${c.phone}</td>
+					<td>${c.blackAndVip}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
