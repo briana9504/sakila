@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.PaymentMapper">
+	<insert id="insertPayment" parameterType="com.gd.sakila.vo.Payment">
+		INSERT INTO payment(customer_id, staff_id, rental_id, amount)
+		 VALUES(#{customerId}, #{staffId}, #{rentalId}, #{amount})
+	</insert>
+
 	<!-- 고객의 총 구매금액 -->
-	<select id="selectPaymentByCustomer" resultType="DOUBLE" parameterType="int">
+	<select id="selectPaymentByCustomer" resultType="Double" parameterType="int">
 		SELECT SUM(amount)
      			 FROM payment
      			 WHERE customer_id = #{customerId}

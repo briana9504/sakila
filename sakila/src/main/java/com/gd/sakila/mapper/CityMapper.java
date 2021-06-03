@@ -8,5 +8,6 @@ import com.gd.sakila.vo.City;
 
 @Mapper
 public interface CityMapper {
+	int insertCity(City city);
 	List<City> selectCity(int countryId);
 }

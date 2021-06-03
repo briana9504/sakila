@@ -18,6 +18,14 @@ public class CityService {
 	@Autowired
 	CityMapper cityMapper;
 	
+	//도시추가
+	public void addCity(City city) {
+		log.debug("■■■■■■■ city: "+city);
+		
+		int row = this.cityMapper.insertCity(city);
+		log.debug("■■■■■■■ 성공(1), 실패(0): " +row);
+	}
+	
 	public List<City> getCityList(int countryId){
 		log.debug("countryId"+ countryId);
 		

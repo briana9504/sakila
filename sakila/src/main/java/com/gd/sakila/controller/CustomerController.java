@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,6 +15,7 @@ import com.gd.sakila.service.CountryService;
 import com.gd.sakila.service.CustomerService;
 import com.gd.sakila.service.PaymentService;
 import com.gd.sakila.vo.Country;
+import com.gd.sakila.vo.CustomerForm;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +29,14 @@ public class CustomerController {
 	PaymentService paymentService;
 	@Autowired
 	CountryService countryService;
+	
+	@PostMapping("/addCustomer")
+	public String addCustomer(CustomerForm customerForm) {
+		log.debug("■■■■■■■■■■■■■■ customerForm param: " + customerForm);
+		
+		int customerId = this.customerService.addCustomer(customerForm);
+		return "redirect:/admin/getCustomerOne?customerId=" + customerId;
+	}
 	
 	@GetMapping("/addCustomer")
 	public String addCustomer(Model model) {
@@ -47,7 +57,7 @@ public class CustomerController {
 		log.debug("■■■■■■■■■■■ map: " + map);
 		
 		//총 구매금액
-		double totalPayment = this.paymentService.getPaymentByCustomer(customerId);
+		Double totalPayment = this.paymentService.getPaymentByCustomer(customerId);
 		log.debug("totalPayment" + totalPayment);
 		
 		model.addAttribute("customerOne" , map.get("customerOne"));

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.InventoryMapper">
+
+	<select id="selectInventoryTotal" parameterType="String" resultType="int">
+		SELECT 
+		   COUNT(*)
+		FROM inventory i, film f 
+		<where>
+			i.film_id=f.film_id
+			<if test="!searchWord.equals('')">
+				AND f.title LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!--  인벤토리 리스트 만들기!: 대여현황, 대여중인 손님 id -->
+	<select id="selectInventoryList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+		   i.inventory_id inventoryId, 
+		   i.store_id storeId, 
+		   f.title title, 
+		   case when inventory_held_by_customer (i.inventory_id) IS NOT null
+		         then '대여중'
+		         ELSE '재고있음'
+		   END 'stockStatus',
+		   inventory_held_by_customer (i.inventory_id) AS customerId 
+		FROM inventory i, film f 
+		<where>
+			i.film_id=f.film_id
+			<if test="!searchWord.equals('')">
+				AND f.title LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<select id="selectInventoryByRental" parameterType="int" resultType="java.util.Map">
+		SELECT 
+			inventory_in_stock(#{inventoryId}) AS state,
+			i.inventory_id inventoryId,
+			f.title title, 
+			f.rating rating,
+			f.rental_rate rentalRate,
+			f.rental_duration rentalDuration
+		FROM inventory i 
+			INNER JOIN film f ON i.film_id=f.film_id 
+		WHERE i.inventory_id= #{inventoryId}
+	</select>
+</mapper>

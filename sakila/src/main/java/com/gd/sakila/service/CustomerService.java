@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gd.sakila.mapper.AddressMapper;
 import com.gd.sakila.mapper.CustomerMapper;
+import com.gd.sakila.vo.Address;
+import com.gd.sakila.vo.Customer;
+import com.gd.sakila.vo.CustomerForm;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -17,7 +21,26 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerService {
 	@Autowired
 	CustomerMapper customerMapper;
-	
+	@Autowired
+	AddressMapper addressMapper;
+
+	//손님 등록하기 + address 등록
+	public int addCustomer(CustomerForm customerForm) {
+		log.debug("■■■■■■■■■■■■ customerFrom: "+customerForm);
+		
+		Address address = customerForm.getAddress();
+		Customer customer = customerForm.getCustomer();
+		//주소를 등록하고 addressId를 받음
+		this.addressMapper.insertAddressByCustomer(address);
+		
+		//받은 addressId를 customer에 넣어줌
+		customer.setAddressId(address.getAddressId());
+		
+		int row = this.customerMapper.insertCustomer(customer);
+		log.debug("■■■■■■■■■■■■■ 성공1, 실패0: " +row);
+		
+		return customer.getCustomerId();
+	}
 	//고객 상세보기+고객 대여목록 보기
 	public Map<String, Object> getCustomerOne(int customerId){
 		log.debug("■■■■■■■■■■■■■ customerId: " + customerId);

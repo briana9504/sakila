@@ -45,12 +45,12 @@ $(document).ready(function() {
 	</c:if>
 	<!-- 로그인 안되었을때...-->
 	<c:if test="${loginStaff != null}">
-	
 		<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
 		<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a>
 		<a href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>		
 		<a href="${pageContext.request.contextPath}/admin/getActorList">배우목록</a>		
-		<a href="${pageContext.request.contextPath}/admin/getCustomerList">손님목록</a>		
+		<a href="${pageContext.request.contextPath}/admin/getCustomerList">손님목록</a>
+		<a href="${pageContext.request.contextPath}/admin/getInventoryList">재고목록</a>	
 		<a href="${pageContext.request.contextPath}/admin/logout">로그아웃</a>
 		<!-- 로그인 화면 넣을것임... -->
 	

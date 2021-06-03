@@ -6,6 +6,6 @@ import lombok.Data;
 public class City {
 	private int cityId;
 	private String city;
-	private String countryId;
+	private int countryId;
 	private String lastUpdate;
 }

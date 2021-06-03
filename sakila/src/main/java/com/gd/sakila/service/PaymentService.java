@@ -16,7 +16,7 @@ public class PaymentService {
 	PaymentMapper paymentMapper;
 	
 	//고객 총 구매금액
-	public double getPaymentByCustomer(int customerId) {
+	public Double getPaymentByCustomer(int customerId) {
 		log.debug("customerId: "+customerId);
 		
 		return this.paymentMapper.selectPaymentByCustomer(customerId);

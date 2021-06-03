@@ -5,6 +5,70 @@
 <head>
 <meta charset="UTF-8">
 <title>getCustomerOne</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	console.log('hello!');
+	
+	$('#btn').click(function(){
+		console.log('click!');
+		
+		let checkId = prompt("대여할 책의 inventory id를 입력하시오.");
+		$.ajax({
+			type: 'get',
+			url: '/getInventoryByRental',
+			data: {inventoryId : checkId},
+			success: function(jsonData){
+				console.log('성공');
+				let inventoryId = jsonData.inventoryId;
+				let rating = jsonData.rating;
+				let title = jsonData.title;
+				let rentalRate = jsonData.rentalRate;
+				let rentalDuration = jsonData.rentalDuration;
+				let state = jsonData.state;
+				
+				console.log(inventoryId);
+				console.log(rating);
+				console.log(title);
+				console.log(rentalRate);
+				console.log(rentalDuration);
+				console.log(state);
+				
+				if(state == false){
+					alert(inventoryId+'번 '+title+'는 이미 대여중입니다.');
+					return;
+				}
+				
+				//성인 영화면 손님이 성인인지 확인
+				if(rating == 'NC-17' || rating == 'R'){
+					let checkedAge = confirm('손님의 나이가 성인입니까?')
+					
+					console.log(checkedAge);
+					if(checkedAge == false){ //성인이 아니라고 대답한 경우
+						alert('손님은 이 영화를 빌려 보실 수 없습니다.');
+						return;
+					}
+				}
+				
+				let checked = confirm('영화 ' +title + '를 빌려보시곘습니까?\n가격은 ' +rentalRate+'$ 이고, 기간은 '+ rentalDuration+'일 입니다.');
+				
+				if(checked){
+					console.log('영화 빌리기 gogo'); // 또 ajax 기술써서 영화 빌리로 가기!
+					
+					$.ajax({
+						type: 'get',
+						url: '/addRental',
+						data: {inventoryId: inventoryId, customerId: $('#customerId').text(), rentalRate: rentalRate},
+						success: function(jsonData){
+							location.reload();// 페이지 새로고침
+						}
+					});	
+				}	
+			}	
+		});		
+	})
+});
+</script>
 </head>
 <body>
 	<h1>고객 상세정보</h1>
@@ -12,7 +76,7 @@
 	<table border="1">
 		<tr>
 			<th>회원번호</th>
-			<td>${customerOne.customerId}</td>
+			<td><span id="customerId">${customerOne.customerId}</span></td>
 		</tr>
 		<tr>
 			<th>지점</th>
@@ -68,7 +132,7 @@
 		</tr>
 	</table>
 	
-	<h3>대여 목록</h3>
+	<h3>대여 목록</h3> <button id="btn">대여</button>
 	<table border="1">
 		<thead>
 			<tr>
