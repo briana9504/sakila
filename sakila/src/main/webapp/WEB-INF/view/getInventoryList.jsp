@@ -16,26 +16,45 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+	<a href="${pageContext.request.contextPath}/admin/addInventory">재고추가</a>
+	<a href="${pageContext.request.contextPath}/admin/removeInventory">재고삭제</a>
+
 	<h1>재고리스트</h1>
 	
 	<table border="1">
 		<thead>
 			<tr>
-				<th>inventory_id</th>
-				<th>store_id</th>
+				<th>ID</th>
 				<th>title</th>
-				<th>재고현황</th>
-				<th>대여중인 고객ID</th>
+				<th>1호점 재고</th>
+				<th>2호점 재고</th>
+				<th>전체 재고</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${inventoryList}" var="i">
 				<tr>
-					<td>${i.inventoryId}</td>
-					<td>${i.storeId}</td>
+					<td>${i.filmId}</td>
 					<td>${i.title}</td>
-					<td>${i.stockStatus}</td>
-					<td>${i.customerId}</td>
+					<td>
+						<c:if test="${i.store1 == null}">
+							0
+						</c:if>
+						${i.store1}
+					</td>
+						
+					<td>
+						<c:if test="${i.store2 == null}">
+							0
+						</c:if>
+						${i.store2}
+					</td>
+					<td>
+						<c:if test="${i.totalStock == null}">
+							0
+						</c:if>
+						${i.totalStock}
+					</td>
 				</tr>
 			</c:forEach>	
 		</tbody>

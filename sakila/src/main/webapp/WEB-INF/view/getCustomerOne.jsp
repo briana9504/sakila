@@ -10,22 +10,24 @@
 $(document).ready(function(){
 	console.log('hello!');
 	
+	//대여하기 버튼 click!
 	$('#btn').click(function(){
 		console.log('click!');
 		
 		let checkId = prompt("대여할 책의 inventory id를 입력하시오.");
+		//대여 할 책의 정보 가져오기!
 		$.ajax({
 			type: 'get',
 			url: '/getInventoryByRental',
 			data: {inventoryId : checkId},
 			success: function(jsonData){
 				console.log('성공');
-				let inventoryId = jsonData.inventoryId;
-				let rating = jsonData.rating;
-				let title = jsonData.title;
-				let rentalRate = jsonData.rentalRate;
-				let rentalDuration = jsonData.rentalDuration;
-				let state = jsonData.state;
+				let inventoryId = jsonData.inventoryId; //책의 인벤토리 번호
+				let rating = jsonData.rating;//책의 등급
+				let title = jsonData.title;//제목
+				let rentalRate = jsonData.rentalRate;//가격
+				let rentalDuration = jsonData.rentalDuration;//기간
+				let state = jsonData.state;//빌리는 중인지 상태
 				
 				console.log(inventoryId);
 				console.log(rating);
@@ -34,6 +36,7 @@ $(document).ready(function(){
 				console.log(rentalDuration);
 				console.log(state);
 				
+				//대여중인 책이면 대여 못한다고 경고창
 				if(state == false){
 					alert(inventoryId+'번 '+title+'는 이미 대여중입니다.');
 					return;
@@ -49,9 +52,9 @@ $(document).ready(function(){
 						return;
 					}
 				}
-				
+				//영화 빌릴건지 마지막 확인!
 				let checked = confirm('영화 ' +title + '를 빌려보시곘습니까?\n가격은 ' +rentalRate+'$ 이고, 기간은 '+ rentalDuration+'일 입니다.');
-				
+				//확인 눌렀으면! 빌리로 가고 페이즌 새로고침한다.
 				if(checked){
 					console.log('영화 빌리기 gogo'); // 또 ajax 기술써서 영화 빌리로 가기!
 					

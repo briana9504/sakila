@@ -25,7 +25,12 @@ public class FilmService {
 	@Autowired
 	FilmMapper filmMapper;
 
-
+	//인벤토리 추가용 영화목록
+	public List<Film> getFilmListByInventory(){
+		return this.filmMapper.selectFilmListByInventory();
+	}
+	
+	
 	//영화 추가 => param: film입력폼, return: 입력된 filmId값 리턴
 	public int addFilm(FilmForm filmForm) {//참조타입은 필드명과 named 같으면 맵핑, 기본(값)타입 매개변수의 이름과 name이 같으면 맵핑 setFilmId
 		log.debug("■■■■■■■■■■■ filmForm param: "+ filmForm);

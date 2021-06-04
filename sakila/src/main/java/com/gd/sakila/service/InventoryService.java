@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.InventoryMapper;
+import com.gd.sakila.vo.Inventory;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,6 +19,31 @@ public class InventoryService {
 	@Autowired
 	InventoryMapper inventoryMapper;
 	
+	//인벤토리 삭제기능
+	public void removeInventory(int inventoryId) {
+		log.debug("■■■■■■■■■■■ inventoryId param: "+inventoryId);
+		
+		int row = this.inventoryMapper.deleteInventory(inventoryId);
+		
+		log.debug("■■■■■■■■■■■ 삭제 1, 실패 0: "+row);
+	}
+	
+	//인벤토리 추가기능
+	public int addInventory(Inventory inventory, int volume) {
+		
+		log.debug("■■■■■■■■■■■ inventory param: "+inventory);
+		log.debug("■■■■■■■■■■■ volume param: "+volume);
+		
+		int row = 0;
+		for(int i=0; i<volume; i++) {
+			this.inventoryMapper.insertInventory(inventory);
+			
+			row += 1;
+		}
+		
+		log.debug("추가된 재고의 갯수: "+ row);
+		return row;
+	}
 	//인벤토리 리스트
 	public Map<String, Object> getInventoryList(int currentPage, int rowPerPage, String searchWord){
 		

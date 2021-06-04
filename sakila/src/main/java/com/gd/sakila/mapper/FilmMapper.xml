@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
+	<select id="selectFilmListByInventory" resultType="com.gd.sakila.vo.Film">
+		SELECT
+			film_id filmId,
+			title title	
+		FROM film
+	</select>
 	<!-- 
 		나중에 배열 받을때 쓰기....
 		<if test="rating != null">

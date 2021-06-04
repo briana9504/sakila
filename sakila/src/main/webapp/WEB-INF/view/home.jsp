@@ -51,6 +51,7 @@ $(document).ready(function() {
 		<a href="${pageContext.request.contextPath}/admin/getActorList">배우목록</a>		
 		<a href="${pageContext.request.contextPath}/admin/getCustomerList">손님목록</a>
 		<a href="${pageContext.request.contextPath}/admin/getInventoryList">재고목록</a>	
+		<a href="${pageContext.request.contextPath}/admin/getSales">매출목록</a>	
 		<a href="${pageContext.request.contextPath}/admin/logout">로그아웃</a>
 		<!-- 로그인 화면 넣을것임... -->
 	
