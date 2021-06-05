@@ -25,6 +25,7 @@ $(document).ready(function(){
   <div class="container">
       <h1>add Film</h1>
       <form method="post" action="${pageContext.request.contextPath}/admin/addFilm" id="addFilmAction">
+         
          <table class="table table-hover">
             <tr>
                <td>title</td>

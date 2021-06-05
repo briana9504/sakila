@@ -24,6 +24,26 @@ public class FilmService {
 	CategoryMapper categoryMapper;
 	@Autowired
 	FilmMapper filmMapper;
+	
+	
+	//영화 수정
+	public int modifyFilmOne(FilmForm filmForm) {
+		log.debug("■■■■■■■■■■■ filmForm param: "+ filmForm);
+		
+		//영화목록 수정
+		
+		int row = this.filmMapper.updateFilmOne(filmForm.getFilm());// insert 후 film.setFilmId(생성된 값)호출
+		log.debug("■■■■■■■■■■■ 영화 수정: "+row);
+		
+		Map <String, Object> map = new HashMap<>();
+		map.put("filmId", filmForm.getFilm().getFilmId());
+		map.put("categoryId", filmForm.getCategory().getCategoryId());
+		
+		int num = this.filmMapper.updateFilmCategory(map);
+		log.debug("■■■■■■■■■■■ 영화 카테고리 수정 : "+num);
+		//영화 카테고리 목록 수정
+		return row+num;
+	}
 
 	//인벤토리 추가용 영화목록
 	public List<Film> getFilmListByInventory(){

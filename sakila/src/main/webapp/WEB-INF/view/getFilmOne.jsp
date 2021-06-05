@@ -73,6 +73,10 @@
 				<td>${filmOne.languageName}</td>
 			</tr>
 			<tr>
+				<td>원어</td>
+				<td>${filmOne.originalLanguageId}</td>
+			</tr>
+			<tr>
 				<td>대여기간</td>
 				<td>${filmOne.rentalDuration}일</td>
 			</tr>
@@ -93,6 +97,10 @@
 				<td>${filmOne.specialFeatures}</td>
 			</tr>
 		</table>
+		<div>
+			<a href="${pageContext.request.contextPath}/admin/modifyFilmOne?filmId=${filmOne.filmId}">영화 수정</a>
+		</div>
 	</div>
+	
 </body>
 </html>

@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
+	<update id="updateFilmCategory" parameterType="java.util.Map">
+		UPDATE film_category
+		SET category_id = #{categoryId}
+		WHERE film_id = #{filmId}
+	</update>
+	<update id="updateFilmOne" parameterType="com.gd.sakila.vo.Film">
+		UPDATE film 
+		SET title = #{title},
+			description = #{description},
+			release_year = #{releaseYear},
+			language_id = #{languageId},
+			original_language_id = #{originalLanguageId},
+			rental_duration = #{rentalDuration},
+			rental_rate = #{rentalRate},
+			length = #{length},
+			replacement_cost = #{replacementCost},
+			rating = #{rating},
+			special_features = #{specialFeatures}
+		WHERE film_id = #{filmId}
+	</update>
+
 	<select id="selectFilmListByInventory" resultType="com.gd.sakila.vo.Film">
 		SELECT
 			film_id filmId,
@@ -92,7 +113,7 @@
 	<!-- 영화 상세보기 -->
 	<select id="selectFilmOne" parameterType="int" resultType="java.util.Map">
 		SELECT 
-			f.film_id filmId, YEAR(f.release_year) releaseYear, f.rental_duration rentalDuration, f.special_features specialFeatures, f.replacement_cost replacementCost,
+			f.film_id filmId, f.original_language_id originalLanguageId ,YEAR(f.release_year) releaseYear, f.rental_duration rentalDuration, f.special_features specialFeatures, f.replacement_cost replacementCost,
 			n.title title, n.description description, n.category category, n.price price, n.length length, n.rating rating, n.actors actors,
 			l.name languageName
 		FROM film f LEFT JOIN nicer_but_slower_film_list n ON f.film_id=n.FID LEFT JOIN language l ON f.language_id=l.language_id

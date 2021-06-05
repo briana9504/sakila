@@ -1,7 +1,6 @@
 package com.gd.sakila.controller;
 
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.gd.sakila.mapper.LanguageMapper;
 import com.gd.sakila.service.CategoryService;
 import com.gd.sakila.service.FilmService;
 import com.gd.sakila.service.LanguageService;
-import com.gd.sakila.vo.Category;
+
 import com.gd.sakila.vo.FilmForm;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +30,34 @@ public class FilmController {
 	CategoryService categoryServce;
 	@Autowired
 	LanguageService languageService;
+	
+	
+	@PostMapping("/modifyFilmOne")
+	public String modifyFilmOne(FilmForm filmForm) {
+		log.debug("■■■■■■■■■■■■■■■■ filmForm param:"+filmForm);
+		this.filmService.modifyFilmOne(filmForm);
+		return "redirect:/admin/getFilmOne?filmId="+ filmForm.getFilm().getFilmId();
+	}
+	@GetMapping("/modifyFilmOne") //영화 수정폼으로
+	public String modifyFilmOne(Model model, @RequestParam(value = "filmId", required = true)int filmId) {
+		
+		log.debug("■■■■■■■■ filmId param: "+filmId);
+		
+		Map<String, Object> map = this.filmService.getFilmOne(filmId);
+		log.debug("■■■■■■■■■■영화 상세보기 filmOne 확인확인: ", map);
+		
+		Map<String, Object> filmOne = (Map<String,Object>)map.get("filmOne");
+		
+		model.addAttribute("categoryList", this.categoryServce.getCategoryList());
+		model.addAttribute("languageList", this.languageService.getLanguageList());
+		//1번 재고량
+		model.addAttribute("countInvetory1",map.get("countInvetory1"));
+		//2번 재고량
+		model.addAttribute("countInvetory2", map.get("countInvetory2"));
+		//영화정보 
+		model.addAttribute("filmOne", filmOne);	
+		return "modifyFilmOne";
+	}
 	
 	@GetMapping("/addFilm")//영화 추가 폼으로 연결 ->필요한 것 categoryList, languageList
 	public String addFilm(Model model) {
@@ -77,10 +103,10 @@ public class FilmController {
 	@GetMapping("/getFilmOne")
 	public String getFilmOne(Model model,
 								@RequestParam(value = "filmId", required = true)int filmId) {
-		log.debug("§§§§§§§§§ filmId param: "+filmId);
+		log.debug("■■■■■■■■■■ filmId param: "+filmId);
 		
 		Map<String, Object> map = this.filmService.getFilmOne(filmId);
-		log.debug("●＠＃＠ 영화 상세보기 filmOne 확인확인: ", map);
+		log.debug("■■■■■■■■■■영화 상세보기 filmOne 확인확인: ", map);
 		
 		Map<String, Object> filmOne = (Map<String,Object>)map.get("filmOne");
 
