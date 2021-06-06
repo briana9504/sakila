@@ -1,5 +1,8 @@
 package com.gd.sakila.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,11 @@ public class RentalService {
 	@Autowired
 	PaymentMapper paymentMapper;
 	
+	//처음 대여중인 목록
+	public List<Map<String,Object>> getRentalList(Integer inventoryId) {
+		
+		return this.rentalMapper.selectRentalList(inventoryId);
+	}
 	
 	public void addRental(int staffId, int customerId, double rentalRate, int inventoryId) {
 		

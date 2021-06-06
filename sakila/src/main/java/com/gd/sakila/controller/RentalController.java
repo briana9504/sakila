@@ -6,20 +6,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.gd.sakila.service.FilmService;
+import com.gd.sakila.service.RentalService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
 @RequestMapping("/admin")
-public class SalesController {
+public class RentalController {
 	@Autowired
-	FilmService filmService;
-	@GetMapping("/getSales")
-	public String getSales(Model model) {
-		model.addAttribute("bestSaller", this.filmService.getBestSellers());
-		return "getSales";
+	RentalService rentalService;
+	
+	@GetMapping("/getRentalList")
+	public String getRentalList(Model model) {
+		
+		model.addAttribute("", this.rentalService.getRentalList(null));
+		return "getOverdueList";
 	}
-
 }

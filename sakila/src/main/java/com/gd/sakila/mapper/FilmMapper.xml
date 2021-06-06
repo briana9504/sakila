@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
+
+	<!-- 베스트 셀러 목록 -->
+	<select id="selectBestSellers" resultType="java.util.Map">
+		SELECT 
+		 f.film_id filmId, 
+		 f.title title,
+		 COUNT(*) cnt
+		FROM inventory i INNER JOIN film f ON f.film_id=i.film_id
+		INNER JOIN rental r ON i.inventory_id = r.inventory_id
+		GROUP BY f.film_id
+		ORDER BY cnt DESC
+		LIMIT 10
+	</select>
+	
 	<update id="updateFilmCategory" parameterType="java.util.Map">
 		UPDATE film_category
 		SET category_id = #{categoryId}

@@ -9,6 +9,7 @@ import com.gd.sakila.vo.Film;
 
 @Mapper
 public interface FilmMapper {
+	List<Map<String, Object>> selectBestSellers();
 	int updateFilmCategory(Map<String, Object> map);
 	int updateFilmOne(Film film);//영화 수정
 	List<Film> selectFilmListByInventory();

@@ -6,6 +6,6 @@ import com.gd.sakila.vo.Address;
 
 @Mapper
 public interface AddressMapper {
-	int insertAddressByCustomer(Address address);
+	int insertAddress(Address address);
 	String selectPhoneByCustomer(String phone);
 }

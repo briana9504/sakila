@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.RentalMapper">
 
+	<!-- 미반납 영화 목록 -->
+	<select id="selectRentalList" resultType="java.util.Map"  parameterType="Integer">
+		SELECT
+			r.rental_id, r.return_date, i.store_id, r.rental_date, r.customer_id, f.title, i.inventory_id
+		FROM rental r 
+		INNER JOIN inventory i ON r.inventory_id=i.inventory_id
+		INNER JOIN film f ON f.film_id=i.film_id
+		<where>
+			r.return_date IS null
+			<if test="inventoryId != null">
+				AND i.inventory_id = #{invnetoryId}
+			</if>
+		</where>
+	</select>
+	<!-- 영화 대여 -->
 	<insert id="insertRental" parameterType="com.gd.sakila.vo.Rental">
 		<selectKey order="AFTER" keyProperty="rentalId" resultType="int">
 			SELECT LAST_INSERT_ID()

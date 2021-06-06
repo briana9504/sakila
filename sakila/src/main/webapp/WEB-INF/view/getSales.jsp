@@ -267,7 +267,22 @@ $(document).ready(function(){
 	
 	<h3>베스트 셀러</h3>
 	
-	
+	<table border="1">
+		<thead>
+			<tr>
+				<th>제목</th>
+				<th>총 대여횟수</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${bestSaller}" var="b">
+				<tr>
+					<td>${b.title}</td>
+					<td>${b.cnt}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 	
 	<h3>월별 매출</h3>
 	<div>

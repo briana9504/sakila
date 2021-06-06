@@ -31,7 +31,7 @@ public class CustomerService {
 		Address address = customerForm.getAddress();
 		Customer customer = customerForm.getCustomer();
 		//주소를 등록하고 addressId를 받음
-		this.addressMapper.insertAddressByCustomer(address);
+		this.addressMapper.insertAddress(address);
 		
 		//받은 addressId를 customer에 넣어줌
 		customer.setAddressId(address.getAddressId());

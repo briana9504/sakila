@@ -3,13 +3,14 @@
 <mapper namespace="com.gd.sakila.mapper.AddressMapper">
 
 	<!-- 고객 가입 주소 등록 : addressId 받아가기 -->
-	<insert id="insertAddressByCustomer" parameterType="com.gd.sakila.vo.Address">
+	<insert id="insertAddress" parameterType="com.gd.sakila.vo.Address">
 		<selectKey resultType="int" keyProperty="addressId" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 		INSERT INTO address(address, address2, district, city_id, postal_code, phone) 
 			VALUES(#{address}, #{address2}, #{district}, #{cityId}, #{postalCode}, #{phone})
 	</insert>
+	
 	<!-- 가입을 위한 폰 번호 체크 -->
 	<select id="selectPhoneByCustomer" parameterType="java.lang.String" resultType="java.lang.String">
 		SELECT phone FROM address WHERE phone = #{phone}

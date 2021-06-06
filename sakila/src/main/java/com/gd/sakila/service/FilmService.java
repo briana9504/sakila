@@ -26,6 +26,10 @@ public class FilmService {
 	FilmMapper filmMapper;
 	
 	
+	//베스트 셀러 목록
+	public List<Map<String, Object>> getBestSellers(){
+		return this.filmMapper.selectBestSellers();
+	}
 	//영화 수정
 	public int modifyFilmOne(FilmForm filmForm) {
 		log.debug("■■■■■■■■■■■ filmForm param: "+ filmForm);
