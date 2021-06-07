@@ -7,9 +7,11 @@
 		SELECT 
 		 f.film_id filmId, 
 		 f.title title,
+		 SUM(p.amount) sum,
 		 COUNT(*) cnt
 		FROM inventory i INNER JOIN film f ON f.film_id=i.film_id
 		INNER JOIN rental r ON i.inventory_id = r.inventory_id
+		INNER JOIN payment p ON p.rental_id = r.rental_id
 		GROUP BY f.film_id
 		ORDER BY cnt DESC
 		LIMIT 10
@@ -20,6 +22,7 @@
 		SET category_id = #{categoryId}
 		WHERE film_id = #{filmId}
 	</update>
+	
 	<update id="updateFilmOne" parameterType="com.gd.sakila.vo.Film">
 		UPDATE film 
 		SET title = #{title},

@@ -35,11 +35,9 @@ public class SalesRestapiController {
 	}
 	
 	@GetMapping("/getSalesByMonth")
-	public List<Map<String, Object>> getSalesByMonth(@RequestParam(value = "year", defaultValue = "2005")int year){
-		log.debug("■■■■■■■■■■ year param: " +year);
+	public List<Map<String, Object>> getSalesByMonth(){
 		
-		
-		return this.paymentService.getSalesByMonth(year);
+		return this.paymentService.getSalesByMonth();
 	}
 	
 	

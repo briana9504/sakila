@@ -31,9 +31,8 @@ public class PaymentService {
 		return this.paymentMapper.selectSalesByDay(map);
 	}
 	//월별 매출액
-	public List<Map<String, Object>> getSalesByMonth(int year){
-		log.debug("■■■■■■■■ year param: "+year);
-		return this.paymentMapper.selectSalesByMonth(year);
+	public List<Map<String, Object>> getSalesByMonth(){
+		return this.paymentMapper.selectSalesByMonth();
 	}
 	//고객 총 구매금액
 	public Double getPaymentByCustomer(int customerId) {

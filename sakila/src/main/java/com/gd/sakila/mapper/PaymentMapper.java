@@ -10,7 +10,7 @@ import com.gd.sakila.vo.Payment;
 @Mapper
 public interface PaymentMapper {
 	List<Map<String, Object>> selectSalesByDay(Map<String, Object> map);
-	List<Map<String, Object>> selectSalesByMonth(int year);
+	List<Map<String, Object>> selectSalesByMonth();
 	int insertPayment(Payment payment);
 	Double selectPaymentByCustomer(int customerId);
 }

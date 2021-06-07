@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.PaymentMapper">
+	
+
 	<!-- 일별 매출 자료 -->
 	<select id="selectSalesByDay" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
@@ -16,14 +18,12 @@
 	
 	
 	<!-- 월별 매출 자료 -->
-	<select id="selectSalesByMonth" resultType="java.util.Map" parameterType="int">
+	<select id="selectSalesByMonth" resultType="java.util.Map">
 		SELECT
-			Year(payment_date) year, 
-			MONTH(payment_date) month, 
-			SUM(amount) amount, 
+			CONCAT( Year(payment_date), '.', MONTH(payment_date)) date,
+			SUM(amount) amount,
 			s.store_id storeId
 		FROM payment p  INNER JOIN staff s ON p.staff_id=s.staff_id
-		WHERE YEAR(p.payment_date) = #{year}
 		GROUP BY Year(payment_date), MONTH(payment_date), s.store_id
 	</select>
 	

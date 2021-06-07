@@ -30,16 +30,34 @@ $(document).ready(function(){
 				
 				$('#cityBtn').click(function(){
 					console.log('도시추가');
+					
+					//시티 앞 글자만 대문자로 바꾸기...!
+					let str = $('#city').val();
+					//공백에 따라 잘라서 배열에 저장
+					let words = str.split(' ');
+					console.log(words);
+					//배열의 앞 글자를 대문자 뒷 글자를 소문자로 변경
+					let concat = words.map(item => item.slice(0,1).toUpperCase() + item.slice(1).toLowerCase());
+
+					console.log(concat);
+					//배열을 하나의 문자열로 합친다.
+					let cityName = concat.reduce(function(pre, currnet) {					
+						return pre+' '+currnet;
+					})
+					
+					console.log(cityName);
+					
 					$.ajax({
 						type: 'get',
 						url: '/addCity',
-						data: {city : $('#city').val(), countryId : $('#countryId').val()},
+						data: {city : cityName, countryId : $('#countryId').val()},
 						success: function(jsonData){
 							console.log('도시추가 성공');
 							
 							cityList();
 						}
 					});
+					
 				});
 				
 			}		
@@ -48,10 +66,61 @@ $(document).ready(function(){
 
 	
 	$('#btn').click(function(){
-		console.log('click!');
+		//console.log('click!');
+		//fist name 과 last name을 모두 첫글자 대문자 나머지 소문자로 바꾸기
+		let first = $('#firstName').val();
+		first = first.slice(0,1).toUpperCase() + first.slice(1).toLowerCase();
+		//console.log(first);
+		$('#firstName').val(first);
+		
+		//console.log($('#firstName').val());
+		
+		let last = $('#lastName').val();
+		last = last.slice(0,1).toUpperCase() + last.slice(1).toLowerCase();
+		$('#lastName').val(last);
+		
+		//console.log($('#lastName').val());
 		
 		//유효성 검사 만들기
-		$('#action').submit();
+		if($('#firstName').val() == ''){
+			
+			alert('first name을 입력하시오.');
+			$('#firstName').focus();
+			
+		} else if($('#lastName').val() == ''){
+			
+			alert('last name을 입력하시오.');
+			$('#lastName').focus();
+			
+		} else if($('#username').val() == ''){
+			
+			alert('username을 입력하시오.');
+			$('#username').focus();
+			
+		} else if($('#password').val() == ''){
+			
+			alert('password를 입력하시오.');
+			$('#password').focus();
+			
+		} else if($('#email').val() == ''){
+			
+			alert('email를 입력하시오.');
+			$('#email').focus();
+			
+		} else if($('#password').val() == ''){
+			
+			alert('password를 입력하시오.');
+			$('#password').focus();
+			
+		} else if($('#address').val() == ''){
+			
+			alert('address를 입력하시오.');
+			$('#address').focus();
+			
+		} else {
+			//$('#action').submit();
+		}
+		
 	});
 	
 });
@@ -75,7 +144,7 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 				<th>password</th>
-				<td><input type="text" id="password" name="staff.password"></td>
+				<td><input type="password" id="password" name="staff.password"></td>
 			</tr>
 			<tr>
 				<th>email</th>

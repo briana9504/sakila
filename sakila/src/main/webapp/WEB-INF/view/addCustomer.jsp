@@ -28,18 +28,38 @@ $(document).ready(function(){
 				$('#target').append('<button id="cityBtn" type="button">도시추가</button>');
 				
 				
+				//도시추가 --> 도시이름의 앞 글자를 다 대문자로 바꾸기....
 				$('#cityBtn').click(function(){
 					console.log('도시추가');
+					
+					//시티 앞 글자만 대문자로 바꾸기...!
+					let str = $('#city').val();
+					
+					let words = str.split(' ');
+					console.log(words);
+
+					let concat = words.map(item => item.slice(0,1).toUpperCase() + item.slice(1).toLowerCase());
+
+					console.log(concat);
+
+					let cityName = concat.reduce(function(pre, currnet) {
+						
+						return pre+' '+currnet;
+					})
+					
+					console.log(cityName);
+					
 					$.ajax({
 						type: 'get',
 						url: '/addCity',
-						data: {city : $('#city').val(), countryId : $('#countryId').val()},
+						data: {city : cityName, countryId : $('#countryId').val()},
 						success: function(jsonData){
 							console.log('도시추가 성공');
 							
 							cityList();
 						}
 					});
+					
 				});
 				
 			}		
@@ -70,12 +90,36 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
+	//유효성 검사 만들기
 	$('#btn').click(function(){
 		console.log('click!');
 		
-		//유효성 검사 만들기
-		$('#addCustomerAction').submit();
+		if($('#firstName').val() == ''){
+			
+			alert('first name을 입력하시오.');
+			$('#firstName').focus();
+			
+		} else if ($('#lastName').val() == ''){
+			
+			alert('last name을 입력하시오.');
+			$('#lastName').focus();
+			
+		}  else if ($('#email').val() == ''){
+			
+			alert('email을 입력하시오.');
+			$('#email').focus();
+			
+		} else if ($('#cityId').val() == ''){
+			
+			alert('cityId을 입력하시오.');
+			$('#cityId').focus();
+			
+		} else {
+			
+			$('#addCustomerAction').submit();
+		}
+		
+		
 	});
 	
 	
@@ -100,8 +144,8 @@ $(document).ready(function(){
 			<tr>
 				<th>name</th>
 				<td>
-					<div>first_name : <input type="text" id="firstName" name="customer.firstName"></div>
-					<div>last_name : <input type="text" id="lastName" name="customer.lastName"></div>
+					<div>first_name : <input type="text" id="firstName" name="customer.firstName" placeholder="first name"></div>
+					<div>last_name : <input type="text" id="lastName" name="customer.lastName" placeholder="last name"></div>
 				</td>
 			</tr>
 			<tr>

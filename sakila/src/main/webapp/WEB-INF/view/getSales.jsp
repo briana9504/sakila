@@ -10,6 +10,86 @@
 <script>
 $(document).ready(function(){
 	
+	//월별 매출 막대 그래프 방법
+	//달별 매출액 그리기 위한 자료
+	function monthss(){
+		$.ajax({
+		type: 'get',
+		url: '/getSalesByMonth',
+		data: {year : $('#yearByMonthSales').val()},
+		success: function(jsonData){
+			//console.log('성공');
+			//console.log(jsonData);
+			
+			//let roots = numbers.map((num) => Math.sqrt(num))
+			let store1 =  jsonData.filter(item => item.storeId ==1);
+			let store2 = jsonData.filter(item => item.storeId ==2);
+			
+			console.log(store1);
+			
+			let storeCount1 = store1.map(item => item.amount);
+			let storeCount2 = store2.map(item => item.amount);
+			//console.log(storeCount1);
+			//let res = users.filter(it => it.name.includes('oli'))
+			let date = store1.map(item => item.date);
+			console.log(date);
+			
+
+			
+			const labels = date;
+			const data = {
+			  labels: labels,
+			  datasets: [
+			    {
+			      label: 'store 1',
+			      data: storeCount1,
+			      backgroundColor: 'rgb(255, 99, 132)',
+			    },
+			    {
+			      label: 'store 2',
+			      data: storeCount2,
+			      backgroundColor: 'rgb(54, 162, 235)',
+			    }
+			  ]
+			};
+						
+			
+			const config = {
+					  type: 'bar',
+					  data: data,
+					  options: {
+					    plugins: {
+					      title: {
+					        display: true,
+					        text: 'Chart.js Bar Chart - Stacked'
+					      },
+					    },
+					    responsive: true,
+					    scales: {
+					      x: {
+					        stacked:  true,
+					      },
+					      y: {
+					        stacked: true
+					      }
+					    }
+					  }
+					};
+				
+				
+				var myChart = new Chart(		
+					    document.getElementById('myChart2'),
+					    config
+					  );
+			
+				//const DATA_COUNT = 7;
+				//const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
+
+		}
+	});
+	}
+	
+	
 	//일별 매출애 그리기 위한 자료
 	function days(){ $.ajax({
 		type: 'get',
@@ -39,14 +119,14 @@ $(document).ready(function(){
 			    {
 			      label: 'store 1',
 			      data: storeCount1,
-			      borderColor: 'rgb(139,0,0)',
-			      backgroundColor: 'rgb	(205,92,92)',
+			      borderColor: 'rgb(243,145,166)',
+			      backgroundColor: 'rgb(243,140,166)',
 			    },
 			    {
 			      label: 'store 2',
 			      data: storeCount2,
 			      borderColor: 'rgb(25,25,112)',
-			      backgroundColor: 'rgb(100,149,237)',
+			      backgroundColor: 'rgb(120,120, 200)',
 			    }
 			  ]
 			};
@@ -74,6 +154,9 @@ $(document).ready(function(){
 		}
 	});
 	}
+	
+	
+	/*
 	
 	//달별 매출액 그리기 위한 자료
 	function months(){ $.ajax({
@@ -147,6 +230,8 @@ $(document).ready(function(){
 	});
 	}
 	
+	*/
+	
 	//카테고리 매출액 차트 그리기 위한 정보
 	$.ajax({
 		type: 'get',
@@ -212,7 +297,7 @@ $(document).ready(function(){
 	//달별 달 변화
 	
 	
-	months();
+	monthss();
 	days();
 	
 	
@@ -220,7 +305,7 @@ $(document).ready(function(){
 		//console.log('년도 ...');
 		$('#span2').empty();
 		$('#span2').append('<canvas id="myChart2"></canvas>');
-		months();
+		monthss();
 	});
 	
 	$('#btn').click(function(){
@@ -252,8 +337,12 @@ $(document).ready(function(){
 });
 </script>
 <style>
-	#span, #span2, #span3{
+	#span, #span3{
 		width:50%; height:50%;
+	}
+	
+	 #span2{
+	 	width:50%; height:50%;
 	}
 </style>
 </head>
@@ -285,12 +374,7 @@ $(document).ready(function(){
 	</table>
 	
 	<h3>월별 매출</h3>
-	<div>
-		<select id="yearByMonthSales" name="year">
-			<option>2005</option>
-			<option>2006</option>
-		</select>
-	</div>
+
 	<div id="span2">
 		<canvas id="myChart2"></canvas>
 	</div>
