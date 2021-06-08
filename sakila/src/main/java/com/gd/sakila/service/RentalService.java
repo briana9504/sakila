@@ -1,5 +1,6 @@
 package com.gd.sakila.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,10 +24,25 @@ public class RentalService {
 	@Autowired
 	PaymentMapper paymentMapper;
 	
-	//처음 대여중인 목록
-	public List<Map<String,Object>> getRentalList(Integer inventoryId) {
+	
+	//대여중인 목록
+	public Map<String,Object> getRentalList(int currentPage, int rowPerPage) {
 		
-		return this.rentalMapper.selectRentalList(inventoryId);
+		int beginRow = (currentPage-1)*rowPerPage;
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("beginRow", beginRow);
+		paramMap.put("rowPerPage", rowPerPage);
+		
+		log.debug("■■■■■■■■■■■■■■■ 확인확인: "+paramMap);
+		
+		int lastPage = (int)Math.ceil((double)this.rentalMapper.selectRentalListTotal()/rowPerPage);
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("rentalList", this.rentalMapper.selectRentalList(paramMap));
+		
+		return returnMap;
 	}
 	
 	public void addRental(int staffId, int customerId, double rentalRate, int inventoryId) {

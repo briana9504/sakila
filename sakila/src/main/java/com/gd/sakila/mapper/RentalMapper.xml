@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.RentalMapper">
-
-	<!-- 미반납 영화 목록 -->
-	<select id="selectRentalList" resultType="java.util.Map"  parameterType="Integer">
+	<!-- 전체페이지 구하기 -->
+	<select id="selectRentalListTotal" resultType="int">
 		SELECT
-			r.rental_id, r.return_date, i.store_id, r.rental_date, r.customer_id, f.title, i.inventory_id
-		FROM rental r 
-		INNER JOIN inventory i ON r.inventory_id=i.inventory_id
-		INNER JOIN film f ON f.film_id=i.film_id
+			COUNT(*)
+		FROM inventory i INNER JOIN rental r ON i.inventory_id=r.inventory_id
+			INNER JOIN film f ON f.film_id = i.film_id
+			INNER JOIN payment p ON p.rental_id=r.rental_id
+		WHERE r.return_date IS NULL
+		
+	</select>
+	<!-- 영화 대여 목록 -->
+	<select id="selectRentalList" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			 r.inventory_id inventoryId, 
+			 f.title title,
+			 f.rental_rate rentalRate, 
+			 DATE(r.rental_date) rentalDate, 
+			 i.store_id storeId,
+			 inventory_held_by_customer(r.inventory_id) customerId, 
+			 r.rental_id rentalId, 
+			 p.payment_id paymentId,
+			 case when DATEDIFF(NOW(),r.rental_date) &gt; f.rental_duration then '연체' ELSE '대여중' END state,
+			 case when DATEDIFF(NOW(),r.rental_date) &gt; f.rental_duration then DATEDIFF(NOW(),r.rental_date) - f.rental_duration END 'overdue'
+		FROM inventory i INNER JOIN rental r ON i.inventory_id=r.inventory_id
+			INNER JOIN film f ON f.film_id = i.film_id
+			INNER JOIN payment p ON p.rental_id=r.rental_id
 		<where>
-			r.return_date IS null
-			<if test="inventoryId != null">
-				AND i.inventory_id = #{invnetoryId}
+			r.return_date IS NULL
+			<if test="!title">
+			
 			</if>
 		</where>
+		ORDER BY rental_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
+	
 	<!-- 영화 대여 -->
 	<insert id="insertRental" parameterType="com.gd.sakila.vo.Rental">
 		<selectKey order="AFTER" keyProperty="rentalId" resultType="int">

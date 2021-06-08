@@ -23,6 +23,13 @@ public class CustomerService {
 	CustomerMapper customerMapper;
 	@Autowired
 	AddressMapper addressMapper;
+	
+	//대여를 위한 손님목록 가져오기
+	public List<Map<String, Object>> getCustomerListByPhone(String phone){
+		log.debug("■■■■■■■■■■■■■■ phone : "+phone);
+		
+		return this.customerMapper.selectCustomerListByPhone(phone);
+	}
 
 	//손님 등록하기 + address 등록
 	public int addCustomer(CustomerForm customerForm) {

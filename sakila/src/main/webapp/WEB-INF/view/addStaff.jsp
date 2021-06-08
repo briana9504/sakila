@@ -7,6 +7,13 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+//첫글자 대문자로 만드기
+function name (name){
+	name = name.slice(0,1).toUpperCase() + name.slice(1).toLowerCase();
+	return name;
+}
+
+
 $(document).ready(function(){
 	console.log('ready!');
 	
@@ -68,15 +75,16 @@ $(document).ready(function(){
 	$('#btn').click(function(){
 		//console.log('click!');
 		//fist name 과 last name을 모두 첫글자 대문자 나머지 소문자로 바꾸기
-		let first = $('#firstName').val();
-		first = first.slice(0,1).toUpperCase() + first.slice(1).toLowerCase();
-		//console.log(first);
+		
+		let first = name($('#firstName').val());
+		console.log(first);
 		$('#firstName').val(first);
 		
 		//console.log($('#firstName').val());
+
 		
-		let last = $('#lastName').val();
-		last = last.slice(0,1).toUpperCase() + last.slice(1).toLowerCase();
+		let last = name($('#lastName').val());
+		console.log(last);
 		$('#lastName').val(last);
 		
 		//console.log($('#lastName').val());
@@ -118,7 +126,7 @@ $(document).ready(function(){
 			$('#address').focus();
 			
 		} else {
-			//$('#action').submit();
+			$('#action').submit();
 		}
 		
 	});
