@@ -23,20 +23,11 @@ public class RentalController {
 	@Autowired
 	CustomerService customerService;
 	
-	@GetMapping("/getRentalPopup")
-	public String getRentalPopup(Model model,
-								@RequestParam(value = "phone")String phone) {
-		log.debug("■■■■■■■■■■ phone: "+phone);
-		
-		model.addAttribute("customerList", this.customerService.getCustomerListByPhone(phone));
-		return "getRentalPopup";
-	}
-	
 	//영화 미반납리스트...
 	@GetMapping("/getRentalAndReturn")
 	public String getRentalAndReturn(Model model,
 									@RequestParam(value = "currentPage", defaultValue = "1")int currentPage,
-									@RequestParam(value = "rowPerPage", defaultValue = "15")int rowPerPage) {
+									@RequestParam(value = "rowPerPage", defaultValue = "10")int rowPerPage) {
 		
 		log.debug("■■■■■■■■■■ currentPage: "+currentPage);
 		log.debug("■■■■■■■■■■ rowPerPage: "+rowPerPage);

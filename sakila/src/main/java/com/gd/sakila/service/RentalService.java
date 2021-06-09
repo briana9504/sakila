@@ -24,6 +24,12 @@ public class RentalService {
 	@Autowired
 	PaymentMapper paymentMapper;
 	
+	//반납을 위한 목록
+	public List<Map<String, Object>> getRentalListBy(int inventoryId){
+		log.debug("■■■■■■■■■■■ inventoryId : " + inventoryId);
+		
+		return this.rentalMapper.selectRentalListBy(inventoryId);
+	}
 	
 	//대여중인 목록
 	public Map<String,Object> getRentalList(int currentPage, int rowPerPage) {

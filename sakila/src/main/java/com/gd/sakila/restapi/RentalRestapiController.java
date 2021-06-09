@@ -25,6 +25,13 @@ public class RentalRestapiController {
 	@Autowired
 	CustomerService customerService;
 	
+	@GetMapping("/getRentalListBy")
+	public List<Map<String, Object>> getRentalListBy(@RequestParam(value = "inventoryId", required = true)int inventoryId){
+		log.debug("■■■■■■■■■■■■■ inventoryId: " + inventoryId);
+		
+		return this.RentalService.getRentalListBy(inventoryId);
+	}
+	
 	@GetMapping("/getCustomerListByPhone")
 	public List<Map<String, Object>> getCustomerListByPhone(@RequestParam(value = "phone", required = true)String phone){
 		log.debug("■■■■■■■■■■ phone param: "+phone);
