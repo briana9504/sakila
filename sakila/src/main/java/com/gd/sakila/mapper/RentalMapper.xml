@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.RentalMapper">
+	
+
 	<!-- 반납 검색용 리스트 -->
-	<select id="selectRentalListBy" parameterType="int" resultType="java.util.Map">
+	<select id="selectRentalListByInventoryId" parameterType="int" resultType="java.util.Map">
 		SELECT
 			 r.inventory_id inventoryId, 
 			 f.title title,
@@ -19,8 +21,8 @@
 			INNER JOIN payment p ON p.rental_id=r.rental_id
 		<where>
 			r.return_date IS NULL
-			<if test="!title">
-				AND i.inventory_id LIKE CONCAT('%', #{inventoryId} , '%')
+			<if test="inventoryId != null">
+				AND i.inventory_id LIKE CONCAT('%', #{inventoryId},'%')
 			</if>
 		</where>
 	</select>
@@ -35,6 +37,7 @@
 		WHERE r.return_date IS NULL
 		
 	</select>
+	
 	<!-- 영화 대여 목록 -->
 	<select id="selectRentalList" resultType="java.util.Map" parameterType="java.util.Map">
 		SELECT

@@ -25,10 +25,10 @@ public class RentalService {
 	PaymentMapper paymentMapper;
 	
 	//반납을 위한 목록
-	public List<Map<String, Object>> getRentalListBy(int inventoryId){
+	public List<Map<String, Object>> getRentalListByInventoryId(int inventoryId){
 		log.debug("■■■■■■■■■■■ inventoryId : " + inventoryId);
 		
-		return this.rentalMapper.selectRentalListBy(inventoryId);
+		return this.rentalMapper.selectRentalListByInventoryId(inventoryId);
 	}
 	
 	//대여중인 목록

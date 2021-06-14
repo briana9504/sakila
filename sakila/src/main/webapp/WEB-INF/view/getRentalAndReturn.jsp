@@ -14,6 +14,7 @@
 $(document).ready(function(){
 	
 	$('#phone').on("change keyup paste", function(){
+		console.log('change');
 	    $.ajax({
 	    	type:'get',
 	    	url:'/getCustomerListByPhone',
@@ -35,18 +36,93 @@ $(document).ready(function(){
 	    })
 	})
 	
+	/*
+	$('#inventoryId').on("change keyup paste", function(){
+		//$('#rentalTarget').empty();
+		
+		$('#rentalTarget').append('<tr>');
+		$('#rentalTarget').append('<td>hello</td>');
+		$('#rentalTarget').append('</tr>');
+	})
+	*/
+	
+	
 	$('#inventoryId').on("change keyup paste", function(){
 		console.log('change');
-		$.ajax({
-			type: 'get',
-			url: '/getRentalListBy',
-			data: {inventoryId: $('#inventoryId')},
-			success: function(jsonData){
-				console.log('성공');
-			}
-		})
-	})
+		console.log($('#inventoryId').val());
+	    $.ajax({
+	    	type:'get',
+	    	url:'/getRentalListByInventoryId',
+	    	data: {inventoryId: $('#inventoryId').val()},
+	    	success: function(jsonData){
+	    		console.log('성공');
+	    		//console.log(jsonData);
+	    		
+	    		$('#rentalTarget').empty();
+	    		
+	    		$(jsonData).each(function(index,item){
+	    			
+	    			$('#rentalTarget').append('<tr>');
+	    			$('#rentalTarget').append('<td class="searchInvetoryId">'+item.inventoryId+'</td>');
+	    			$('#rentalTarget').append('<td>'+item.title+'</td>');
+	    			$('#rentalTarget').append('<td>'+item.state+'</td>');
+	    			$('#rentalTarget').append('<td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId='+item.customerId+'">'+item.customerId+'</a></td>');
+	    			$('#rentalTarget').append('<td><button class="returnBtn">반납</button></td>');
+	    			$('#rentalTarget').append('</tr>'); 
+	    			
+	    		});
+	    		
+	    		$('.returnBtn').click(function(){
+	    			
+	    			//리턴id 구하기
+	    			let index = $('.returnBtn').index(this);
+	    			//console.log(index);//배열 위치 구하기
+	    			//console.log($('.searchInvetoryId').eq(index).text());
+	    			//console.log(this);
+	    			//console.log(jsonData[index]);
+	    			//console.log(jsonData[index].rentalId);
+	    			console.log(jsonData[index].overdue);
+	    			console.log(jsonData[index].rentalRate);
+	    			//console.log(jsonData[index].overdue+jsonData[index].rentalRate);
+	    			let amount = jsonData[index].overdue+jsonData[index].rentalRate;
+	    			console.log(amount);
+	    			if(isNaN(amount)){
+	    				amount = jsonData[index].rentalRate;
+	    			}
+	    			console.log(amount);
+	    			
+	    			if(jsonData[index].state == '연체'){
+	    				console.log('연체입니다.');
+	    				alert('연체입니다.');
+	    				//alert('연체료는 ' + jsonData[index].overdue + '$ 입니다.');
+	    				
+	    				//연체료 알림창!
+	    				let overdueConfirm = confirm('연체료는 ' +jsonData[index].overdue+ '$ 입니다.');
+	    				console.log(overdueConfirm);
+	    				
+	    				if(overdueConfirm == false){
+	    					alert('연체료를 내주는 착한 손님이 됩시다.');
+	    					return;
+	    				}
+	    				
+	    				$.ajax({
+	    					type: 'get',
+	    					url: '/modifyRentalAndPayment',
+	    					data: {rentalId: jsonData[index].rentalId, amount: amount},	
+	    					success: function(jsonData){
+	    						console.log('됬을까???');
+	    					}
+	    				})
+	    				
+	    			}
 
+	    		})
+	    	}
+	    })
+	})
+	
+	
+	
 });
 </script>
 </head>
@@ -74,6 +150,7 @@ $(document).ready(function(){
         <!-- Modal body -->
         <div class="modal-body">
         	<h6>대여하는 손님의 휴대폰 번호를 적어주세요</h6>
+        	
          	<div>
          		<input id="phone" type="text">
       			
@@ -87,6 +164,7 @@ $(document).ready(function(){
          				<th>번호</th>
          			</tr>
          		</thead>
+         		
          		<tbody id="target">
          			
          		</tbody>
@@ -129,6 +207,22 @@ $(document).ready(function(){
          	<div>
          		<input type="text" id="inventoryId">
          	</div>
+         	
+         	<table class="table" id="rentalTable">
+         		<thead>
+         			<tr>
+         				<th>인벤토리ID</th>
+         				<th>제목</th>
+         				<th>상태</th>
+         				<th>손님ID</th>
+         				<th></th>
+         			</tr>
+         		</thead>
+         		<tbody id="rentalTarget"></tbody>
+         		
+         	</table>
+         	
+         	
         </div>
         
         <!-- Modal footer -->

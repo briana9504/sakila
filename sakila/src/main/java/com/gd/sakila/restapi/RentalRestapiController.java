@@ -25,13 +25,24 @@ public class RentalRestapiController {
 	@Autowired
 	CustomerService customerService;
 	
-	@GetMapping("/getRentalListBy")
+	//반납
+	@GetMapping("/modifyRentalAndPayment")
+	public void modifyRentalAndPayment(@RequestParam(value = "rentalId")int rentalId,
+										@RequestParam(value = "amount")Double amount) {
+		
+		log.debug("■■■■■■■■■■■■■ rentalId: " + rentalId);
+		log.debug("■■■■■■■■■■■■■ amount: " + amount);
+	}
+	
+	//반납을 위한 인벤토리 검색
+	@GetMapping("/getRentalListByInventoryId")
 	public List<Map<String, Object>> getRentalListBy(@RequestParam(value = "inventoryId", required = true)int inventoryId){
 		log.debug("■■■■■■■■■■■■■ inventoryId: " + inventoryId);
 		
-		return this.RentalService.getRentalListBy(inventoryId);
+		return this.RentalService.getRentalListByInventoryId(inventoryId);
 	}
 	
+	//대여를 위한 손님 검색
 	@GetMapping("/getCustomerListByPhone")
 	public List<Map<String, Object>> getCustomerListByPhone(@RequestParam(value = "phone", required = true)String phone){
 		log.debug("■■■■■■■■■■ phone param: "+phone);
