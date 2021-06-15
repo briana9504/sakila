@@ -36,6 +36,14 @@ $(document).ready(function(){
 				console.log(rentalDuration);
 				console.log(state);
 				
+				
+				//재고가 존재하지 않을때
+				if(title == undefined){
+					alert('존재하지 않는 재고입니다.');
+					return;
+				}
+				
+				
 				//대여중인 책이면 대여 못한다고 경고창
 				if(state == false){
 					alert(inventoryId+'번 '+title+'는 이미 대여중입니다.');

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.RentalMapper">
-	
+	<!-- 반납 returnDate 넣어주기 -->
+	<update id="updateRentalForReturn" parameterType="int">
+		UPDATE rental SET return_date = NOW() WHERE rental_id = #{rentalId}
+	</update>
 
 	<!-- 반납 검색용 리스트 -->
 	<select id="selectRentalListByInventoryId" parameterType="int" resultType="java.util.Map">

@@ -9,6 +9,7 @@ import com.gd.sakila.vo.Payment;
 
 @Mapper
 public interface PaymentMapper {
+	int updatePaymentForReturn(Payment payment);
 	List<Map<String, Object>> selectSalesByDay(Map<String, Object> map);
 	List<Map<String, Object>> selectSalesByMonth();
 	int insertPayment(Payment payment);

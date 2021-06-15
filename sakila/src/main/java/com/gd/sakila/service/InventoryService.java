@@ -19,6 +19,13 @@ public class InventoryService {
 	@Autowired
 	InventoryMapper inventoryMapper;
 	
+	//인벤토리 삭제를 위한 영화 제목 검색
+	public String getFilmTitleByInventoryId(int inventoryId) {
+		log.debug("■■■■■■■■■■■ inventoryId param: "+inventoryId);
+		
+		return this.inventoryMapper.selectFilmTitleByInventoryId(inventoryId);
+	}
+	
 	//인벤토리 삭제기능
 	public void removeInventory(int inventoryId) {
 		log.debug("■■■■■■■■■■■ inventoryId param: "+inventoryId);

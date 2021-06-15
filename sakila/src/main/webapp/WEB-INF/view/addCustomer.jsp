@@ -66,7 +66,8 @@ $(document).ready(function(){
 		}); 	
 	});
 	
-	
+	//휴대폰 유효성 검사
+	let ck = 0;
 	$('#phoneCheckBtn').click(function() {
 		console.log('click');
 		
@@ -81,6 +82,7 @@ $(document).ready(function(){
 					console.log('가입 gogo');
 					$('#phoneTarget').empty();
 					$('#phoneTarget').append('중복 검사 성공!');
+					ck = 1;
 					
 				} else {
 					console.log('휴대폰 있음....');
@@ -114,16 +116,16 @@ $(document).ready(function(){
 			alert('cityId을 입력하시오.');
 			$('#cityId').focus();
 			
+		} else if (ck == 0){
+			
+			alert('휴대폰 유효성 검사를 해주세요.');
+			$('#phone').focus();
+			
 		} else {
 			
 			$('#addCustomerAction').submit();
-		}
-		
-		
+		}	
 	});
-	
-	
-	
 });
 </script>
 </head>

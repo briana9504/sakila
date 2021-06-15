@@ -24,6 +24,24 @@ public class RentalService {
 	@Autowired
 	PaymentMapper paymentMapper;
 	
+	//반납 -> payment amount추가 , rental에 return_date 추가
+	public int modifyRentalAndPaymentForReturn(Double amount, int rentalId) {
+		log.debug("■■■■■■■■■■■ amount : " + amount);
+		log.debug("■■■■■■■■■■■ rentalId : " + rentalId);
+		
+		Payment payment = new Payment();
+		payment.setAmount(amount);
+		payment.setRentalId(rentalId);
+		
+		//rental 리스트 returndate 추가
+		int row = this.rentalMapper.updateRentalForReturn(rentalId);
+		
+		//payemnt에 amount 업데이트
+		int no = this.paymentMapper.updatePaymentForReturn(payment);
+		
+		return row+no;
+	}
+	
 	//반납을 위한 목록
 	public List<Map<String, Object>> getRentalListByInventoryId(int inventoryId){
 		log.debug("■■■■■■■■■■■ inventoryId : " + inventoryId);

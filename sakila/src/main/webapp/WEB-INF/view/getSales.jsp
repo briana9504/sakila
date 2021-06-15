@@ -317,6 +317,7 @@ $(document).ready(function(){
 	
 	const month2005 = [5,6,7,8];
 	const month2006 = [2];
+	const month2021 = [6];
 	
 	//달에 따라 월 바꾸기
 	$('#yearByDaysSales').change(function(){
@@ -325,9 +326,14 @@ $(document).ready(function(){
 			for(item of month2005){
 				$('#monthByDaysSales').append('<option>'+item+'</option>');
 			}
-		} else {
+		} else if($('#yearByDaysSales').val() == 2006) {
 			$('#monthByDaysSales').empty();
 			for(item of month2006){
+				$('#monthByDaysSales').append('<option>'+item+'</option>');
+			}
+		} else if($('#yearByDaysSales').val() == 2021){
+			$('#monthByDaysSales').empty();
+			for(item of month2021){
 				$('#monthByDaysSales').append('<option>'+item+'</option>');
 			}
 		}
@@ -387,6 +393,7 @@ $(document).ready(function(){
 		<select id="yearByDaysSales" name="year">
 			<option>2005</option>
 			<option>2006</option>
+			<option>2021</option>
 		</select>
 		
 		<select id="monthByDaysSales" name="year">

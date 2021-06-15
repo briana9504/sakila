@@ -44,6 +44,7 @@
 		      AND r.customer_id = #{customerId}
 		ORDER BY r.rental_date DESC
 	</select>
+	
 	<!-- 고객 상세보기 -->
 	<select id="selectCustomerOne" resultType="java.util.Map" parameterType="int">
 		SELECT
@@ -62,6 +63,7 @@
 		      ON c.customer_id = cl.ID
 		WHERE c.customer_id = #{customerId}
 	</select>
+	
 	<!-- 전체 고객 수 -->
 	<select id="selectCustomerTotal" resultType="int" parameterType="java.util.Map">
 		SELECT COUNT(*) FROM customer_list

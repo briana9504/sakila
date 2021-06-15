@@ -9,6 +9,7 @@ import com.gd.sakila.vo.Rental;
 
 @Mapper
 public interface RentalMapper {
+	int updateRentalForReturn(int rentalId);
 	List<Map<String, Object>> selectRentalListByInventoryId(int inventoryId);
 	int selectRentalListTotal();
 	List<Map<String, Object>> selectRentalList(Map<String, Object> map);//미반납 영화목록

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.PaymentMapper">
-	
+	<!-- 반납용 payment에 amount 추가 -->
+	<update id="updatePaymentForReturn" parameterType="com.gd.sakila.vo.Payment">
+		UPDATE payment SET amount = #{amount}, payment_date = NOW() WHERE rental_id =  #{rentalId}
+	</update>
 
 	<!-- 일별 매출 자료 -->
 	<select id="selectSalesByDay" parameterType="java.util.Map" resultType="java.util.Map">

@@ -17,6 +17,15 @@ public class InventoryRestapiController {
 	@Autowired
 	InventoryService inventoryService;
 	
+	@GetMapping("/getFilmTitleByInventoryId")
+	public String getFilmTitleByInventoryId(@RequestParam(value = "inventoryId", required = true)int inventoryId) {
+		
+		log.debug("■■■■■■■■■■■ inventoryId param: " + inventoryId);
+		
+		
+		return this.inventoryService.getFilmTitleByInventoryId(inventoryId);
+	}
+	
 	@GetMapping("/getInventoryByRental")
 	public Map<String, Object> getInventoryByRental(@RequestParam(value = "inventoryId", required = true)int inventoryId){
 		

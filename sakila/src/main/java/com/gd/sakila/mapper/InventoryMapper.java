@@ -9,6 +9,7 @@ import com.gd.sakila.vo.Inventory;
 
 @Mapper
 public interface InventoryMapper {
+	String selectFilmTitleByInventoryId(int inventoryId);
 	int deleteInventory(int inventoryId);
 	int insertInventory(Inventory inventory);
 	int selectInventoryTotal(String searchWord);

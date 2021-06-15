@@ -26,12 +26,14 @@ public class RentalRestapiController {
 	CustomerService customerService;
 	
 	//반납
-	@GetMapping("/modifyRentalAndPayment")
-	public void modifyRentalAndPayment(@RequestParam(value = "rentalId")int rentalId,
+	@GetMapping("/modifyRentalAndPaymentForReturn")
+	public int modifyRentalAndPaymentForReturn(@RequestParam(value = "rentalId")int rentalId,
 										@RequestParam(value = "amount")Double amount) {
 		
 		log.debug("■■■■■■■■■■■■■ rentalId: " + rentalId);
 		log.debug("■■■■■■■■■■■■■ amount: " + amount);
+		
+		return this.RentalService.modifyRentalAndPaymentForReturn(amount, rentalId);
 	}
 	
 	//반납을 위한 인벤토리 검색
@@ -58,9 +60,9 @@ public class RentalRestapiController {
 		Staff staff = (Staff)session.getAttribute("loginStaff");
 		
 		log.debug("■■■■■■■■■■ staff param: "+staff);
-		log.debug("■■■■■■■■■■ inventoryId param: "+customerId);
+		log.debug("■■■■■■■■■■ customerId param: "+customerId);
 		log.debug("■■■■■■■■■■ inventoryId param: "+inventoryId);
-		log.debug("■■■■■■■■■■ inventoryId param: "+rentalRate);
+		log.debug("■■■■■■■■■■ rentalRate param: "+rentalRate);
 		
 		this.RentalService.addRental(staff.getStaffId(), customerId, rentalRate, inventoryId);
 

@@ -12,7 +12,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-	
+	//입력창 -> 폰번호로 손님 검색
 	$('#phone').on("change keyup paste", function(){
 		console.log('change');
 	    $.ajax({
@@ -36,18 +36,8 @@ $(document).ready(function(){
 	    })
 	})
 	
-	/*
-	$('#inventoryId').on("change keyup paste", function(){
-		//$('#rentalTarget').empty();
-		
-		$('#rentalTarget').append('<tr>');
-		$('#rentalTarget').append('<td>hello</td>');
-		$('#rentalTarget').append('</tr>');
-	})
-	*/
-	
-	
-	$('#inventoryId').on("change keyup paste", function(){
+	//반납창 -> 인벤토리 아이디로 빌려간 목록 검색
+	$('#inventoryId').on("change keyup paste", function returns(){
 		console.log('change');
 		console.log($('#inventoryId').val());
 	    $.ajax({
@@ -84,53 +74,58 @@ $(document).ready(function(){
 	    			console.log(jsonData[index].overdue);
 	    			console.log(jsonData[index].rentalRate);
 	    			//console.log(jsonData[index].overdue+jsonData[index].rentalRate);
-	    			let amount = jsonData[index].overdue+jsonData[index].rentalRate;
+	    			
+	    			//연체하는 책이 맞는지 확인하기
+	    			let checked = confirm(jsonData[index].title + '를 반납하시 겠습니까?');
+	    			
+	    			if(checked == false){ //연체하는 책이 아니면 끝
+	    				return;
+	    			}
+	    			
+	    			let amount = jsonData[index].overdue+jsonData[index].rentalRate;//payment에 기록 될 총 금액
+	    			
 	    			console.log(amount);
-	    			if(isNaN(amount)){
+	    			if(isNaN(amount)){ //연체 상태가 아니면 amount에 overdue를 더하지 않는다...
 	    				amount = jsonData[index].rentalRate;
 	    			}
 	    			console.log(amount);
 	    			
 	    			if(jsonData[index].state == '연체'){
 	    				console.log('연체입니다.');
-	    				alert('연체입니다.');
 	    				//alert('연체료는 ' + jsonData[index].overdue + '$ 입니다.');
 	    				
 	    				//연체료 알림창!
 	    				let overdueConfirm = confirm('연체료는 ' +jsonData[index].overdue+ '$ 입니다.');
 	    				console.log(overdueConfirm);
 	    				
+	    				//연체료 내기에서 취소 누른경우...
 	    				if(overdueConfirm == false){
 	    					alert('연체료를 내주는 착한 손님이 됩시다.');
 	    					return;
 	    				}
-	    				
-	    				$.ajax({
-	    					type: 'get',
-	    					url: '/modifyRentalAndPayment',
-	    					data: {rentalId: jsonData[index].rentalId, amount: amount},	
-	    					success: function(jsonData){
-	    						console.log('됬을까???');
-	    					}
-	    				})
-	    				
 	    			}
+	    			
+	    			//최종적으로 rental과 payment에 기록
+	    			$.ajax({
+    					type: 'get',
+    					url: '/modifyRentalAndPaymentForReturn',
+    					data: {rentalId: jsonData[index].rentalId, amount: amount},	
+    					success: function(jsonData){
+    						console.log('됬을까???');
+    						
+    						returns();
+    					}
+    				})
 
 	    		})
 	    	}
 	    })
-	})
-	
-	
-	
+	})	
 });
 </script>
 </head>
 <body>
 <div class="container">
-
-	<h1>대여/반남</h1>
-	
 	<!-- 대여버튼 -->
 	<button type="button" data-toggle="modal" data-target="#rental">
    		 대여
