@@ -90,6 +90,6 @@ public class CustomerController {
 		model.addAttribute("searchName", searchName);
 		model.addAttribute("searchPhone", searchPhone);
 		model.addAttribute("storeId", storeId);
-		return "getCustomerList";
+		return "getCustomerListTest";
 	}
 }

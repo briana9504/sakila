@@ -31,7 +31,7 @@ public class HomeController {
 		//log 출력
 		log.debug("HomeController test");
 		
-		return "home";
+		return "homeTest";
 	}
 	
 	@GetMapping("/admin/logout")
