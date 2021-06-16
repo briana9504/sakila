@@ -64,8 +64,8 @@ $(document).ready(function(){
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Table</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Bootstrap</a></li>
+                             <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">home</a></li>
+                            <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getCustomerList">고객목록</a></li>
                         </ol>
                     </div>
                 </div>
@@ -104,6 +104,10 @@ $(document).ready(function(){
 										</tbody>
 									</table>
 									
+									<!-- 고객등록 -->
+									<div>
+										<a href="${pageContext.request.contextPath}/admin/addCustomer">고객등록</a>
+									</div>
 									
 									
 										<!-- 현재 페이지/ 마지막 페이지 -->

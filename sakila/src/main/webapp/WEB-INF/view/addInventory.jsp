@@ -14,6 +14,8 @@ $(document).ready(function(){
 	
 	$('#btn').click(function(){
 		console.log('ready!');
+		
+		$('#action').submit();
 	})
 });
 </script>
@@ -46,7 +48,7 @@ $(document).ready(function(){
 	</div>
 	
 	<div>
-		<button id="btn">재고추가</button>
+		<button type="button" id="btn">재고추가</button>
 	</div>
 	</form>
 

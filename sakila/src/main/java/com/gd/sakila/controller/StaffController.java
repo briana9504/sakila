@@ -43,7 +43,7 @@ public class StaffController {
 		
 		model.addAttribute("countryList", list);
 		
-		return "addStaff";
+		return "addStaffTest";
 	}
 	
 	@GetMapping("/getStaffOne")
@@ -53,7 +53,7 @@ public class StaffController {
 		Map<String,Object> staffMap = this.staffService.getStaffOne(ID);
 		log.debug("§§§§§§§§§§§§§§§§§§ staffMap: "+ staffMap);
 		model.addAttribute("staffMap", staffMap);
-		return "getStaffOne";
+		return "getStaffOneTest";
 	}
 	
 	@GetMapping("/getStaffList")
@@ -62,7 +62,7 @@ public class StaffController {
 		log.debug("§§§§§§§§§§§§§§§§§§ getStaffList: "+ staffList);
 		
 		model.addAttribute("staffList", staffList);
-		return "getStaffList";
+		return "getStaffListTest";
 	}
 
 }

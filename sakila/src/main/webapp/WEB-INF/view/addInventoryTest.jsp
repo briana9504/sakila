@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>staffList</title>
+<title>add inventory</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!-- Favicon icon -->
@@ -15,6 +15,19 @@
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	console.log('ready');
+	
+	//$('#film').select2();
+	
+	$('#btn').click(function(){
+		console.log('ready!');
+		
+		$('#action').submit();
+	})
+});
+</script>
 </head>
 <body>
 	<div id="preloader">
@@ -36,64 +49,70 @@
 	            <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>직원 목록</h4>
+                            <h4>재고 등록</h4>
                             <p class="mb-0"><!-- 쓸거 있으면 쓰기... --></p>
                         </div>
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">home</a></li>
-                             <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a></li>
+                            <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getCustomerList">재고목록</a></li>
+                        	<li class="breadcrumb-item active">재고등록</li>
                         </ol>
                     </div>
                 </div>
                 <!-- 제목 끝 -->
             	 <div class="row">
-            	 	<!-- 리스트 시작 -->
-            	 	<div class="col-lg-12">
+            	 
+            	 	<!-- 리스트 시작... -->
+                	 <div class="col-lg-12">
                         <div class="card">
                         	<div class="card-header">
-                                
+                                <p></p>
                             </div>
                              <div class="card-body">
-                                <div class="table">
-                                		
-										<table class="table table-responsive-sm">
-											<thead>
-												<tr>
-													<th>ID</th>
-													<th>name</th>
-													<th>SID(근무 매장 번호)</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="s" items="${staffList}">
-													<tr>
-														<td>${s.ID}</td>
-														<td>
-															<a href="${pageContext.request.contextPath}/admin/getStaffOne?ID=${s.ID}">${s.name}</a>
-															
-														</td>
-														<td>${s.address}</td>
-														<td>${s.SID}</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-										
-										<div>
-											<a href="${pageContext.request.contextPath}/admin/addStaff">직원등록</a>
-										</div>
-									                                  	                                  	
-	                             </div>
-	                           </div>                        
-	                        </div>
-	                     </div>	                
+                             
+                                <form id="action" action="${pageContext.request.contextPath}/admin/addInventory" method="post">
+									<div>
+										매장 : 
+										<select name="storeId">
+											<option value="1">1호점</option>
+											<option value="2">2호점</option>
+										</select>
+									</div>
+									
+									<div>
+										영화: 
+										<input list="film" name="filmId">
+										<datalist id="film">
+											<c:forEach items="${filmList}" var="f">
+												<option value="${f.filmId}">${f.title}</option>
+											</c:forEach>
+										</datalist>
+									</div>
+									
+									<div>
+										수량: 
+										<input type="text" name="volume">
+									</div>
+									
+									<div>
+										<button type="button" id="btn">재고추가</button>
+									</div>
+								</form>
+                                
+	                          </div>         
+	                        </div>           
+	                     </div>
+	                
 	                <!-- 리스트 끝 -->
-           	 	
-            	</div>
+            	 
+            	 	
+					            	 
+            	 </div>
             </div>
-         </div>   	     
+         </div>
+    
       	<!-- footer -->
 		<jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include>
      </div>

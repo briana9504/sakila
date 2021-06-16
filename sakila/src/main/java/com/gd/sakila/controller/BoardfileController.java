@@ -38,7 +38,7 @@ public class BoardfileController {
 			return"redirect:/admin/getBoardOne?boardId="+boardId;
 		}
 		model.addAttribute("boardId", boardId);		
-		return "addBoardfile";
+		return "addBoardfileTest";
 	}
 	
 	@PostMapping("/addBoardfile")

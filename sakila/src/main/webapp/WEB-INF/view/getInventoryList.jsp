@@ -21,7 +21,7 @@ $(document).ready(function(){
 
 	<h1>재고리스트</h1>
 	
-	<table border="1">
+	<table class="table table-hover table-responsive-sm">
 		<thead>
 			<tr>
 				<th>ID</th>

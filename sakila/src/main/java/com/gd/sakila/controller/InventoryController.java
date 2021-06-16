@@ -37,7 +37,7 @@ public class InventoryController {
 	@GetMapping("/removeInventory")
 	public String removeInventory() {
 		
-		return "removeInventory";
+		return "removeInventoryTest";
 	}
 	
 	@PostMapping("/addInventory")	
@@ -56,7 +56,7 @@ public class InventoryController {
 	public String addInventory(Model model) {//인벤토리 입력폼으로
 
 		model.addAttribute("filmList", this.filmMapper.selectFilmListByInventory());
-		return "addInventory";
+		return "addInventoryTest";
 	}
 	
 	@GetMapping("/getInventoryList")
@@ -74,6 +74,6 @@ public class InventoryController {
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("inventoryList", map.get("inventoryList"));
-		return "getInventoryList";
+		return "getInventoryListTest";
 	}
 }

@@ -56,7 +56,7 @@ public class FilmController {
 		model.addAttribute("countInvetory2", map.get("countInvetory2"));
 		//영화정보 
 		model.addAttribute("filmOne", filmOne);	
-		return "modifyFilmOne";
+		return "modifyFilmOneTest";
 	}
 	
 	@GetMapping("/addFilm")//영화 추가 폼으로 연결 ->필요한 것 categoryList, languageList
@@ -64,7 +64,7 @@ public class FilmController {
 		
 		model.addAttribute("categoryList", this.categoryServce.getCategoryList());
 		model.addAttribute("languageList", this.languageService.getLanguageList());
-		return "addFilm";
+		return "addFilmTest";
 	}
 	
 	@PostMapping("/addFilm") //영화 추가 form 에서 받음
@@ -96,7 +96,7 @@ public class FilmController {
 		
 		model.addAttribute("actorList", list);
 		model.addAttribute("filmId", filmId);
-		return "getFilmActorListByFilm";
+		return "getFilmActorListByFilmTest";
 	}
 	
 	//영화 상세보기
@@ -116,7 +116,7 @@ public class FilmController {
 		model.addAttribute("countInvetory2", map.get("countInvetory2"));
 		//영화정보 
 		model.addAttribute("filmOne", filmOne);
-		return "getFilmOne";
+		return "getFilmOneTest";
 	}
 	
 	//영화 리스트
@@ -171,7 +171,7 @@ public class FilmController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("currentPage", currentPage);
-		return "getFilmList";
+		return "getFilmListTest";
 	}
 	
 }

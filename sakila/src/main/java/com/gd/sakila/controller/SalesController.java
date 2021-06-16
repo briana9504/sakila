@@ -19,7 +19,7 @@ public class SalesController {
 	@GetMapping("/getSales")
 	public String getSales(Model model) {
 		model.addAttribute("bestSaller", this.filmService.getBestSellers());
-		return "getSales";
+		return "getSalesTest";
 	}
 
 }

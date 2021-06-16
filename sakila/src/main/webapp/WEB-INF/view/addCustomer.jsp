@@ -199,8 +199,7 @@ $(document).ready(function(){
 					<button type="button" id="phoneCheckBtn">중복검사</button>
 					<span id="phoneTarget">중복 검사를 해주세요.</span>
 				</td>
-			</tr>
-			
+			</tr>			
 		</table>
 		
 		<div>

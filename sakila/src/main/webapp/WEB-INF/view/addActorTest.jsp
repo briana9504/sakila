@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>staffList</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>add actor</title>
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/images/favicon.png">
@@ -15,6 +15,28 @@
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	console.log('ready!');
+	
+	$('#btn').click(function(){
+		console.log('btn.click!');
+		
+		if($('#firstName').val() == ''){
+			alert('firstName을 입력하시오.');
+			$('#firstName').focus();
+			
+		} else if($('#lastName').val() == ''){
+			alert('lastName을 입력하시오.');
+			$('#lastName').focus();
+			
+		} else{
+			$('#addActionForm').submit();
+		}
+		
+	});
+});
+</script>
 </head>
 <body>
 	<div id="preloader">
@@ -36,64 +58,53 @@
 	            <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>직원 목록</h4>
+                            <h4>배우 등록</h4>
                             <p class="mb-0"><!-- 쓸거 있으면 쓰기... --></p>
                         </div>
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">home</a></li>
-                             <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a></li>
+                            <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getActorList">배우목록</a></li>
+                        	<li class="breadcrumb-item active">배우등록</li>
                         </ol>
                     </div>
                 </div>
                 <!-- 제목 끝 -->
             	 <div class="row">
-            	 	<!-- 리스트 시작 -->
-            	 	<div class="col-lg-12">
+            	 	<!-- 리스트 시작... -->
+                	 <div class="col-lg-12">
                         <div class="card">
                         	<div class="card-header">
-                                
+                                <p>등록할 배우의 이름을 입력하세요.</p>
                             </div>
                              <div class="card-body">
-                                <div class="table">
-                                		
-										<table class="table table-responsive-sm">
-											<thead>
-												<tr>
-													<th>ID</th>
-													<th>name</th>
-													<th>SID(근무 매장 번호)</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="s" items="${staffList}">
-													<tr>
-														<td>${s.ID}</td>
-														<td>
-															<a href="${pageContext.request.contextPath}/admin/getStaffOne?ID=${s.ID}">${s.name}</a>
-															
-														</td>
-														<td>${s.address}</td>
-														<td>${s.SID}</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-										
-										<div>
-											<a href="${pageContext.request.contextPath}/admin/addStaff">직원등록</a>
+                             
+                                <form id="addActionForm" action="${pageContext.request.contextPath}/admin/addActor" method="post">
+									<div class="row">
+										<div class="col-sm-2">
+											<input id="firstName" name="firstName" type="text" placeholder="firstName"> 
 										</div>
-									                                  	                                  	
-	                             </div>
-	                           </div>                        
-	                        </div>
-	                     </div>	                
+										<div class="col-sm-2">
+											<input id="lastName" name="lastName"type="text" placeholder="lastName">
+										</div>
+								
+										<div class="col-sm-1">
+											<button type="button" id="btn">등록</button>
+										</div>
+									</div>									
+								</form>
+                                
+	                          </div>         
+	                        </div>           
+	                     </div>
+	                
 	                <!-- 리스트 끝 -->
-           	 	
-            	</div>
+            	             	 
+            	 </div>
             </div>
-         </div>   	     
+         </div>
+    
       	<!-- footer -->
 		<jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include>
      </div>

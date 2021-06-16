@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>staffList</title>
+<title>staff one</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!-- Favicon icon -->
@@ -36,7 +36,7 @@
 	            <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>직원 목록</h4>
+                            <h4>직원 상세정보</h4>
                             <p class="mb-0"><!-- 쓸거 있으면 쓰기... --></p>
                         </div>
                     </div>
@@ -44,6 +44,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">home</a></li>
                              <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a></li>
+                             <li class="breadcrumb-item active">직원 상세정보</li>
                         </ol>
                     </div>
                 </div>
@@ -58,42 +59,51 @@
                              <div class="card-body">
                                 <div class="table">
                                 		
-										<table class="table table-responsive-sm">
-											<thead>
-												<tr>
-													<th>ID</th>
-													<th>name</th>
-													<th>SID(근무 매장 번호)</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="s" items="${staffList}">
-													<tr>
-														<td>${s.ID}</td>
-														<td>
-															<a href="${pageContext.request.contextPath}/admin/getStaffOne?ID=${s.ID}">${s.name}</a>
-															
-														</td>
-														<td>${s.address}</td>
-														<td>${s.SID}</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-										
-										<div>
-											<a href="${pageContext.request.contextPath}/admin/addStaff">직원등록</a>
-										</div>
+									<table class="table table-hover table-responsive-sm">
+										<tr>
+											<th>ID</th>
+											<td>${staffMap.ID}</td>
+										</tr>
+										<tr>
+											<th>name</th>
+											<td>${staffMap.name}</td>
+										</tr>
+										<tr>
+											<th>address</th>
+											<td>${staffMap.address}</td>
+										</tr>
+										<tr>
+											<th>zip code</th>
+											<td>${staffMap.zipCode}</td>
+										</tr>
+										<tr>
+											<th>phone</th>
+											<td>${staffMap.phone}</td>
+										</tr>
+										<tr>
+											<th>city</th>
+											<td>${staffMap.city}</td>
+										</tr>
+										<tr>
+											<th>country</th>
+											<td>${staffMap.country}</td>
+										</tr>
+										<tr>
+											<th>SID(근무 매장 번호)</th>
+											<td>${staffMap.SID}</td>
+										</tr>
+									</table>
 									                                  	                                  	
 	                             </div>
 	                           </div>                        
 	                        </div>
 	                     </div>	                
 	                <!-- 리스트 끝 -->
-           	 	
-            	</div>
+            	 
+            	 </div>
             </div>
-         </div>   	     
+         </div>
+     	     
       	<!-- footer -->
 		<jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include>
      </div>

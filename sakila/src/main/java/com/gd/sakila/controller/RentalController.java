@@ -39,7 +39,7 @@ public class RentalController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("rentalList", map.get("rentalList"));
 		model.addAttribute("currentPage", currentPage);
-		return "getRentalAndReturn";
+		return "getRentalAndReturnTest";
 	}
 	
 }

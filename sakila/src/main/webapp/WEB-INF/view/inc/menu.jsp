@@ -147,7 +147,7 @@
                     	<i class="icon icon-world-2"></i><span class="nav-text">재고관리</span></a>
                     </li>
                     <li><a href="${pageContext.request.contextPath}/admin/getSales">
-                    	<i class="icon icon-chart-bar-33"></i><span class="nav-text">매출보기</span></a>
+                    	<i class="icon icon-chart-bar-33"></i><span class="nav-text">매출현황</span></a>
                     </li>
 
                     <li><a href="${pageContext.request.contextPath}/admin/getCustomerList">

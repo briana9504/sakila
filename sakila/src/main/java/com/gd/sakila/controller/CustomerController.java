@@ -47,7 +47,7 @@ public class CustomerController {
 		log.debug("■■■■■■ countryList: "+list);
 		
 		model.addAttribute("countryList", list);
-		return "addCustomer";
+		return "addCustomerTest";
 	}
 	
 	@GetMapping("/getCustomerOne")
@@ -64,7 +64,7 @@ public class CustomerController {
 		model.addAttribute("customerOne" , map.get("customerOne"));
 		model.addAttribute("rentalList", map.get("rentalList"));
 		model.addAttribute("totalPayment", totalPayment);
-		return "getCustomerOne";
+		return "getCustomerOneTest";
 	}
 	
 	@GetMapping("/getCustomerList")

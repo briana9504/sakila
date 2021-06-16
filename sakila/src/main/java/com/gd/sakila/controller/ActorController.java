@@ -24,7 +24,7 @@ public class ActorController {
 	
 	@GetMapping("/addActor")
 	public String addActor() {
-		return "addActor";
+		return "addActorTest";
 	}
 	
 	@PostMapping("/addActor")
@@ -57,6 +57,6 @@ public class ActorController {
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("actorList", map.get("actorList"));
-		return "getActorList";
+		return "getActorListTest";
 	}
 }

@@ -34,7 +34,7 @@ public class BoardController {
 		Map<String, Object> map = boardServcie.getBoardOne(boardId);
 		log.debug("▶▶▶▶▶ modifyBoard() map: "+map.get("boardMap"));
 		model.addAttribute("map", map.get("boardMap"));
-		return"modifyBoard";
+		return"modifyBoardTest";
 	}
 	
 	@PostMapping("/modifyBoard")
@@ -62,13 +62,13 @@ public class BoardController {
 	public String removeBoard(Model model, @RequestParam(value = "boardId", required = true)int boardId) {
 		log.debug("▶▶▶▶▶ param: "+boardId);
 		model.addAttribute("boardId", boardId);
-		return"removeBoard";//리턴타입 뷰이름 -> 문자열
+		return"removeBoardTest";//리턴타입 뷰이름 -> 문자열
 	}
 	
 	//게시물 입력창
 	@GetMapping("/addBoard")
 	public String addBoard() {
-		return"addBoard";
+		return"addBoardTest";
 	}
 	
 	//게시물 입력 후 올리기
@@ -101,7 +101,7 @@ public class BoardController {
 		model.addAttribute("insertDate", insertDate);
 		model.addAttribute("boardMap",map.get("boardMap"));
 		model.addAttribute("commentList", map.get("commentList"));
-		return "getBoardOne";
+		return "getBoardOneTest";
 	}
 	
 	//관리자 게시판
@@ -122,6 +122,6 @@ public class BoardController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("boardList", map.get("boardList"));
 		
-		return "getBoardList";
+		return "getBoardListTest";
 	}
 }
