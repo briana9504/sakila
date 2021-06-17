@@ -58,7 +58,7 @@
                              <div class="card-body">
                                 <div class="table">
                                 		
-										<table class="table table-responsive-sm">
+										<table class="table table-responsive-sm text-center">
 											<thead>
 												<tr>
 													<th>ID</th>
@@ -71,10 +71,8 @@
 													<tr>
 														<td>${s.ID}</td>
 														<td>
-															<a href="${pageContext.request.contextPath}/admin/getStaffOne?ID=${s.ID}">${s.name}</a>
-															
+															<a href="${pageContext.request.contextPath}/admin/getStaffOne?ID=${s.ID}">${s.name}</a>	
 														</td>
-														<td>${s.address}</td>
 														<td>${s.SID}</td>
 													</tr>
 												</c:forEach>

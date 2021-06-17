@@ -13,6 +13,12 @@
     <link href="${pageContext.request.contextPath}/vendor/summernote/summernote.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+<style>
+	table {
+    margin-left:auto;
+    margin-right:auto;
+	}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -68,7 +74,7 @@ $(document).ready(function(){
 					  options: {
 					    plugins: {
 					      title: {
-					        display: true,
+					        display: false,
 					        text: 'Chart.js Bar Chart - Stacked'
 					      },
 					    },
@@ -148,7 +154,7 @@ $(document).ready(function(){
 				        position: 'top',
 				      },
 				      title: {
-				        display: true,
+				        display: false,
 				        text: 'Chart.js Line Chart'
 				      }
 				    }
@@ -370,14 +376,14 @@ $(document).ready(function(){
 	            <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>매출 현황</h4>
+                            <h4 class="title">매출 현황</h4>
                             <p class="mb-0">카테고리, 달,일별 매출액과 베스트셀러</p>
                         </div>
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">home</a></li>
-                             <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getSales">sales</a></li>
+                             <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getSales">매출현황</a></li>
                         </ol>
                     </div>
                 </div>
@@ -401,24 +407,26 @@ $(document).ready(function(){
                          <div class="card">
                              <div class="card-header">
                                  <h4 class="card-title">일별 매출</h4>
+                                 
+                                 <div class="row justify-content-end col-sm-7">
+									<select id="yearByDaysSales" name="year"  class="form-control col-sm-5">
+										<option>2005</option>
+										<option>2006</option>
+										<option>2021</option>
+									</select>
+									
+									<select id="monthByDaysSales" name="year"  class="form-control col-sm-4">
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+									</select>
+									<button id="daysBtn" class="btn col-sm">변화</button>
+								</div>                                 
                              </div>
-                             <div class="card-body">
                              
-                             		<div>
-										<select id="yearByDaysSales" name="year">
-											<option>2005</option>
-											<option>2006</option>
-											<option>2021</option>
-										</select>
-										
-										<select id="monthByDaysSales" name="year">
-											<option>5</option>
-											<option>6</option>
-											<option>7</option>
-											<option>8</option>
-										</select>
-										<button id="daysBtn">날짜바꾸기</button>
-									</div>
+                             <div class="card-body">
+                                   		
                                  <div id="span3">
 									<canvas id="myChart3"></canvas>
 								</div>
@@ -449,18 +457,18 @@ $(document).ready(function(){
                               <div class="card-header">
                                   <h4 class="card-title">대여량 top10</h4>
                               </div>
-                              <div class="card-body text-center">
-                                  <table class="table-responsive">
-									<thead>
+                              <div class="card-body">
+                                  <table class="table table-bordered text-center col-sm-10">
+									<thead class="thead-dark">
 										<tr>
 											<th>제목</th>
-											<th>총 대여횟수</th>
+											<th>대여수</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${bestSaller}" var="b">
 											<tr>
-												<td>${b.title}</td>
+												<td class="text-left">${b.title}</td>
 												<td>${b.cnt}</td>
 											</tr>
 										</c:forEach>

@@ -58,7 +58,7 @@
                             </div>
                              <div class="card-body">
                                 <div class="table">	
-                                	<table class="table table-hover table-responsive-sm">
+                                	<table class="table table-hover table-responsive-sm text-center">
 											<thead>
 									            <tr>
 									                <th>boardId</th>
@@ -69,11 +69,11 @@
 									        <tbody>
 									            <c:forEach var="b" items="${boardList}">
 									                <tr>
-									                    <td class="col-sm-1 text-center">${b.boardId}</td>
-									                    <td class="col-sm-8"> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+									                    <td class="col-sm-2">${b.boardId}</td>
+									                    <td class="col-sm-7 text-left"> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
 									                    	<a href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${b.boardId}">${b.boardTitle}</a>
 									                    </td>
-									                    <td class="col-sm-4 text-center">${b.insertDate.substring(0,10)}</td>
+									                    <td class="col-sm-4">${b.insertDate.substring(0,10)}</td>
 									                </tr>
 									            </c:forEach>
 									        </tbody>

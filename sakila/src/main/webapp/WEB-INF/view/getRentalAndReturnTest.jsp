@@ -17,6 +17,19 @@
 	.btn{
 		margin: 5px;
 	}
+	.margin{
+		margin: 10px;
+	}
+	nav {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+	table{
+		vertical-align: middle;
+	}
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
@@ -34,7 +47,7 @@ $(document).ready(function(){
 	    		$('#target').empty();
 	    		//item.customerId  ,, $('#target').append('<td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId='+item.customerId+'">'+item.name+'</a></td>');
 	    		$(jsonData).each(function(index,item){
-	    			$('#target').append('<tr>');
+	    			$('#target').append('<tr class="align-self-center">');
 	    			$('#target').append('<td>'+item.customerId+'</td>');
 	    			$('#target').append('<td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId='+item.customerId+'">'+item.name+'</a></td>');
 	    			$('#target').append('<td>'+item.phone+'</td>');
@@ -61,12 +74,12 @@ $(document).ready(function(){
 	    		
 	    		$(jsonData).each(function(index,item){
 	    			
-	    			$('#rentalTarget').append('<tr>');
+	    			$('#rentalTarget').append('<tr class="align-self-center">');
 	    			$('#rentalTarget').append('<td class="searchInvetoryId">'+item.inventoryId+'</td>');
 	    			$('#rentalTarget').append('<td>'+item.title+'</td>');
-	    			$('#rentalTarget').append('<td>'+item.state+'</td>');
+	    			$('#rentalTarget').append('<td >'+item.state+'</td>');
 	    			$('#rentalTarget').append('<td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId='+item.customerId+'">'+item.customerId+'</a></td>');
-	    			$('#rentalTarget').append('<td><button class="returnBtn">반납</button></td>');
+	    			$('#rentalTarget').append('<td><button class="returnBtn btn">반납</button></td>');
 	    			$('#rentalTarget').append('</tr>'); 
 	    			
 	    		});
@@ -159,7 +172,7 @@ $(document).ready(function(){
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">home</a></li>
-                             <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getRentalAndReturn">rental and return</a></li>
+                            <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getRentalAndReturn">대여/반납</a></li>
                         </ol>
                     </div>
                 </div>
@@ -193,9 +206,8 @@ $(document).ready(function(){
 								        <div class="modal-body">
 								        	<h6>대여하는 손님의 휴대폰 번호를 적어주세요</h6>
 								        	
-								         	<div>
-								         		<input id="phone" type="text">
-								      			
+								         	<div class="col-sm-5 margin">
+								         		<input id="phone" class="form-control input-default" type="text">								      			
 								         	</div>
 								         	
 								         	<table class="table">
@@ -245,9 +257,9 @@ $(document).ready(function(){
 								        
 								        <!-- Modal body -->
 								        <div class="modal-body">
-								         	<p> 반납할 영화의 inventory ID를 적어주세요. </p>
-								         	<div>
-								         		<input type="text" id="inventoryId">
+								         	<h6> &nbsp;&nbsp;&nbsp;&nbsp; 반납할 영화의 inventory ID를 적어주세요. </h6>
+								         	<div class="col-sm-5 margin">
+								         		<input type="text" class="form-control input-default" id="inventoryId">
 								         	</div>
 								         	
 								         	<table class="table" id="rentalTable">
@@ -277,7 +289,7 @@ $(document).ready(function(){
 								  </div>
 								  <!-- 반납 버튼 끝 -->
 								  <!-- 대여 목록 -->
-								  <table class="table">
+								  <table class="table text-center">
 										<thead>
 											<tr>
 												<th>지점</th>
@@ -291,7 +303,7 @@ $(document).ready(function(){
 										<c:forEach items="${rentalList}" var="r">
 											<tr>
 												<td>${r.storeId}</td>
-												<td>${r.title}</td>
+												<td class="text-left">&nbsp;&nbsp; ${r.title}</td>
 												<td>${r.rentalDate}</td>
 												<td>${r.customerId}</td>
 												<td>${r.state}</td>
@@ -321,7 +333,7 @@ $(document).ready(function(){
 		                                </nav>								
 									 -->
 									 	<nav>
-		                                    <ul class="pagination pagination-gutter ">
+		                                    <ul class="pagination pagination-gutter">
 		                                    	<c:if test="${currentPage > 1}">
 			                                        <li class="page-item page-indicator">
 			                                            <a class="page-link" href="${pageContext.request.contextPath}/admin/getRentalAndReturn?currentPage=${currentPage-1}">

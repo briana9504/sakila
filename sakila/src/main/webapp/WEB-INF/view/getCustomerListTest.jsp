@@ -13,7 +13,21 @@
     <link href="${pageContext.request.contextPath}/vendor/summernote/summernote.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+<style>
+	nav{
+		display: table;
+		margin-left: auto;
+		margin-right: auto;
+		text-align: center;
+	}
+	.btn{
+		margin: 5px;
+	}
+	table{
+		vertical-align: middle;
+	}
 
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
@@ -27,10 +41,10 @@ $(document).ready(function(){
 		
 		if($('#searchOption').val() == 'phone'){
 			$('#target').empty();
-			$('#target').append('<input type="text" name="searchPhone" id="searchPhone">');
+			$('#target').append('<input type="text" name="searchPhone" id="searchPhone" class="form-control">');
 		} else if($('#searchOption').val() == 'name'){
 			$('#target').empty();
-			$('#target').append('<input type="text" name="searchName" id="searchName">');
+			$('#target').append('<input type="text" name="searchName" id="searchName" class="form-control">');
 		}
 		
 	});
@@ -77,13 +91,13 @@ $(document).ready(function(){
                              <div class="card-body">
                                 <div class="table-responsive">
                                 	
-                                	<div>
+                                	<div class="float-right">
 										<a href="${pageContext.request.contextPath}/admin/getCustomerList">전체</a>
 										<a href="${pageContext.request.contextPath}/admin/getCustomerList?storeId=1">1호점</a>
 										<a href="${pageContext.request.contextPath}/admin/getCustomerList?storeId=2">2호점</a>
 									</div>
                                 	
-                                	<table class="table table-hover table-responsive-sm">
+                                	<table class="table table-hover table-responsive-sm text-center">
 										<thead>
 											<tr>
 												<th>store id</th>
@@ -96,7 +110,7 @@ $(document).ready(function(){
 											<c:forEach items="${customerList}" var="c">
 												<tr>
 													<td>${c.storeId}</td>
-													<td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${c.customerId}">${c.name}</a></td>
+													<td class="text-left"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${c.customerId}">${c.name}</a></td>
 													<td>${c.phone}</td>
 													<td>${c.blackAndVip}</td>
 												</tr>
@@ -105,45 +119,52 @@ $(document).ready(function(){
 									</table>
 									
 									<!-- 고객등록 -->
-									<div>
+									<div class="float-right">
 										<a href="${pageContext.request.contextPath}/admin/addCustomer">고객등록</a>
 									</div>
 									
 									
-										<!-- 현재 페이지/ 마지막 페이지 -->
-										<div class="text-center">
-											${currentPage}/${lastPage}
-										</div>
-									
-									
-									
-									<div>
-										<!-- 페이징 -->
-										<ul class="pager">
-									        <c:if test="${currentPage > 1}">
-								            	<li class="previous"><a href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage-1}&searchName=${searchName}&searchPhone=${searchPhone}">이전</a></li>        
-									        </c:if>
-									       
-									        <c:if test="${currentPage < lastPage}">
-								            	<li class="next"><a href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage+1}&searchName=${searchName}&searchPhone=${searchPhone}">다음</a></li>        
-									        </c:if>
-									    </ul>
-								    </div>
+									<!-- 현재 페이지/ 마지막 페이지 -->
+									<div class="text-center">
+										${currentPage}/${lastPage}
+									</div>
+							    
+								    <nav>
+	                                    <ul class="pagination pagination-gutter">
+	                                    	<c:if test="${currentPage > 1}">
+		                                        <li class="page-item page-indicator">
+		                                            <a class="page-link" href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage-1}&searchName=${searchName}&searchPhone=${searchPhone}">
+		                                                <i class="icon-arrow-left"></i></a>
+		                                        </li>
+	                                        </c:if>
+	                                        
+	                                         <c:if test="${currentPage < lastPage}">
+		                                        <li class="page-item page-indicator">
+		                                            <a class="page-link" href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage+1}&searchName=${searchName}&searchPhone=${searchPhone}">
+		                                                <i class="icon-arrow-right"></i></a>
+		                                        </li>
+	                                        </c:if>
+	                                    </ul>
+	                                </nav>
 								    
-								    <form id="searchAction" action="${pageContext.request.contextPath}/admin/getCustomerList" method="get">
-										<select id="searchOption">
-											<option value="name">이름</option>
-									    	<option value="phone">휴대폰번호</option>
-										</select>
-										<span id="target">
-											<input type="text" name="searchName" id="searchName">
-										</span>
-										<button type="button" id="btn">검색</button>
-									</form>
-                                  
+								    							   								   
+									   	<form id="searchAction" action="${pageContext.request.contextPath}/admin/getCustomerList" method="get" style="width:90%">
+									   		<div class="row">
+									   			<div class="col-sm-4"></div>
+										   		<select id="searchOption" class="form-control col-sm-1">
+													<option value="name">이름</option>
+											    	<option value="phone">휴대폰번호</option>
+												</select>
+												<span id="target col-sm-5">
+													<input type="text" name="searchName" id="searchName" class="form-control">
+												</span>
+												<button type="button" id="btn" class="btn btn-light col-sm-1">검색</button>			
+									   		</div>				   												
+										</form>			
+								   
+								   							                                     
                                 </div>
-                            </div>
-                            
+                            </div>                
                         </div>
                      </div>
                 
