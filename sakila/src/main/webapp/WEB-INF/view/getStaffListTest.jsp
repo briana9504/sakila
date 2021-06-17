@@ -15,6 +15,7 @@
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/chartjs/chartUpload/3.3.2"></script>
 </head>
 <body>
 	<div id="preloader">

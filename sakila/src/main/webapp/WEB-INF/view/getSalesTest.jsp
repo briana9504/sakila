@@ -21,6 +21,12 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- 
+	<script src="${pageContext.request.contextPath}/vendor/chart.js/Chart.bundle.min.js"></script>
+	
+	<script src="./vendor/chart.js/Chart.bundle.min.js"></script>
+    <script src="./js/plugins-init/chartjs-init.js"></script>
+ -->
 <script>
 $(document).ready(function(){
 	

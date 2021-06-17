@@ -13,7 +13,21 @@
     <link href="${pageContext.request.contextPath}/vendor/summernote/summernote.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-
+<style>
+	.margin{
+		margin: 10px;
+	}
+	
+	nav{
+		display: table;
+		margin-left: auto;
+		margin-right: auto;
+		text-align: center;
+	}
+	.btn{
+		margin: 5px;
+	}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
@@ -51,7 +65,7 @@ $(document).ready(function(){
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">home</a></li>
-                             <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getCustomerList">재고목록</a></li>
+                            <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getCustomerList">재고목록</a></li>
                         </ol>
                     </div>
                 </div>
@@ -61,9 +75,9 @@ $(document).ready(function(){
             	 	<!-- 리스트 시작... -->
                 	 <div class="col-lg-12">
                         <div class="card">
-                        	<div class="card-header">
-                                <a href="${pageContext.request.contextPath}/admin/addInventory">재고추가</a>
-								<a href="${pageContext.request.contextPath}/admin/removeInventory">재고삭제</a>
+                        	<div class="card-header justify-content-end">
+                                <a class="margin" href="${pageContext.request.contextPath}/admin/addInventory">재고추가</a>
+								<a class="margin" href="${pageContext.request.contextPath}/admin/removeInventory">재고삭제</a>
                             </div>
                              <div class="card-body">
                                 <div class="table">
@@ -116,25 +130,32 @@ $(document).ready(function(){
 											${currentPage}/${lastPage}
 										</div>
 										
-										<div>
-											<!-- 페이징 -->
-											<ul class="pager">
-										        <c:if test="${currentPage > 1}">
-									            	<li class="previous"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+-1}">이전</a></li>        
-										        </c:if>
-										       
-										        <c:if test="${currentPage < lastPage}">
-									            	<li class="next"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+1}">다음</a></li>        
-										        </c:if>
-										    </ul>
-									    </div>
+										 <nav>
+		                                    <ul class="pagination pagination-gutter">
+		                                    	<c:if test="${currentPage > 1}">
+			                                        <li class="page-item page-indicator">
+			                                            <a class="page-link" href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+-1}">
+			                                                <i class="icon-arrow-left"></i></a>
+			                                        </li>
+		                                        </c:if>
+		                                        
+		                                         <c:if test="${currentPage < lastPage}">
+			                                        <li class="page-item page-indicator">
+			                                            <a class="page-link" href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+1}">
+			                                                <i class="icon-arrow-right"></i></a>
+			                                        </li>
+		                                        </c:if>
+		                                    </ul>
+										</nav>
 									    
 									    <form id="searchAction" action="${pageContext.request.contextPath}/admin/getInventoryList" method="get">
-									
-											<span id="target">
-												<input type="text" name="searchWord" id="searchWord">
-											</span>
-											<button type="button" id="btn">검색</button>
+									    	<div class="row">
+									    		<div class="col-sm-5"></div>
+									    		<span id="target col-sm-5">
+													<input type="text" name="searchWord" id="searchWord" class="form-control">
+												</span>
+												<button type="button" id="btn" class="btn btn-light col-sm-1">검색</button>
+									    	</div>													
 										</form>
                              	
 	                                </div>
