@@ -13,7 +13,11 @@
     <link href="${pageContext.request.contextPath}/vendor/summernote/summernote.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-
+<style>
+	.imges{
+		width: 20%;
+	}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
@@ -57,41 +61,62 @@
                                 
                             </div>
                              <div class="card-body">
-                                <div class="table">
+                                <div class="table text-center">
                                 		
-									<table class="table table-hover table-responsive-sm">
+									<table class="table table-responsive-sm">																			
 										<tr>
-											<th>ID</th>
-											<td>${staffMap.ID}</td>
+											<td class="col-sm-3" rowspan="4">
+												<c:if test="${staffMap.picture != null}">
+													<div>
+						                 				<img src="${pageContext.request.contextPath}/resource/${staffMap.picture}" height="200" width="200">
+						                 			</div>
+												</c:if>											
+											</td>
+										</tr>
+										<tr>
+											<th class="col-sm-3">ID</th>
+											<td>${staffMap.staffId}</td>
 										</tr>
 										<tr>
 											<th>name</th>
 											<td>${staffMap.name}</td>
 										</tr>
 										<tr>
+											<th>email</th>
+											<td>${staffMap.email}</td>
+										</tr>
+										
+										<tr>
+											<td></td>
 											<th>address</th>
 											<td>${staffMap.address}</td>
 										</tr>
 										<tr>
+											<td></td>
 											<th>zip code</th>
 											<td>${staffMap.zipCode}</td>
 										</tr>
 										<tr>
+											<td></td>
 											<th>phone</th>
 											<td>${staffMap.phone}</td>
 										</tr>
 										<tr>
+											<td></td>
 											<th>city</th>
 											<td>${staffMap.city}</td>
 										</tr>
 										<tr>
+											<td></td>
 											<th>country</th>
-											<td>${staffMap.country}</td>
+											<td >${staffMap.country}</td>
 										</tr>
 										<tr>
+											<td></td>
 											<th>SID(근무 매장 번호)</th>
-											<td>${staffMap.SID}</td>
+											<td>${staffMap.storeId}</td>
 										</tr>
+										
 									</table>
 									                                  	                                  	
 	                             </div>

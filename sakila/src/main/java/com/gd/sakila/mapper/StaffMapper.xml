@@ -7,17 +7,21 @@
 		VALUES( #{firstName}, #{lastName}, #{addressId}, #{picture}, #{email}, #{storeId}, #{username}, PASSWORD(#{password}), 1)
 	</insert>
 	<select id="selectStaffListOne" resultType="java.util.Map" parameterType="int">
-		SELECT
-			 ID ID,
-			 NAME name, 
-			 address address, 
-			 phone phone, 
-			 city city, 
-			 country country, 
-			 SID SID,
-			 `zip code` zipCode
-		FROM staff_list
-		WHERE ID = #{staffId}
+		SELECT 
+			sl.ID staffId,
+			sl.name name,
+			sl.address address,
+			sl.`zip code` zipCode,
+			sl.phone phone,
+			sl.city city,
+			sl.country country,
+			sl.SID storeId,
+			s.picture picture,
+			s.email email,
+			s.username username
+		FROM staff_list sl 
+		INNER JOIN staff s ON sl.ID = s.staff_id 
+		WHERE sl.ID= #{staffId}
 	
 	</select>
 	<select id="selectStaffList" resultType="java.util.Map">
