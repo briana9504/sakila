@@ -30,7 +30,7 @@ $(document).ready(function(){
 		console.log('city 목록');
 		$.ajax({
 			type:'get',
-			url:'/getCityList',
+			url:'${pageContext.request.contextPath}/getCityList',
 			data:{countryId : $('#countryId').val()},
 			success: function(jsonData) {
 				$('#cityId').empty();
@@ -65,7 +65,7 @@ $(document).ready(function(){
 					
 					$.ajax({
 						type: 'get',
-						url: '/addCity',
+						url: '${pageContext.request.contextPath}/addCity',
 						data: {city : cityName, countryId : $('#countryId').val()},
 						success: function(jsonData){
 							console.log('도시추가 성공');

@@ -2,6 +2,7 @@ package com.gd.sakila.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.UUID;
 
@@ -43,7 +44,7 @@ public class BoardfileService {
 			String ext = multipartFile.getOriginalFilename().substring(p).toLowerCase();//확장자
 			String prename = UUID.randomUUID().toString().replace("-", "");
 			
-			String fileName = ext + prename;//저장되는 파일 이름
+			String fileName = prename+ext;//저장되는 파일 이름
 			log.debug("§§§§§§§§§ fileName:  "+fileName);
 			boardfile.setBoardfileName(fileName);
 		
@@ -55,7 +56,15 @@ public class BoardfileService {
 				String path = temp.getAbsolutePath();
 				
 				try {
-					multipartFile.transferTo(new File(path+"\\src\\main\\webapp\\resource\\"+fileName));
+					//배포 전 배포 후 나뉜다 --> 운영체제로 확인
+					String os = System.getProperty("os.name");
+					if(os.contains("Win")) { //윈도우의 경우... 배포전
+						multipartFile.transferTo(new File(path+File.separator+Paths.get("src","main","webapp","resource")+File.separator+fileName));
+					} else { //배포 후
+						multipartFile.transferTo(new File(path+File.separator+Paths.get("webapps", "sakila", "resource")+File.separator+fileName));
+					}
+					
+					
 				} catch (Exception e) {
 					throw new RuntimeException();
 				}
@@ -80,7 +89,14 @@ public class BoardfileService {
 		String path = temp.getAbsolutePath();
 		log.debug("확인!!!!!!!!"+path);
 		
-		File file = new File(path+"\\src\\main\\webapp\\resource\\"+boardfile.getBoardfileName());
+		String os = System.getProperty("os.name");
+		File file = null;
+		if(os.contains("Win")) {//윈도우인 경우 - 배포전
+			file = new File(path+File.separator+Paths.get("src","main","webapp","resource")+File.separator+boardfile.getBoardfileName());//메모리 안에 파일을 새로만듬...
+		} else {
+			//배포 버전인 경우 -우분투
+			file = new File(path+File.separator+Paths.get("webapps", "sakila", "resource")+File.separator+boardfile.getBoardfileName());			
+		}
 		if(file.exists()) {//파일이 존재한다면
 			log.debug("§§§§§§§ 파일 삭제 if문!");
 			file.delete();

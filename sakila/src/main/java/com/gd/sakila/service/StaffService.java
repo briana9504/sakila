@@ -2,6 +2,7 @@ package com.gd.sakila.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -65,7 +66,14 @@ public class StaffService {
 				File temp = new File("");
 				String path = temp.getAbsolutePath();//프로젝트 위치
 				log.debug("■■■■■■■■■■■ 프로젝트 경로: "+path);
-				file.transferTo(new File(path+"\\src\\main\\webapp\\resource\\"+fileName));
+				
+				String os = System.getProperty("os.name");
+				if(os.contains("Win")) { //윈도우의 경우... 배포전
+					file.transferTo(new File(path+Paths.get("src","main","webapp","resource")+File.separator+fileName));
+				} else { //배포 후
+					file.transferTo(new File(path+File.separator+Paths.get("webapps", "sakila", "resource")+File.separator+fileName));
+				}
+				//new File(path+File.separator+Paths.get("webapps", "sakila", "resource")+File.separator+fileName))
 			} catch (Exception e) {
 				throw new RuntimeException();
 			} 

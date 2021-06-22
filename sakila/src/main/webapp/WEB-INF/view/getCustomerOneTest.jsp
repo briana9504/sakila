@@ -206,7 +206,7 @@ $(document).ready(function(){
                                 고객 대여정보
                             </div>
                              <div class="card-body">
-                             	<button id="btn">대여</button>
+                             	<button id="btn" class="btn btn-rounded btn-outline-primary float-right">대여</button>
                                 <div class="table">			
                                		<table class="table table-hover table-responsive-sm">
 										<thead>

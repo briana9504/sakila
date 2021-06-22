@@ -39,7 +39,7 @@ $(document).ready(function(){
 		console.log('change');
 	    $.ajax({
 	    	type:'get',
-	    	url:'/getCustomerListByPhone',
+	    	url:'${pageContext.request.contextPath}/getCustomerListByPhone',
 	    	data: {phone: $('#phone').val()},
 	    	success: function(jsonData){
 	    		console.log('성공');
@@ -64,7 +64,7 @@ $(document).ready(function(){
 		console.log($('#inventoryId').val());
 	    $.ajax({
 	    	type:'get',
-	    	url:'/getRentalListByInventoryId',
+	    	url:'${pageContext.request.contextPath}/getRentalListByInventoryId',
 	    	data: {inventoryId: $('#inventoryId').val()},
 	    	success: function(jsonData){
 	    		console.log('성공');
@@ -130,7 +130,7 @@ $(document).ready(function(){
 	    			//최종적으로 rental과 payment에 기록
 	    			$.ajax({
     					type: 'get',
-    					url: '/modifyRentalAndPaymentForReturn',
+    					url: '${pageContext.request.contextPath}/modifyRentalAndPaymentForReturn',
     					data: {rentalId: jsonData[index].rentalId, amount: amount},	
     					success: function(jsonData){
     						console.log('됬을까???');

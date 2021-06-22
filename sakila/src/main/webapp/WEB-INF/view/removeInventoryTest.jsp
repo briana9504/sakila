@@ -26,7 +26,7 @@ $(document).ready(function(){
 		}
 		$.ajax({
 			type: 'get',
-			url: '/getFilmTitleByInventoryId',
+			url: '${pageContext.request.contextPath}/getFilmTitleByInventoryId',
 			data: {inventoryId: $('#inventoryId').val()},
 			success: function(jsonData){
 				console.log(jsonData);

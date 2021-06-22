@@ -5,6 +5,7 @@ package com.gd.sakila.service;
 
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,19 @@ public class BoardService {
 			for(Boardfile f : boardfileList) {
 				File temp = new File("");//프로젝트 위치에 빈파일이 만들어짐.... src 위에 프로젝트 안에
 				String path =temp.getAbsolutePath();//프로젝트 위치
-				File file = new File(path+"\\src\\main\\webapp\\resource\\"+f.getBoardfileName());//메모리 안에 파일을 새로만듬...
+				
+				//String os = System.getProperty("os.name");
+				//os를 확인하고 경로를 바꾼다 -> 배포의 경우 프로젝트 구조가 달라진다.
+				String os = System.getProperty("os.name");
+				File file = null;
+				if(os.contains("Win")) {//윈도우인 경우 - 배포전
+					file = new File(path+File.separator+Paths.get("src","main","webapp","resource")+File.separator+f.getBoardfileName());//메모리 안에 파일을 새로만듬...
+				} else {
+					//배포 버전인 경우 -우분투
+					file = new File(path+File.separator+Paths.get("webapps", "sakila", "resource")+File.separator+f.getBoardfileName());
+					
+				}
+				
 				file.delete();
 			}
 		}
@@ -109,6 +122,7 @@ public class BoardService {
 				String fileName = prename + ext;
 				
 				boardfile.setBoardfileName(fileName);
+				
 				boardfile.setBoardfileSize(f.getSize());
 				boardfile.setBoardfileType(f.getContentType());
 				log.debug("▶▶▶▶▶▶▶ 확인확인!!!!  boardfile: "+boardfile);
@@ -119,8 +133,17 @@ public class BoardService {
 				try {
 					File temp = new File("");//프로젝트 위치에 빈파일이 만들어짐.... src 위에 프로젝트 안에
 					String path =temp.getAbsolutePath();//프로젝트 위치
+					//"\\src\\main\\webapp\\resource\\"
 					log.debug("§§§§§§§§§§ 프로젝트 경로: "+path);
-					f.transferTo(new File(path+"\\src\\main\\webapp\\resource\\"+fileName));
+					
+					//배포 전과 배포 후의 프로젝트의 구조가 달라진다.
+					String os = System.getProperty("os.name");
+					if(os.contains("Win")) { //배포 전
+						f.transferTo(new File(path+File.separator+Paths.get("src","main","webapp","resource")+File.separator+fileName));
+					} else {
+						f.transferTo(new File(path+File.separator+Paths.get("webapps", "sakila", "resource")+File.separator+fileName));
+					}
+					
 				}catch(Exception e){
 					throw new RuntimeException();
 				}

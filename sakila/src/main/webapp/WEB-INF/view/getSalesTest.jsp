@@ -35,7 +35,7 @@ $(document).ready(function(){
 	function monthss(){
 		$.ajax({
 		type: 'get',
-		url: '/getSalesByMonth',
+		url: '${pageContext.request.contextPath}/getSalesByMonth',
 		data: {year : $('#yearByMonthSales').val()},
 		success: function(jsonData){
 			//console.log('성공');
@@ -113,7 +113,7 @@ $(document).ready(function(){
 	//일별 매출애 그리기 위한 자료
 	function days(){ $.ajax({
 		type: 'get',
-		url: '/getSalesByDay',
+		url: '${pageContext.request.contextPath}/getSalesByDay',
 		data: {year : $('#yearByDaysSales').val(), month: $('#monthByDaysSales').val()},
 		success: function(jsonData){
 			//console.log('성공');
@@ -255,7 +255,7 @@ $(document).ready(function(){
 	//카테고리 매출액 차트 그리기 위한 정보
 	$.ajax({
 		type: 'get',
-		url: '/getSalesByFilmCategory',
+		url: '${pageContext.request.contextPath}/getSalesByFilmCategory',
 		success: function(jsonData){
 			//console.log('성공!');
 			
