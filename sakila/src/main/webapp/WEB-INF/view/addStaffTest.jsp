@@ -39,9 +39,10 @@ $(document).ready(function(){
 						'<option value="'+item.cityId+'">'+item.city+'</option>'
 					);
 				});
+				
 				$('#target').empty();
-				$('#target').append('<input type="text" name="city" id="city" placeholder="city">');
-				$('#target').append('<button id="cityBtn" type="button">도시추가</button>');
+				$('#target').append('<input type="text" name="city" id="city" placeholder="city"  class="form-control input-default col-sm-4">');
+				$('#target').append('<button id="cityBtn" type="button" class="btn">도시추가</button>');
 				
 				
 				$('#cityBtn').click(function(){
@@ -189,67 +190,70 @@ $(document).ready(function(){
 											<tr>
 												<th>name</th>
 												<td>
-													<div>first_name : <input type="text" id="firstName" name="staff.firstName"></div>
-													<div>last_name : <input type="text" id="lastName" name="staff.lastName"></div>
+													<div>first_name : <input type="text" id="firstName" name="staff.firstName" class="form-control input-default col-sm-4"></div>
+													<div>last_name : <input type="text" id="lastName" name="staff.lastName" class="form-control input-default col-sm-4"></div>
 												</td>
 											</tr>
 											<tr>
 												<th>username</th>
-												<td><input type="text" id="username" name="staff.username"></td>
+												<td><input type="text" id="username" name="staff.username" class="form-control input-default col-sm-4"></td>
 											</tr>
 											<tr>
 												<th>password</th>
-												<td><input type="password" id="password" name="staff.password"></td>
+												<td><input type="password" id="password" name="staff.password" class="form-control input-default col-sm-4"></td>
 											</tr>
 											<tr>
 												<th>email</th>
-												<td><input type="email" id="email" name="staff.email"></td>
+												<td><input type="email" id="email" name="staff.email" class="form-control input-default col-sm-4"></td>
 											</tr>
 											<tr>
 												<th>address</th>
 												<td>
+													<div class="row">
+														<div class="col-sm-5">
+															<select name="countryId" id="countryId" class="form-control">
+																<c:forEach items="${countryList}" var="c">
+																	<option value="${c.countryId}">${c.country}</option>
+																</c:forEach>	
+															</select>
+														</div>
+														<div class="col-sm-5">
+															<select name="address.cityId" id="cityId" class="form-control col-sm-5"></select>																																																						
+														</div>														
+													</div>
+													
 													<div>
-														<select name="countryId" id="countryId">
-															<c:forEach items="${countryList}" var="c">
-																<option value="${c.countryId}">${c.country}</option>
-															</c:forEach>	
-														</select>
+														<span id="target"></span>		
 													</div>
 													<div>
-														<select name="address.cityId" id="cityId"></select>
-														
-															<span id="target"></span>
-														
-														<div>
-															<input id="address" name="address.address" type="text" placeholder="address">
-														</div>
+														<input id="address" name="address.address" type="text" placeholder="address" class="form-control input-default col-sm-5">
 													</div>
 												</td>
 											</tr>
 											<tr>
 												<th>address2</th>
-												<td><input type="text" id="address2" placeholder="address2" name="address.address2"></td>
+												<td><input type="text" id="address2" placeholder="address2" name="address.address2" class="form-control input-default col-sm-5"></td>
 											</tr>
 											
 											<tr>
 												<th>district</th>
-												<td><input id="district" type="text" placeholder="district" name="address.district"></td>
+												<td><input id="district" type="text" placeholder="district" name="address.district" class="form-control input-default col-sm-4"></td>
 											</tr>
 											<tr>
 												<th>postal_code</th>
-												<td><input id="postalCode" type="text" placeholder="postalCode" name="address.postalCode"></td>
+												<td><input id="postalCode" type="text" placeholder="postalCode" name="address.postalCode" class="form-control input-default col-sm-4"></td>
 											</tr>
 											
 											<tr>
 												<th>phone</th>
 												<td>
-													<input id="phone" type="text" placeholder="phone" name="address.phone">
+													<input id="phone" type="text" placeholder="phone" name="address.phone" class="form-control input-default col-sm-4">
 												</td>
 											</tr>
 											<tr>
 												<th>store</th>
 												<td>
-													<select name="staff.storeId" id="storeId">
+													<select name="staff.storeId" id="storeId" class="form-control input-default col-sm-4">
 														<option value="1">1호점</option>
 														<option value="2">2호점</option>
 													</select>
@@ -258,12 +262,12 @@ $(document).ready(function(){
 											<tr>
 												<th>picture</th>
 												<td>
-													<input type="file" name="picture" id="picture">
+													<input type="file" name="picture" id="picture" class="form-control cols-sm-2">
 												</td>
 											</tr>
 										</table>
 										
-										<button id="btn" type="button">직원등록</button>
+										<button id="btn" type="button" class="btn btn-outline-primary float-right">직원등록</button>
 									 </form>                                 	                                  	
 	                             </div>
 	                           </div>                        

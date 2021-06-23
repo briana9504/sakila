@@ -79,9 +79,7 @@
 									        </tbody>
 										</table>
 								
-										
-								
-								
+																							
 									<!-- 현재 페이지/ 마지막 페이지 -->
 										<div class="text-center">
 											${currentPage}/${lastPage}
@@ -114,10 +112,8 @@
 	                            </div>
 	                            
 	                        </div>
-	                     </div>
-	                
-	                <!-- 리스트 끝 -->
-         	 
+	                     </div>	                
+	                <!-- 리스트 끝 -->       	 
             	</div>
             </div>
          </div>

@@ -56,6 +56,7 @@ public class BoardfileService {
 				String path = temp.getAbsolutePath();
 				
 				try {
+					
 					//배포 전 배포 후 나뉜다 --> 운영체제로 확인
 					String os = System.getProperty("os.name");
 					if(os.contains("Win")) { //윈도우의 경우... 배포전

@@ -272,8 +272,7 @@ $(document).ready(function(){
 								         				<th></th>
 								         			</tr>
 								         		</thead>
-								         		<tbody id="rentalTarget"></tbody>
-								         		
+								         		<tbody id="rentalTarget"></tbody>							         		
 								         	</table>
 								         	
 								         	
@@ -353,12 +352,9 @@ $(document).ready(function(){
 								 </div>
 								<!-- 카드 바디 끝 -->                            
 	                        </div>
-	                     </div>
-	                
-	                <!-- 리스트 끝 -->
-                
-                </div>
-                
+	                     </div>	                
+	                <!-- 리스트 끝 -->                
+                </div>                
             </div>
         </div>
      	
