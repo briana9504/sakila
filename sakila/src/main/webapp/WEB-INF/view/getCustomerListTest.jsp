@@ -26,6 +26,15 @@
 	table{
 		vertical-align: middle;
 	}
+	
+	.verticalMargin{
+		margin-top: 1%;
+		margin-bottom: 1%;
+	}
+	
+	.margin{
+		margin: 1%;
+	}
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -150,19 +159,18 @@ $(document).ready(function(){
 								    							   								   
 									   	<form id="searchAction" action="${pageContext.request.contextPath}/admin/getCustomerList" method="get" style="width:90%">
 									   		<div class="row">
-									   			<div class="col-sm-4"></div>
-										   		<select id="searchOption" class="form-control col-sm-1">
+									   			<div class="col-sm-5"></div>
+										   		<select id="searchOption" class="form-control col-sm-1 verticalMargin">
 													<option value="name">이름</option>
 											    	<option value="phone">휴대폰번호</option>
 												</select>
-												<span id="target col-sm-5">
+												<span id="target" class="verticalMargin">
 													<input type="text" name="searchName" id="searchName" class="form-control">
 												</span>
-												<button type="button" id="btn" class="btn btn-light col-sm-1">검색</button>			
+												<button type="button" id="btn" class="btn btn-light margin">검색</button>			
 									   		</div>				   												
 										</form>			
-								   
-								   							                                     
+								   								   							                                     
                                 </div>
                             </div>                
                         </div>

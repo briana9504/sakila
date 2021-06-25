@@ -14,8 +14,13 @@
     <!-- Custom Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 <style>
+	.verticalMargin{
+		margin-top: 1%;
+		margin-bottom: 1%;
+	}
+	
 	.margin{
-		margin: 10px;
+		margin: 1%;
 	}
 	
 	nav{
@@ -27,6 +32,7 @@
 	.btn{
 		margin: 5px;
 	}
+	
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
@@ -83,7 +89,7 @@ $(document).ready(function(){
                                 <div class="table">
                                 		
 										
-                                		<table class="table table-hover table-responsive-sm">
+                                		<table class="table table-hover table-responsive-sm text-center">
 											<thead>
 												<tr>
 													<th>ID</th>
@@ -97,7 +103,7 @@ $(document).ready(function(){
 												<c:forEach items="${inventoryList}" var="i">
 													<tr>
 														<td>${i.filmId}</td>
-														<td>${i.title}</td>
+														<td class="text-left">${i.title}</td>
 														<td>
 															<c:if test="${i.store1 == null}">
 																0
@@ -151,10 +157,10 @@ $(document).ready(function(){
 									    <form id="searchAction" action="${pageContext.request.contextPath}/admin/getInventoryList" method="get">
 									    	<div class="row">
 									    		<div class="col-sm-5"></div>
-									    		<span id="target col-sm-5">
+									    		<span id="target" class="verticalMargin">
 													<input type="text" name="searchWord" id="searchWord" class="form-control">
 												</span>
-												<button type="button" id="btn" class="btn btn-light col-sm-1">검색</button>
+												<button type="button" id="btn" class="btn btn-light margin">검색</button>
 									    	</div>													
 										</form>
                              	

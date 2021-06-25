@@ -169,8 +169,8 @@ $(document).ready(function(){
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">home</a></li>
-                             <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a></li>
-                              <li class="breadcrumb-item active">직원등록</li>
+                            <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a></li>
+                            <li class="breadcrumb-item active">직원등록</li>
                         </ol>
                     </div>
                 </div>

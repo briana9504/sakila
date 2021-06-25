@@ -13,7 +13,12 @@
     <link href="${pageContext.request.contextPath}/vendor/summernote/summernote.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+<style>
+	.margin{
+		margin: 1%;
+	}
 
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
@@ -33,9 +38,12 @@ $(document).ready(function(){
 					);
 				});
 				$('#target').empty();
-				$('#target').append('<input type="text" name="city" id="city" placeholder="city">');
-				$('#target').append('<button id="cityBtn" type="button">도시추가</button>');
-				
+				$('#target').append('<div class="col-sm-3 margin">');
+				$('#target').append('<input type="text" name="city" id="city" placeholder="city" class="form-control">');
+				$('#target').append('</div>');
+				$('#target').append('<div>');
+				$('#target').append('<button id="cityBtn" type="button" class="btn margin">도시추가</button>');
+				$('#target').append('</div>');
 				
 				//도시추가 --> 도시이름의 앞 글자를 다 대문자로 바꾸기....
 				$('#cityBtn').click(function(){
@@ -185,7 +193,7 @@ $(document).ready(function(){
 											<tr>
 												<th>등록 지점</th>
 												<td>
-													<select name="customer.storeId" id="storeId">
+													<select name="customer.storeId" id="storeId" class="form-control input-default col-sm-4">
 														<option value="1">1호점</option>
 														<option value="2">2호점</option>
 													</select>
@@ -194,33 +202,36 @@ $(document).ready(function(){
 											<tr>
 												<th>name</th>
 												<td>
-													<div>first_name : <input type="text" id="firstName" name="customer.firstName" placeholder="first name"></div>
-													<div>last_name : <input type="text" id="lastName" name="customer.lastName" placeholder="last name"></div>
+													<div>first_name : <input type="text" id="firstName" name="customer.firstName" placeholder="first name"  class="form-control input-default col-sm-4"></div>
+													<div>last_name : <input type="text" id="lastName" name="customer.lastName" placeholder="last name" class="form-control input-default col-sm-4"></div>
 												</td>
 											</tr>
 											<tr>
 												<th>email</th>
-												<td><input type="email" id="email" name="customer.email" placeholder="email"></td>
+												<td><input type="email" id="email" name="customer.email" placeholder="email" class="form-control input-default col-sm-4"></td>
 												
 											</tr>
 											<tr>
 												<th>address</th>
 												<td>
-													<div>
-														<select name="countryId" id="countryId">
-															<c:forEach items="${countryList}" var="c">
-																<option value="${c.countryId}">${c.country}</option>
-															</c:forEach>	
-														</select>
-													</div>
-													<div>
-														<select name="address.cityId" id="cityId"></select>
-														
-															<span id="target"></span>
-														
-														<div>
-															<input id="address" name="address.address" type="text" placeholder="address">
+													<div class="row">
+														<div class="col-sm-5 margin">
+															<select name="countryId" id="countryId" class="form-control">
+																<c:forEach items="${countryList}" var="c">
+																	<option value="${c.countryId}">${c.country}</option>
+																</c:forEach>	
+															</select>
 														</div>
+														<div class="col-sm-5 margin">
+															<select name="address.cityId" id="cityId" class="form-control col-sm-5"></select>																																																						
+														</div>														
+													</div>
+													
+													<div class="row">
+														<span id="target"></span>		
+													</div>
+													<div class="margin">
+														<input id="address" name="address.address" type="text" placeholder="address" class="form-control input-default col-sm-5">
 													</div>
 												</td>
 											</tr>
@@ -228,30 +239,32 @@ $(document).ready(function(){
 											
 											<tr>
 												<th>address2</th>
-												<td><input type="text" id="address2" placeholder="address2" name="address.address2"></td>
+												<td><input type="text" id="address2" placeholder="address2" name="address.address2" class="form-control input-default col-sm-5"></td>
 											</tr>
 											
 											<tr>
 												<th>district</th>
-												<td><input id="district" type="text" placeholder="district" name="address.district"></td>
+												<td><input id="district" type="text" placeholder="district" name="address.district"  class="form-control input-default col-sm-4"></td>
 											</tr>
 											<tr>
 												<th>postal_code</th>
-												<td><input id="postalCode" type="text" placeholder="postalCode" name="address.postalCode"></td>
+												<td><input id="postalCode" type="text" placeholder="postalCode" name="address.postalCode" class="form-control input-default col-sm-4"></td>
 											</tr>
 											
 											<tr>
 												<th>phone</th>
 												<td>
-													<input id="phone" type="text" placeholder="phone" name="address.phone">
-													<button type="button" id="phoneCheckBtn">중복검사</button>
-													<span id="phoneTarget">중복 검사를 해주세요.</span>
+													<div class="row">
+														<input id="phone" type="text" placeholder="phone" name="address.phone" class="form-control input-default col-sm-4">
+														<button type="button" id="phoneCheckBtn" class="btn">중복검사</button>
+														<span id="phoneTarget" class="margin">중복 검사를 해주세요.</span>
+													</div>
 												</td>
 											</tr>
 										</table>
 										
 										<div>
-											<button id="btn" type="button">등록</button>
+											<button id="btn" type="button" class="btn btn-outline-primary float-right">등록</button>
 										</div>
 									</form>
 									                                  	                                  	
